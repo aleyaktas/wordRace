@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const usersRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
 const connectDB = require('./config/db')
-
 const app = express();
 dotenv.config();
 

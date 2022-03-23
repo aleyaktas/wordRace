@@ -23,9 +23,7 @@ router.post('/', [
       if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
       }
-
       const { username,email,password } = req.body;
-  
       try{
         let user = await User.findOne({ email }) 
         if(user) {
@@ -45,10 +43,10 @@ router.post('/', [
         // Return jsonwebtoken
         const payload = {
           user: {
-            id: user.id
+            id: user.id,
+            username: user.username
           }
         }
-  
         jwt.sign(
           payload, 
           process.env.jwtSecret,
@@ -57,11 +55,11 @@ router.post('/', [
             if(err) throw err;
             res.json({ token });
           });
+
       } catch(err) {
         console.log(err.message);
         res.status(500).send('Server error')
       }
-      
     });
 
 

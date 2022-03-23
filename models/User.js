@@ -27,8 +27,8 @@ const UserSchema = new Schema({
         type: Object,
         ref:'User'
     }],
-    pendingRequest: [{
-        type: Schema.Types.ObjectId,
+    pendingRequests: [{
+        type: Object,
         ref:'User' 
     }]
 });
