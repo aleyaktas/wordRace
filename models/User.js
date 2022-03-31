@@ -24,11 +24,11 @@ const UserSchema = new Schema({
         min: 6
     },
     friends: [{
-        type: Object,
+        type: Schema.Types.ObjectId,
         ref:'User'
     }],
     pendingRequests: [{
-        type: Object,
+        type: Schema.Types.ObjectId,
         ref:'User' 
     }]
 });

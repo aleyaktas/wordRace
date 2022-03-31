@@ -51,6 +51,7 @@ router.post('/', [
         res.status(500).send('Server error')
       }
     });
+
   
 // POST api/auth/addFriends
 // Add friends and incoming friend requests
@@ -64,23 +65,33 @@ router.post('/addFriends', auth, async (req,res) => {
   try {
     let addedUser = await User.findOne({username})
     let ownUser = await User.findById(req.user.id)
+    if(!addedUser) {
+      return res
+        .status(400)
+        .json({ errors: [ { msg: 'This user not found' } ] });
+    }
+    if(addedUser.id==ownUser.id) {
+      return res
+        .status(400)
+        .json({ errors: [ { msg: 'Request failed' } ] });
+    }
     if(addedUser) {
-      if(addedUser.pendingRequests?.some(pendingRequest => pendingRequest.id===req.user.id)) {
+      if(addedUser.pendingRequests.some(pendingRequest => pendingRequest._id==ownUser.id)) {
         return res
         .status(400)
         .json({ errors: [ { msg: 'Friend request already sent' } ] });
         
-      } else if(ownUser.pendingRequests?.some(pendingRequest => pendingRequest.id===addedUser.id)) {
+      } else if(ownUser.pendingRequests.some(pendingRequest => pendingRequest._id==addedUser.id)) {
         return res
         .status(400)
         .json({ errors: [ { msg: 'Friend request already exists, you can accept the request' } ] });
-      } else if(ownUser.friends?.some(friend => friend.id===addedUser.id)) {
+      } else if(ownUser.friends.some(friend => friend._id==addedUser.id)) {
         return res
         .status(400)
         .json({ errors: [ { msg: 'This user is already attached to your friend list' } ] });
       }
        {
-        await addedUser.pendingRequests.push({id:req.user.id, username: req.user.username})
+        await addedUser.pendingRequests.push({_id:ownUser.id})
         await addedUser.save();
         res.send(addedUser)
       }
@@ -101,20 +112,24 @@ router.post('/acceptFriends', auth, async (req,res) => {
     }
   const { username } = req.body;
   try {
-    var user = await User.findById(req.user.id)
+    var me = await User.findById(req.user.id)
     var incomingRequest = await User.findOne({username})
-    if(user && incomingRequest) {
-      if(user.friends?.some(friend => friend.id=incomingRequest.id)){
+    if(me) {
+      if(!me.pendingRequests.some(pendingRequest=> pendingRequest._id=incomingRequest.id)) {
+        return res
+        .status(400)
+        .json({ errors: [ { msg: 'this user not found' } ] });
+      } else if(me.friends?.some(friend => friend._id=incomingRequest.id)){
         return res
         .status(400)
         .json({ errors: [ { msg: 'this user is already your friend' } ] });
       } else {
-        user.friends.push({id:incomingRequest.id, username: incomingRequest.username })
-        incomingRequest.friends.push({id:user.id, username: user.username })
-        user.pendingRequests = user.pendingRequests?.filter(pendingRequest => pendingRequest.id !== incomingRequest.id),
-        await user.save();
-        await pendingRequest.save();
-        res.send(user)
+        me.friends.push({_id:incomingRequest.id})
+        incomingRequest.friends.push({_id:me.id})
+        me.pendingRequests = me.pendingRequests?.filter(pendingRequest => pendingRequest._id != incomingRequest.id),
+        await me.save();
+        await incomingRequest.save();
+        res.send(me)
       }
     }
   } catch (err) {
@@ -133,18 +148,69 @@ router.post('/rejectFriends', auth, async (req, res) => {
     }
   const { username } = req.body;
   try {
-    var user = await User.findById(req.user.id)
+    var me = await User.findById(req.user.id)
     var incomingRequest = await User.findOne({username})
-    if(user && incomingRequest) {
-      if(user.pendingRequests?.some(pendingRequest => pendingRequest.id=incomingRequest.id)) {
-        user.pendingRequests = user.pendingRequests?.filter(pendingRequest => pendingRequest.id !== incomingRequest.id)
-        await user.save();
-        res.send(user)
+    if(me) {
+      if(!me.pendingRequests.some(pendingRequest=> pendingRequest._id=incomingRequest.id)) {
+        return res
+          .status(400)
+          .json({ errors: [ { msg: 'Request does not exist!' } ] });
       }
+      if(me.pendingRequests?.some(pendingRequest => pendingRequest._id=incomingRequest.id)) {
+        me.pendingRequests = me.pendingRequests?.filter(pendingRequest => pendingRequest._id != incomingRequest.id)
+        await me.save();
+        res.send(me)
+      }
+    } 
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send('Server error')
+  }
+})
+
+// POST api/auth/deleteFriend
+// Delete friend 
+// Private
+router.post('/deleteFriend', [auth], async (req,res) => {
+  const {username} = req.body;
+  try {
+    const me = await User.findById(req.user.id)
+    const user = await User.findOne({username})
+    if(me) {
+      if(!me.friends.some(friend => friend._id=user.id)) {
+        return res
+          .status(400)
+          .json({ errors: [ { msg: 'User not found' } ] });
+      }else if(me.friends.some(friend => friend._id=user.id)) {
+        me.friends = me.friends?.filter(friend => friend._id != user.id),
+        user.friends = user.friends?.filter(friend => friend._id != me.id)
+        await me.save()
+        await user.save();
+        res.send(me)
+      } else if(me.friends.some(friend => friend._id!=user.id)){
+        res.send("This user not your friend")
+      }
+
     }
   } catch (err) {
     console.log(err.message);
     res.status(500).send('Server error')
+  }
+})
+
+// GET api/auth/me
+// Get user's own
+// Private
+router.get('/me',auth,async (req,res) => {
+  const populate = [
+    { path: "pendingRequests", select: "username _id" },
+    { path: "friends", select:"username _id" }
+  ]
+  try {
+    const me = await User.findById(req.user.id).lean().populate(populate)
+    res.send(me)
+  } catch (error) {
+    console.log(error)
   }
 })
 
