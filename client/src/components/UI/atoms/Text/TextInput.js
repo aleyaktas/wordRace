@@ -2,9 +2,9 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
+import Icon from '../../../assets/icons/Icon'
 
-const TextInput = ({ iconName, placeHolder, placeHolderColor, iconSize }) => {
-  const Icon = require('../../../assets/icons/Icons')[iconName]
+const TextInput = ({ iconName, placeHolder, placeHolderColor, iconWidth, iconHeight }) => {
   const CssTextField = styled(TextField)({
     '& label.Mui-focused': {
       color: 'green',
@@ -34,7 +34,7 @@ const TextInput = ({ iconName, placeHolder, placeHolderColor, iconSize }) => {
         gap: 2,
       }}
     >
-      {iconName && <Icon size={iconSize} iconName={iconName} />}
+      {iconName && <Icon width={iconWidth} height={iconHeight} name={iconName} />}
       <CssTextField label={placeHolder} id="custom-css-outlined-input" variant='standard'/>
     </Box>
   );

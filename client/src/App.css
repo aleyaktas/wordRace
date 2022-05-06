@@ -1,111 +1,112 @@
-* {
-  font-weight: 200 !important;
+svg {
+  vertical-align: baseline !important;
+  margin: 0px 2px;
 }
 
 @font-face {
-  font-family: 'Inter-SemiBold', sans-serif ;
-  src: local('Inter-SemiBold'), url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
+  font-family: 'Inter-SemiBold';
+  src: local('Inter-SemiBold'), url('./assets//fonts/Inter-SemiBold.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'MerriweatherSans-Regular', sans-serif ;
+  font-family: 'MerriweatherSans-Regular' ;
   src: local('MerriweatherSans-Regular'), url('./assets/fonts/MerriweatherSans-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Inter-Bold', sans-serif ;
+  font-family: 'Inter-Bold' ;
   src: local('Inter-Bold'), url('./assets/fonts/Inter-Bold.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Inter-Regular', sans-serif ;
+  font-family: 'Inter-Regular' ;
   src: local('Inter-Regular'), url('./assets/fonts/Inter-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'OpenSans-Regular', sans-serif ;
+  font-family: 'OpenSans-Regular' ;
   src: local('OpenSans-Regular'), url('./assets/fonts/OpenSans-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Poppins-Regular', sans-serif ;
+  font-family: 'Poppins-Regular' ;
   src: local('Poppins-Regular'), url('./assets/fonts/Poppins-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'RedHatMono-Regular', monospace ;
+  font-family: 'RedHatMono-Regular' ;
   src: local('RedHatMono-Regular'), url('./assets/fonts/RedHatMono-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Roboto-Bold', sans-serif ;
+  font-family: 'Roboto-Bold' ;
   src: local('Roboto-Bold'), url('./assets/fonts/Roboto-Bold.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Roboto-Medium', sans-serif ;
+  font-family: 'Roboto-Medium' ;
   src: local('Roboto-Medium'), url('./assets/fonts/Roboto-Medium.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Roboto-LightItalic', sans-serif ;
+  font-family: 'Roboto-LightItalic' ;
   src: local('Roboto-LightItalic'), url('./assets/fonts/Roboto-LightItalic.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Roboto-Thin', sans-serif ;
+  font-family: 'Roboto-Thin' ;
   src: local('Roboto-Thin'), url('./assets/fonts/Roboto-Thin.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Roboto-ThinItalic', sans-serif ;
+  font-family: 'Roboto-ThinItalic';
   src: local('Roboto-ThinItalic'), url('./assets/fonts/Roboto-ThinItalic.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'RobotoSlab-Regular', monospace ;
+  font-family: 'RobotoSlab-Regular' ;
   src: local('RobotoSlab-Regular'), url('./assets/fonts/RobotoSlab-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'SawarabiMincho-Regular', serif ;
+  font-family: 'SawarabiMincho-Regular' ;
   src: local('SawarabiMincho-Regular'), url('./assets/fonts/SawarabiMincho-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'SfProDisplay-Medium', serif ;
+  font-family: 'SfProDisplay-Medium' ;
   src: local('SfProDisplay-Medium'), url('./assets/fonts/SfProDisplay-Medium.ttf') format('truetype');
 }
 
 
 .InterBold {
-font-family: 'Inter-Bold', sans-serif !important;
+font-family: Inter-Bold
 }
 .InterRegular {
-font-family: 'Inter-Regular', sans-serif !important;
+font-family: Inter-Regular
 }
 .InterSemiBold {
-font-family: 'Inter-SemiBold', sans-serif !important;
+font-family: Inter-SemiBold
 }
 .MerriweatherSansRegular {
-font-family: 'MerriweatherSans-Regular', sans-serif !important;
+font-family: MerriweatherSans-Regular
 }
 .OpenSansRegular {
-font-family: 'MerriweatherSans-Regular', sans-serif !important;
+font-family: OpenSans-Regular
 }
 .PoppinsRegular {
-font-family: 'Poppins-Regular', sans-serif !important;
+font-family: Poppins-Regular
 }
 .RedHatMonoRegular {
-font-family: 'RedHatMono-Regular', monospace !important;
+font-family: RedHatMono-Regular
 }
 .RobotoBold {
-font-family: 'Roboto-Bold', sans-serif !important;
+font-family: Roboto-Bold
 }
 .RobotoMedium {
-font-family: 'Roboto-Medium', sans-serif !important;
+font-family: Roboto-Medium
 }
 .RobotoLightItalic {
-font-family: 'Roboto-LightItalic', sans-serif !important;
+font-family: Roboto-LightItalic
 }
 .RobotoThin {
-font-family: 'Roboto-Thin', sans-serif !important;
+font-family: Roboto-Thin
 }
 .RobotoThinItalic {
-font-family: 'Roboto-ThinItalic', sans-serif !important;
+font-family: Roboto-ThinItalic;
 }
 .RobotoSlabRegular {
-font-family: 'RobotoSlab-Regular', sans-serif !important;
+font-family: RobotoSlab-Regular
 }
 .SawarabiMinchoRegular {
-font-family: 'SawarabiMincho-Regular', serif !important;
+font-family: SawarabiMincho-Regular
 }
 .SfProDisplayMedium {
-font-family: 'SfProDisplay-Medium', serif !important;
+font-family: SfProDisplay-Medium
 }
