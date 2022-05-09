@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ButtonItem from './Button';
 
 export default {
@@ -14,7 +13,6 @@ defaultButton.args = {
   text:"Button",
   outlined: true,
   borderColor: "#6B5814",
-  iconPosition:'end'
 }
 
 export const iconButton = Template.bind({})
@@ -22,7 +20,6 @@ iconButton.args = {
   text:"Button",
   iconName:"User",
   icon:true,
-  iconPosition:'end'
 }
 
 
