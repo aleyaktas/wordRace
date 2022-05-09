@@ -1,8 +1,11 @@
 import './App.css';
+import TextInput from './components/UI/atoms/TextInput/TextInput';
 
 function App() {
   return (
-    <div></div>
+    <div>
+      <TextInput/>
+    </div>
   );
 }
 

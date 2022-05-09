@@ -3,17 +3,18 @@ import { Typography } from '@mui/material';
 import '../../../../App.css'
 import PropTypes from 'prop-types';
 
-const Text = ({ text, font, size, color }) => {
+const Text = ({ text, font, size, color, textDecorationLine }) => {
 
   const style = {
     fontSize: size,
-    color
+    color,
+    textDecorationLine
   }
   return (
     <div>
       <Typography
         style={style}
-        className={font}
+        class={font}
       >{text}
       </Typography>
     </div>
@@ -24,10 +25,11 @@ Text.propTypes = {
   text: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
+  textDecorationLine: PropTypes.string
 };
 Text.defaultProps = {
   color: "black",
-  font:"InterSemiBold"
+  font:"InterRegular"
 };
 
 export default Text
