@@ -3,12 +3,16 @@ import { Typography } from '@mui/material';
 import '../../../../App.css'
 import PropTypes from 'prop-types';
 
-const Text = ({ text, font, size, color, textDecorationLine }) => {
+const Text = ({ text, font, fontSize, color, textDecorationLine, textAlign, letterSpacing, padding, margin}) => {
 
   const style = {
-    fontSize: size,
+    fontSize,
     color,
-    textDecorationLine
+    textDecorationLine,
+    textAlign,
+    letterSpacing,
+    margin,
+    padding
   }
   return (
     <div>

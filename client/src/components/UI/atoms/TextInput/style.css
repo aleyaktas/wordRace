@@ -1,13 +1,22 @@
-input {
-  display: inline-block;
-  border:none;
-  width: 100% !important;
+@font-face {
+  font-family: 'Roboto-Thin' ;
+  src: local('Roboto-Thin'), url('../../../../assets/fonts/Roboto-Thin.ttf') format('truetype');
+}
+*:focus {
+  outline: none;
 }
 .container {
   padding-bottom: 5px;   
   border-bottom: 1px solid gray;
   display: flex;
 }
-*:focus {
-  outline: none;
+input {
+  display: inline-block;
+  border:none;
+  width: 100% !important;
 }
+#input::placeholder {
+  font-family: Roboto-Thin
+ }
+
+

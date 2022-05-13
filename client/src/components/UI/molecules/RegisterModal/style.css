@@ -1,0 +1,18 @@
+#button {
+  background-color:white; 
+  border:none;
+  border-radius: 40%; 
+  transition-duration: 0.4s;
+  cursor: pointer;
+  margin:4% 5%;
+  display: flex;
+  margin-inline-start: auto;
+}
+
+div.containerDiv button.MuiButton-root:hover {
+  background-color: #DEBF50;
+}
+
+.button:hover svg{
+  color: black;
+}

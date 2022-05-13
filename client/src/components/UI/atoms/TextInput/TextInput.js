@@ -4,18 +4,19 @@ import Icon from '../../../../assets/icons/Icon'
 import PropTypes from 'prop-types';
 import '../../../../App.css'
 
-const TextInput = ({size, padding, margin, border, textColor, placeHolder, containerWidth, iconName, iconWidth, iconHeight, iconColor, icon, font}) => {
+const TextInput = ({containerMargin, containerPadding, containerWidth, fontSize, padding, margin, border, textColor, placeHolder, iconName, iconWidth, iconHeight, iconColor, icon, font, type}) => {
   const style = {
-    fontSize:size,
+    fontSize,
     padding,
     margin,
     border,
     color: textColor,
   }
+ 
   return (
-    <div className='container' style={{width:containerWidth}}>
+    <div className='container' style={{width:containerWidth, margin:containerMargin, padding: containerPadding}}>
       {icon && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor}  />}
-      <input class={font} style={style} type="text" name="firstname" placeholder={placeHolder}/>
+      <input id='input' type={type} class={font} style={style} name="firstname" placeholder={placeHolder} plac />
     </div>
   )
 }
@@ -32,7 +33,7 @@ TextInput.defaultProps = {
   icon: false,
   font:"InterRegular",
   placeHolder: "placeHolder",
-  containerWidth: "15%",
+  // containerWidth: "15%",
   iconName:"User",
 };
 

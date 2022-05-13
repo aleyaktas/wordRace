@@ -17,7 +17,6 @@ defaultButton.args = {
 
 export const iconButton = Template.bind({})
 iconButton.args = {
-  text:"Button",
   iconName:"User",
   icon:true,
 }
@@ -25,7 +24,6 @@ iconButton.args = {
 
 export const containedButton = Template.bind({})
 containedButton.args = {
-  text:"Button",
   buttonColor: '#EBD894',
 }
 

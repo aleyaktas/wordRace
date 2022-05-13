@@ -5,17 +5,17 @@ import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import '../../../../../src/App.css'
 
-const ButtonItem = ({ iconPosition, border, borderColor, outlined, fontFace, icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin }) => {
+const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined, fontFace, icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin, textAlign, onClick, containerMargin }) => {
   
   if(size==="sm") {
-    fontSize= 12
-    padding= "10 16"
+    fontSize= 12 
+    padding= "2px 4px "
   } else if(size==="md") {
     fontSize= 14
-    padding= "11 20"
+    padding= "4px 8px"
   } else if(size==="lg") {
     fontSize= 16
-    padding= "12 24"
+    padding= "8px 16px"
   }
   if(outlined==false) border="none"
   
@@ -29,7 +29,8 @@ const ButtonItem = ({ iconPosition, border, borderColor, outlined, fontFace, ico
     height,
     margin,
     color: textColor,
-    borderRadius: 10
+    borderRadius,
+    textTransform: 'none',
   });
   
   if(icon & iconPosition=='start') {
@@ -42,11 +43,12 @@ const ButtonItem = ({ iconPosition, border, borderColor, outlined, fontFace, ico
   }
 
   return (  
-    <div style={{display: 'flex'}}>
+    <div style={{textAlign:`${textAlign}`, margin: `${containerMargin}`}}>
         <CustomizedButton
           className={fontFace ? `${fontFace}` : null }
           startIcon={startIcon}
           endIcon={endIcon}
+          onClick={onClick}
         >
           {text}
         </CustomizedButton>
@@ -66,9 +68,9 @@ ButtonItem.propTypes = {
 };
 
 ButtonItem.defaultProps = {
+  text:"Button",
   buttonColor: null,
   iconColor: null,
-  size: 'md',
   border: '1px solid',
   icon: false,
   iconWidth: 16,
