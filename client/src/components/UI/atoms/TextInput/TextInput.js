@@ -4,19 +4,20 @@ import Icon from '../../../../assets/icons/Icon'
 import PropTypes from 'prop-types';
 import '../../../../App.css'
 
-const TextInput = ({containerMargin, containerPadding, containerWidth, fontSize, padding, margin, border, textColor, placeHolder, iconName, iconWidth, iconHeight, iconColor, icon, font, type}) => {
+const TextInput = ({containerMargin, containerPadding, containerWidth, fontSize, placeHolderSize, padding, margin, border, textColor, placeHolder, iconName, iconWidth, iconHeight, iconColor, icon, font, type}) => {
   const style = {
     fontSize,
     padding,
     margin,
     border,
     color: textColor,
+    '--placeHolderSize': placeHolderSize
   }
  
   return (
     <div className='container' style={{width:containerWidth, margin:containerMargin, padding: containerPadding}}>
       {icon && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor}  />}
-      <input id='input' type={type} class={font} style={style} name="firstname" placeholder={placeHolder} plac />
+      <input id='input' type={type} class={font} style={style} name="firstname" placeholder={placeHolder} />
     </div>
   )
 }

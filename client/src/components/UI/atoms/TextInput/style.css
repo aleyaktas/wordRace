@@ -6,7 +6,6 @@
   outline: none;
 }
 .container {
-  padding-bottom: 5px;   
   border-bottom: 1px solid gray;
   display: flex;
 }
@@ -16,7 +15,9 @@ input {
   width: 100% !important;
 }
 #input::placeholder {
-  font-family: Roboto-Thin
+  font-size: var(--placeHolderSize);
+  font-family: Roboto-Thin;
+  letter-spacing: 1px;
  }
 
 
