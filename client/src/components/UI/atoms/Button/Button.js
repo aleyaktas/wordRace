@@ -3,18 +3,20 @@ import Icon from '../../../../assets/icons/Icon'
 import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import '../../../../../src/App.css'
+import '../../../../../src/App.css';
+import { makeStyles } from '@mui/styles';
 
-const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined, fontFace, icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin, textAlign, onClick, containerMargin }) => {
+
+const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined, fontt="RobotoThinItalic", icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin, textAlign, onClick, containerMargin, hoverTextColor }) => {
   
   if(size==="sm") {
     fontSize= 12 
     padding= "2px 4px "
   } else if(size==="md") {
-    fontSize= 14
+    fontSize= 16
     padding= "4px 8px"
   } else if(size==="lg") {
-    fontSize= 16
+    fontSize= 18
     padding= "8px 16px"
   }
   if(outlined==false) border="none"
@@ -32,6 +34,12 @@ const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined,
     borderRadius,
     textTransform: 'none',
   });
+  const useStyles = makeStyles({
+    button: {
+      '&:hover': {
+        color: hoverTextColor,
+    },
+  }})
   
   if(icon & iconPosition=='start') {
     var startIcon= <Icon style={{display:'inline-flex !important'}} name={iconName} width={iconWidth} height={iconHeight} color={iconColor}/>
@@ -41,11 +49,11 @@ const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined,
     startIcon=''
     endIcon=''
   }
-
+  const classes = useStyles()
   return (  
     <div style={{textAlign:`${textAlign}`, margin: `${containerMargin}`}}>
         <CustomizedButton
-          className={fontFace ? `${fontFace}` : null }
+          className= {classes.button}
           startIcon={startIcon}
           endIcon={endIcon}
           onClick={onClick}
@@ -65,6 +73,7 @@ ButtonItem.propTypes = {
   outlined: PropTypes.bool,
   borderColor: PropTypes.string,
   iconPosition: PropTypes.oneOf(["start", 'end']),
+  hoverTextColor: PropTypes.string
 };
 
 ButtonItem.defaultProps = {
@@ -77,6 +86,7 @@ ButtonItem.defaultProps = {
   iconHeight:16,
   iconPosition: 'end',
   textColor: "#6B5814",
+  hoverTextColor: "white"
 };
 
 export default ButtonItem

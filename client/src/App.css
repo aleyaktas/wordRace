@@ -36,6 +36,10 @@ svg {
   src: local('Roboto-Bold'), url('./assets/fonts/Roboto-Bold.ttf') format('truetype');
 }
 @font-face {
+  font-family: 'Roboto-Black' ;
+  src: local('Roboto-Black'), url('./assets/fonts/Roboto-Black.ttf') format('truetype');
+}
+@font-face {
   font-family: 'Roboto-Medium' ;
   src: local('Roboto-Medium'), url('./assets/fonts/Roboto-Medium.ttf') format('truetype');
 }
@@ -89,6 +93,9 @@ font-family: RedHatMono-Regular
 .RobotoBold {
 font-family: Roboto-Bold
 }
+.RobotoBlack {
+  font-family: Roboto-Black
+  }
 .RobotoMedium {
 font-family: Roboto-Medium
 }

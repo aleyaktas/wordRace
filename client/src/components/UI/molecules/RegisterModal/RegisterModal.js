@@ -7,7 +7,7 @@ import Icon from '../../../../assets/icons/Icon';
 import  '../../molecules/style.css'
 import PropTypes from 'prop-types';
 
-const RegisterModal = ({isOpen, modalClose}) => {
+const RegisterModal = ({isOpen, modalClose, onClick}) => {
   
   const style = {
     position: 'absolute',
@@ -37,7 +37,7 @@ const RegisterModal = ({isOpen, modalClose}) => {
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Username' icon="true" iconName="User" fontSize={16} placeHolderSize="14px" type="text" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Email' icon="true" iconName="Mail" fontSize={16} placeHolderSize="14px" type="text" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Password' icon="true" iconName="Lock" fontSize={16} placeHolderSize="14px" type="password"  />
-          <ButtonItem id="buttonItem" text='Sign Up' size="md" textAlign="center" iconName="User"  width="100%" containerMargin="7%" buttonColor='#EBD894' />
+          <ButtonItem onClick={onClick} id="buttonItem" text='Sign Up' size="md" textAlign="center" iconName="User"  width="100%" containerMargin="7%" buttonColor='#EBD894' />
           <button style={{display:"contents", cursor:"pointer"}} >
             <Text margin="7%" textAlign="center" text="Do you have an account?" textDecorationLine='underline' font="RobotoThin" color='#6B5814' letterSpacing="1.5px"/>
           </button>
