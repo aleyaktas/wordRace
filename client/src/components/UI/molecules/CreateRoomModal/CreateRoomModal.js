@@ -11,12 +11,7 @@ import Checkbox from '../../atoms/Checkbox/Checkbox';
 const CreateRoomModal = ({isOpen, modalClose, onClick}) => {
   
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
     backgroundColor:"white"

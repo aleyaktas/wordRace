@@ -13,7 +13,6 @@ const TextInput = ({containerMargin, containerPadding, containerWidth, fontSize,
     color: textColor,
     '--placeHolderSize': placeHolderSize
   }
- 
   return (
     <div className='container' style={{width:containerWidth, margin:containerMargin, padding: containerPadding}}>
       {icon && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor}  />}

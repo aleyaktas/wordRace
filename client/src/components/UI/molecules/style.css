@@ -9,10 +9,17 @@
   margin-inline-start: auto;
 }
 
+.containerDiv {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 div.containerDiv button.MuiButton-root:hover {
   background-color: #DEBF50;
 }
 
-.button:hover svg{
+#button:hover svg{
   color: black;
 }

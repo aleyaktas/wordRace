@@ -7,7 +7,7 @@ import '../../../../../src/App.css';
 import { makeStyles } from '@mui/styles';
 
 
-const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined, fontt="RobotoThinItalic", icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin, textAlign, onClick, containerMargin, hoverTextColor }) => {
+const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined, fontt="RobotoThinItalic", icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin, textAlign, onClick, containerMargin, hoverTextColor, hoverBackgroundColor }) => {
   
   if(size==="sm") {
     fontSize= 12 
@@ -37,6 +37,7 @@ const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined,
   const useStyles = makeStyles({
     button: {
       '&:hover': {
+        backgroundColor: hoverBackgroundColor,
         color: hoverTextColor,
     },
   }})
