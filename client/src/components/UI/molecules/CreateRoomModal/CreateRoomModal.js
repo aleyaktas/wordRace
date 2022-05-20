@@ -29,7 +29,7 @@ const CreateRoomModal = ({isOpen, modalClose, onClick}) => {
           <button id="button" class='button' onClick={modalClose}>
             <Icon name="Close" width={18} height={18} color="#8F8F8F"/>
           </button>
-          <Text textAlign="center" text="Create Room" font="InterRegular" letterSpacing="4px" fontSize="24px" margin="0px 0px 40px 0px" />
+          <Text textAlign="center" text="Create Room" font="InterRegular" letterSpacing="2x" fontSize="20px" margin="0px 0px 40px 0px" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Room Name' fontSize={18} placeHolderSize="16px" type="text" />
           <div style={{margin: "7%"}} >
             <Checkbox checboxColor="#709F60" font="RobotoBold" color="#6B5814" value="Public" margin="0px 5px 0px 0px" />

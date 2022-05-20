@@ -28,7 +28,7 @@ const LoginModal = ({isOpen, modalClose, onClick}) => {
           <button id="button" class='button' onClick={modalClose}>
             <Icon name="Close" width={18} height={18} color="#8F8F8F"/>
           </button>
-          <Text textAlign="center" text="Login" font="InterRegular" letterSpacing="4px" fontSize="24px" />
+          <Text textAlign="center" text="Login" font="InterRegular" letterSpacing="2px" fontSize="20px" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Username' icon="true" iconName="User" fontSize={16} placeHolderSize="14px" type="text" />
           <TextInput font="InterRegular" containerMargin="7% 7% 3% 7%" placeHolder='Password' icon="true" iconName="Lock" fontSize={16} placeHolderSize="14px" type="password" />
           <Text color="#6B5814" margin="0% 7%" textAlign="end" text="Forgot your password?" font="RobotoThinItalic" letterSpacing="1px" fontSize={14} textDecorationLine="underline"/>

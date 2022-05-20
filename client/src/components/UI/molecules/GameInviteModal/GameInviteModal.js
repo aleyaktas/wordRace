@@ -47,7 +47,7 @@ const GameInviteModal = ({isOpen, modalClose, onClick, roomImage, roomFounder}) 
             </div>
             </div>
             <div style={cardTextStyle}>
-              <Text font="InterSemiBold" text={`${roomFounder} invites you to the game`} color="#6A685E" margin={0}/>
+              <Text font="RobotoMedium" text={`${roomFounder} invites you to the game`} color="#6A685E" margin={0}/>
             </div>
             <ButtonItem onClick={onClick} text='JOIN THE GAME' fontSize="14px" padding= "8px 10px" textAlign="center" width="75%" buttonColor='#C0FFB0' textColor="#2B9810" borderRadius="20px" hoverTextColor='white' hoverBackgroundColor="#39D712 !important" />
           </div>

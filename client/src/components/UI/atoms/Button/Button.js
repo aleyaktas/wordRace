@@ -3,18 +3,17 @@ import Icon from '../../../../assets/icons/Icon'
 import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import '../../../../../src/App.css';
 import { makeStyles } from '@mui/styles';
 
 
-const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined, fontt="RobotoThinItalic", icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin, textAlign, onClick, containerMargin, hoverTextColor, hoverBackgroundColor }) => {
+const ButtonItem = ({ iconPosition, border, borderColor, borderRadius, outlined, font="RobotoThinItalic", icon, size, buttonColor, fontSize, textColor, width, height, text, iconName, iconColor, iconWidth, iconHeight, padding, margin, textAlign, onClick, containerMargin, hoverTextColor, hoverBackgroundColor }) => {
   
   if(size==="sm") {
     fontSize= 12 
     padding= "2px 4px "
   } else if(size==="md") {
     fontSize= 16
-    padding= "4px 8px"
+    padding= "6px 8px"
   } else if(size==="lg") {
     fontSize= 18
     padding= "8px 16px"
@@ -87,7 +86,8 @@ ButtonItem.defaultProps = {
   iconHeight:16,
   iconPosition: 'end',
   textColor: "#6B5814",
-  hoverTextColor: "white"
+  hoverTextColor: "black",
+  hoverBackgroundColor:"aliceblue"
 };
 
 export default ButtonItem

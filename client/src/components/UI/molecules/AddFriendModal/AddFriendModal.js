@@ -28,9 +28,9 @@ const AddFriendModal = ({isOpen, modalClose, onClick}) => {
           <button id="button" class='button' onClick={modalClose}>
             <Icon name="Close" width={18} height={18} color="#8F8F8F"/>
           </button>
-          <Text textAlign="center" text="Add friend" font="InterRegular" letterSpacing="4px" fontSize="24px" margin="0px 0px 40px 0px" />
+          <Text textAlign="center" text="Add friend" font="InterRegular" letterSpacing="2px" fontSize="20px" margin="0px 0px 40px 0px" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Enter your friend username' fontSize={18} placeHolderSize="16px" type="text" />
-          <ButtonItem onClick={onClick} id="buttonItem" text='Add' size="md" textAlign="center" iconName="User"  width="100%" containerMargin="7%" buttonColor='#EBD894' />
+          <ButtonItem onClick={onClick} id="buttonItem" text='Add' size="md" textAlign="center" iconName="User"  width="100%" containerMargin="8% 7%" buttonColor='#EBD894' />
         </div>
         </Modal>
       </>

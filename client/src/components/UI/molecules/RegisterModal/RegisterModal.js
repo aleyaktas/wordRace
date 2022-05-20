@@ -28,7 +28,7 @@ const RegisterModal = ({isOpen, modalClose, onClick}) => {
           <button id="button" class='button' onClick={modalClose}>
             <Icon name="Close" width={18} height={18} color="#8F8F8F"/>
           </button>
-          <Text textAlign="center" text="Sign Up" font="InterRegular" letterSpacing="4px" fontSize="24px" />
+          <Text textAlign="center" text="Sign Up" font="InterRegular" letterSpacing="2px" fontSize="20px" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Username' icon="true" iconName="User" fontSize={16} placeHolderSize="14px" type="text" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Email' icon="true" iconName="Mail" fontSize={16} placeHolderSize="14px" type="text" />
           <TextInput font="InterRegular" containerMargin="7%" placeHolder='Password' icon="true" iconName="Lock" fontSize={16} placeHolderSize="14px" type="password"  />
