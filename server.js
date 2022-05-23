@@ -2,6 +2,8 @@ const express = require('express')
 const dotenv = require('dotenv');
 const usersRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
+const privateWordRoute = require('./routes/privateWord')
+
 const app = require("express")();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http,
@@ -20,6 +22,7 @@ connectDB();
 app.use(express.json())
 app.use('/api/users', usersRoute)
 app.use('/api/auth', authRoute)
+app.use('/api/privateWord', privateWordRoute)
 
 
 io.on('connection', (socket) => {
