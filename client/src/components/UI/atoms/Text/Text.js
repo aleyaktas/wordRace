@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import '../../../../App.css'
 import PropTypes from 'prop-types';
 
-const Text = ({ text, font, fontSize, color, textDecorationLine, textAlign, letterSpacing, padding, margin}) => {
+const Text = ({ text, font, fontSize, color, textDecorationLine, textAlign, letterSpacing, padding, margin, paddingContainer, marginContainer}) => {
 
   const style = {
     fontSize,
@@ -14,8 +14,12 @@ const Text = ({ text, font, fontSize, color, textDecorationLine, textAlign, lett
     margin,
     padding
   }
+  const styleContainer = {
+    padding: paddingContainer,
+    margin: marginContainer
+  }
   return (
-    <div>
+    <div style={styleContainer}>
       <Typography
         style={style}
         class={font}

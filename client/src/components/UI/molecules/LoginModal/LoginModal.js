@@ -51,4 +51,3 @@ LoginModal.defaultProps = {
 };
 
 export default LoginModal
-

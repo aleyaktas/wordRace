@@ -4,7 +4,8 @@
   border-radius: 40%; 
   transition-duration: 0.4s;
   cursor: pointer;
-  margin:4% 5%;
+  padding:4% 5% 0% 0%;
+  box-sizing: border-box;
   display: flex;
   margin-inline-start: auto;
 }

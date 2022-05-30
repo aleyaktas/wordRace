@@ -9,7 +9,7 @@ import { ReactComponent as Mail } from "./Icons/Mail.svg";
 import { ReactComponent as Plus } from "./Icons/Plus.svg";
 import { ReactComponent as Profile } from "./Icons/Profile-Settings.svg";
 import { ReactComponent as Refresh } from "./Icons/Refresh.svg";
-import { ReactComponent as Letter } from "./Icons/Request-Letter.svg";
+import { ReactComponent as Letter } from "./Icons/Letter.svg";
 import { ReactComponent as Tick } from "./Icons/Tick.svg";
 import { ReactComponent as AddFriend } from "./Icons/Add-Friend.svg";
 
