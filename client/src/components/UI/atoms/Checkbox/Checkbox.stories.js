@@ -1,17 +1,18 @@
-import React from 'react';
-import Checkbox from './Checkbox';
+import React from "react";
+import Checkbox from "./Checkbox";
 
 export default {
-  title: 'Atoms/Checkbox',
+  title: "Atoms/Checkbox",
   component: Checkbox,
 };
 
 const Template = (args) => <Checkbox {...args} />;
 
-export const defaultCheckbox = Template.bind({})
+export const defaultCheckbox = Template.bind({});
 defaultCheckbox.args = {
-  value:"Default checkbox",
-  checboxColor: "black"
-}
-
-
+  text: "Default checkbox",
+  checboxColor: "black",
+  width: "20rem",
+  size: "1.8rem",
+  fontSize: "1.8rem",
+};

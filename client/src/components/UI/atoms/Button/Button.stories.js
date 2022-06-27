@@ -1,29 +1,36 @@
-import React from 'react';
-import ButtonItem from './Button';
+import React from "react";
+import Button from "./Button";
 
 export default {
-  title: 'Atoms/Button',
-  component: ButtonItem,
+  title: "Atoms/Button",
+  component: Button,
 };
 
-const Template = (args) => <ButtonItem {...args} />;
+const Template = (args) => <Button {...args} />;
 
-export const defaultButton = Template.bind({})
+export const defaultButton = Template.bind({});
 defaultButton.args = {
-  text:"Button",
-  outlined: true,
+  width: "10rem",
+  height: "3rem",
+  text: "Button",
   borderColor: "#6B5814",
-}
+  borderRadius: "1rem",
+};
 
-export const iconButton = Template.bind({})
+export const iconButton = Template.bind({});
 iconButton.args = {
-  iconName:"User",
-  icon:true,
-}
+  width: "15rem",
+  height: "5rem",
+  icon: true,
+  iconPosition: "left",
+  borderRadius: "1rem",
+  textPosition: "center",
+};
 
-
-export const containedButton = Template.bind({})
+export const containedButton = Template.bind({});
 containedButton.args = {
-  buttonColor: '#EBD894',
-}
-
+  width: "10rem",
+  height: "3rem",
+  buttonColor: "#EBD894",
+  borderRadius: "1rem",
+};

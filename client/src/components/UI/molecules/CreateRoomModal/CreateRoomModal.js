@@ -1,53 +1,50 @@
-import React from 'react'
-import Text from '../../atoms/Text/Text'
-import TextInput from '../../atoms/TextInput/TextInput'
-import ButtonItem from '../../atoms/Button/Button'
-import Modal from '@mui/material/Modal';
-import Icon from '../../../../assets/icons/Icon';
-import  '../../molecules/style.css'
-import PropTypes from 'prop-types';
-import Checkbox from '../../atoms/Checkbox/Checkbox';
+import React from "react";
+import TextInput from "../../atoms/TextInput/TextInput";
+import Modal from "@mui/material/Modal";
+import "../../style.css";
+import PropTypes from "prop-types";
+import Checkbox from "../../atoms/Checkbox/Checkbox";
+import Button from "../../atoms/Button/Button";
+import style from "./CreateRoomModal.style";
+import ModalHeader from "../Modals/ModalHeader/ModalHeader";
 
-const CreateRoomModal = ({isOpen, modalClose, onClick}) => {
-  
-  const style = {
-    width: 400,
-    boxShadow: 24,
-    p: 4,
-    backgroundColor:"white"
-  };
+const CreateRoomModal = ({ isOpen, modalClose, onClick }) => {
+  const styles = style();
 
   return (
-    <>  
-      <Modal
-        open={isOpen}
-        onClose={modalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div class="containerDiv" style={style} >
-          <button id="button" class='button' onClick={modalClose}>
-            <Icon name="Close" width={18} height={18} color="#8F8F8F"/>
-          </button>
-          <Text textAlign="center" text="Create Room" font="InterRegular" letterSpacing="2x" fontSize="20px" margin="0px 0px 40px 0px" />
-          <TextInput font="InterRegular" containerMargin="7%" placeHolder='Room Name' fontSize={18} placeHolderSize="16px" type="text" />
-          <div style={{margin: "7%"}} >
-            <Checkbox checboxColor="#709F60" font="RobotoBold" color="#6B5814" value="Public" margin="0px 5px 0px 0px" />
-            <Checkbox checboxColor="#709F60" font="RobotoBold" color="#6B5814" value="Private"/>
+    <>
+      <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <div className="modal" style={styles.container}>
+          <ModalHeader icon iconName="CreatePlus" text="Create Room" />
+          <div style={styles.body}>
+            <TextInput className="input" font="InterRegular" placeHolder="Room Name" fontSize="1.8rem" type="text" />
+            <div style={styles.checkbox}>
+              <Checkbox className="input" fontSize="1.5rem" margin="2rem 0.8rem 0 0" checboxColor="#709F60" color="#6B5814" text="Public" isCheck />
+              <Checkbox className="input" fontSize="1.5rem" margin="2rem 0 0 0" checboxColor="#709F60" color="#6B5814" text="Private" />
+            </div>
+            <Button
+              className="buttonHoverGold"
+              onClick={onClick}
+              fontSize="1.6rem"
+              margin="3rem 0"
+              padding="1rem"
+              text="Create"
+              iconName="User"
+              width="100%"
+              buttonColor="#EBD894"
+            />
           </div>
-          <ButtonItem onClick={onClick} id="buttonItem" text='Create' size="md" textAlign="center" iconName="User"  width="100%" containerMargin="7%" buttonColor='#EBD894' />
         </div>
-        </Modal>
-      </>
-  )
-}
+      </Modal>
+    </>
+  );
+};
 
 CreateRoomModal.propTypes = {
   isOpen: PropTypes.bool,
- 
 };
 CreateRoomModal.defaultProps = {
-  isOpen:false
+  isOpen: false,
 };
 
-export default CreateRoomModal
+export default CreateRoomModal;

@@ -1,6 +1,14 @@
+html {
+  font-size: 62.5%; /*10px*/
+}
+
 svg {
   vertical-align: baseline !important;
   margin: 0px 2px;
+}
+
+*:focus {
+  outline: none;
 }
 
 @font-face {

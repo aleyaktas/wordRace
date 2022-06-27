@@ -1,50 +1,37 @@
-import React from 'react'
-import Text from '../../atoms/Text/Text'
-import TextInput from '../../atoms/TextInput/TextInput'
-import ButtonItem from '../../atoms/Button/Button'
-import Modal from '@mui/material/Modal';
-import Icon from '../../../../assets/icons/Icon';
-import  '../../molecules/style.css'
-import PropTypes from 'prop-types';
+import React from "react";
+import TextInput from "../../atoms/TextInput/TextInput";
+import Modal from "@mui/material/Modal";
+import "../../style.css";
+import PropTypes from "prop-types";
+import Button from "../../atoms/Button/Button";
+import style from "./ChangePasswordModal.style";
+import ModalHeader from "../Modals/ModalHeader/ModalHeader";
 
-const ChangePasswordModal = ({isOpen, modalClose, onClick}) => {
-  
-  const style = {
-    width: 400,
-    boxShadow: 24,
-    p: 4,
-    backgroundColor:"white"
-  };
+const ChangePasswordModal = ({ isOpen, modalClose, onClick }) => {
+  const styles = style();
 
   return (
-    <>  
-      <Modal
-        open={isOpen}
-        onClose={modalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div class="containerDiv" style={style} >
-          <button id="button" class='button' onClick={modalClose}>
-            <Icon name="Close" width={18} height={18} color="#8F8F8F"/>
-          </button>
-          <Text textAlign="center" text="Change Password" font="InterRegular" letterSpacing="2px" fontSize="20px" margin="0px 0px 40px 0px" />
-          <TextInput font="InterRegular" containerMargin="5% 10%" placeHolder='Current Password' fontSize={18} placeHolderSize="16px" padding="10px" type="password" />
-          <TextInput font="InterRegular" containerMargin="5% 10%" placeHolder='New Password' fontSize={18} placeHolderSize="16px"  padding="10px" type="password" />
-          <TextInput font="InterRegular" containerMargin="5% 10%" placeHolder='Confirm New Password' fontSize={18} placeHolderSize="16px" padding="10px" type="password" />
-          <ButtonItem onClick={onClick} id="buttonItem" text='Save' size="md" textAlign="center" iconName="User"  width="100%" containerMargin="10% 10%" buttonColor='#EBD894' />
+    <>
+      <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <div className="modal" style={styles.container}>
+          <ModalHeader icon iconName="Password" text="Change Password" />
+          <div style={styles.body}>
+            <TextInput className="input" font="InterRegular" placeHolder="Current Password" fontSize="1.4rem" margin="0 0 1.6rem 0" type="password" />
+            <TextInput className="input" font="InterRegular" placeHolder="New Password" fontSize="1.4rem" margin="0 0 1.6rem 0" type="password" />
+            <TextInput className="input" font="InterRegular" placeHolder="Confirm New Password" fontSize="1.4rem" type="password" />
+            <Button className="buttonHoverGold" onClick={onClick} fontSize="1.6rem" text="Save" iconName="User" width="100%" padding="1rem" margin="3rem 0" buttonColor="#EBD894" />
+          </div>
         </div>
-        </Modal>
-      </>
-  )
-}
+      </Modal>
+    </>
+  );
+};
 
 ChangePasswordModal.propTypes = {
   isOpen: PropTypes.bool,
- 
 };
 ChangePasswordModal.defaultProps = {
-  isOpen:false
+  isOpen: false,
 };
 
-export default ChangePasswordModal
+export default ChangePasswordModal;

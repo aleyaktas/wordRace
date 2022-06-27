@@ -1,0 +1,29 @@
+const style = ({ width, height, padding, margin, border, borderColor, borderRadius, iconPosition, textPosition, buttonColor, iconSize }) => ({
+  button: {
+    display: "flex",
+    position: "relative",
+    justifyContent: textPosition || "center",
+    flexDirection: iconPosition === "left" ? "row-reverse" : "",
+    alignItems: "center",
+    cursor: "pointer",
+    fontSize: "1.6rem",
+    width,
+    height,
+    padding: padding,
+    margin: margin,
+    border: border || "none",
+    borderStyle: "none",
+    borderColor,
+    borderRadius,
+    backgroundColor: buttonColor,
+  },
+  icon: {
+    position: iconPosition == "left" || iconPosition == "right" ? "" : "absolute",
+    left: iconPosition === "start" ? 0 : undefined,
+    right: iconPosition === "end" ? 0 : undefined,
+    width: iconSize || "2.4rem",
+    height: iconSize || "2.4rem",
+  },
+});
+
+export default style;

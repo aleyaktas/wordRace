@@ -1,53 +1,41 @@
-import React from 'react'
-import Text from '../../atoms/Text/Text'
-import TextInput from '../../atoms/TextInput/TextInput'
-import ButtonItem from '../../atoms/Button/Button'
-import Modal from '@mui/material/Modal';
-import Icon from '../../../../assets/icons/Icon';
-import  '../../molecules/style.css'
-import PropTypes from 'prop-types';
+import React from "react";
+import Text from "../../atoms/Text/Text";
+import TextInput from "../../atoms/TextInput/TextInput";
+import Button from "../../atoms/Button/Button";
+import Modal from "@mui/material/Modal";
+import "../../style.css";
+import PropTypes from "prop-types";
+import style from "./RegisterModal.style";
+import ModalHeader from "../Modals/ModalHeader/ModalHeader";
 
-const RegisterModal = ({isOpen, modalClose, onClick}) => {
-  
-  const style = {
-    width: 400,
-    boxShadow: 24,
-    p: 4,
-    backgroundColor:"white"
-  };
+const RegisterModal = ({ isOpen, modalClose, onClick }) => {
+  const styles = style();
 
   return (
-    <>  
-      <Modal
-        open={isOpen}
-        onClose={modalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div class="containerDiv" style={style} >
-          <button id="button" class='button' onClick={modalClose}>
-            <Icon name="Close" width={18} height={18} color="#8F8F8F"/>
-          </button>
-          <Text textAlign="center" text="Sign Up" font="InterRegular" letterSpacing="2px" fontSize="20px" />
-          <TextInput font="InterRegular" containerMargin="7%" placeHolder='Username' icon="true" iconName="User" fontSize={16} placeHolderSize="14px" type="text" />
-          <TextInput font="InterRegular" containerMargin="7%" placeHolder='Email' icon="true" iconName="Mail" fontSize={16} placeHolderSize="14px" type="text" />
-          <TextInput font="InterRegular" containerMargin="7%" placeHolder='Password' icon="true" iconName="Lock" fontSize={16} placeHolderSize="14px" type="password"  />
-          <ButtonItem onClick={onClick} id="buttonItem" text='Sign Up' size="md" textAlign="center" iconName="User"  width="100%" containerMargin="7%" buttonColor='#EBD894' />
-          <button style={{display:"contents", cursor:"pointer"}} >
-            <Text margin="7%" textAlign="center" text="Do you have an account?" textDecorationLine='underline' font="RobotoThin" color='#6B5814' letterSpacing="1.5px"/>
-          </button>
+    <>
+      <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <div className="modal" style={styles.container}>
+          <ModalHeader icon iconName="RegisterUser" text="Sign Up" />
+          <div style={styles.body}>
+            <TextInput font="InterRegular" placeHolder="Username" icon="true" iconName="User" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
+            <TextInput font="InterRegular" placeHolder="Email" icon="true" iconName="Mail" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
+            <TextInput font="InterRegular" placeHolder="Password" icon="true" iconName="Lock" fontSize="1.6rem" margin="0 0 1.5rem 0" type="password" />
+            <Button onClick={onClick} text="Sign Up" iconName="User" width="100%" margin="3rem 0" padding="1rem" buttonColor="#EBD894" />
+            <button style={styles.button}>
+              <Text margin="0 0 2rem 0" textAlign="center" text="Do you have an account?" font="RobotoThin" color="#6B5814" letterSpacing="0.15rem" />
+            </button>
+          </div>
         </div>
-        </Modal>
-      </>
-  )
-}
+      </Modal>
+    </>
+  );
+};
 
 RegisterModal.propTypes = {
   isOpen: PropTypes.bool,
 };
 RegisterModal.defaultProps = {
-  isOpen:false
+  isOpen: false,
 };
 
-export default RegisterModal
-
+export default RegisterModal;

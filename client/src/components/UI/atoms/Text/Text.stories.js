@@ -1,16 +1,15 @@
-import React from 'react';
-import Text from './Text';
+import React from "react";
+import Text from "./Text";
 
 export default {
-  title: 'Atoms/Text',
+  title: "Atoms/Text",
   component: Text,
 };
 
 const Template = (args) => <Text {...args} />;
 
-export const defaultText = Template.bind({})
+export const defaultText = Template.bind({});
 defaultText.args = {
   text: "Text",
-  size: 16
-}
-
+  fontSize: "1.6rem",
+};

@@ -1,43 +1,27 @@
-import React from 'react'
-import { Typography } from '@mui/material';
-import '../../../../App.css'
-import PropTypes from 'prop-types';
+import React from "react";
+import "../../../../App.css";
+import PropTypes from "prop-types";
+import style from "./Text.style";
 
-const Text = ({ text, font, fontSize, color, textDecorationLine, textAlign, letterSpacing, padding, margin, paddingContainer, marginContainer}) => {
+const Text = ({ text, font, fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, padding, margin }) => {
+  const styles = style({ fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, margin, padding });
 
-  const style = {
-    fontSize,
-    color,
-    textDecorationLine,
-    textAlign,
-    letterSpacing,
-    margin,
-    padding
-  }
-  const styleContainer = {
-    padding: paddingContainer,
-    margin: marginContainer
-  }
   return (
-    <div style={styleContainer}>
-      <Typography
-        style={style}
-        class={font}
-      >{text}
-      </Typography>
-    </div>
-  )
-}
+    <p style={styles.text} className={font}>
+      {text}
+    </p>
+  );
+};
 
 Text.propTypes = {
   text: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
-  textDecorationLine: PropTypes.string
+  textDecorationLine: PropTypes.string,
 };
 Text.defaultProps = {
   color: "black",
-  font:"InterRegular"
+  font: "InterRegular",
 };
 
-export default Text
+export default Text;
