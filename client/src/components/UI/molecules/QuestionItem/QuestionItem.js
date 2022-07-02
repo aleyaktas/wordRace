@@ -1,0 +1,36 @@
+import React from "react";
+import Button from "../../atoms/Button/Button";
+import PropTypes from "prop-types";
+import style from "./QuestionItem.style";
+
+const QuestionItem = ({ option, className }) => {
+  const styles = style();
+  return (
+    <>
+      <div style={styles.container}>
+        <Button
+          className="buttonHoverGold"
+          text={option}
+          fontWeight="600"
+          borderRadius="3.6rem"
+          fontSize="1.8rem"
+          letterSpacing="0.1rem"
+          width="80%"
+          height="5rem"
+          buttonColor="#E9D8A6"
+          padding="1rem 2rem"
+          textPosition="center"
+        />
+      </div>
+    </>
+  );
+};
+
+QuestionItem.propTypes = {
+  option: PropTypes.string,
+};
+QuestionItem.defaultProps = {
+  option: null,
+};
+
+export default QuestionItem;

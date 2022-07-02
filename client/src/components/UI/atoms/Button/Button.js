@@ -46,12 +46,10 @@ const Button = ({
   });
 
   return (
-    <div style={styles.container}>
-      <button style={styles.button} className={className} onClick={onClick}>
-        <Text text={text} margin={textMargin} font={font} fontWeight={fontWeight} fontSize={fontSize} color={textColor} letterSpacing={letterSpacing} />
-        {icon && <Icon style={styles.icon} name={iconName} width={iconSize} height={iconSize} color={iconColor} />}
-      </button>
-    </div>
+    <button style={styles.button} className={className} onClick={onClick}>
+      <Text text={text} margin={textMargin} font={font} fontWeight={fontWeight} fontSize={fontSize} color={textColor} letterSpacing={letterSpacing} />
+      {icon && <Icon style={styles.icon} name={iconName} width={iconSize} height={iconSize} color={iconColor} />}
+    </button>
   );
 };
 

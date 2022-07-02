@@ -1,3 +1,7 @@
+:root {
+  --left: 50%;
+  --right: 50%;
+}
 #close-button {
   background-color:white; 
   border:none;
@@ -49,6 +53,14 @@
 .buttonHoverGold:hover svg{
   color: white !important;
   transition: 0.2s;
+}
+.firstJokerButton {
+  position: absolute !important;
+  right: 75%;
+}
+.secondJokerButton {
+  position: absolute !important;
+  left: 75%;
 }
 .input::placeholder {
   font-size: 1.4rem !important;

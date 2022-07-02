@@ -17,6 +17,8 @@ import { ReactComponent as Friend } from "./Icons/Friend.svg";
 import { ReactComponent as OutlinedPlus } from "./Icons/OutlinedPlus.svg";
 import { ReactComponent as LoginUser } from "./Icons/Login.svg";
 import { ReactComponent as RegisterUser } from "./Icons/UserOutlined.svg";
+import { ReactComponent as FiftyPercentJoker } from "./Icons/FiftyPercentJoker.svg";
+import { ReactComponent as PassJoker } from "./Icons/PassJoker.svg";
 
 const Icon = ({ name, width = "2.4rem", height = "2.4rem", color, style }) => {
   const icons = {
@@ -38,6 +40,8 @@ const Icon = ({ name, width = "2.4rem", height = "2.4rem", color, style }) => {
     OutlinedPlus,
     LoginUser,
     RegisterUser,
+    FiftyPercentJoker,
+    PassJoker,
   };
 
   const IconItem = icons[name];

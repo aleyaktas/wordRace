@@ -10,7 +10,7 @@ const style = ({ width, height, padding, margin, border, borderColor, borderRadi
     width,
     height,
     padding: padding,
-    margin: margin,
+    margin: margin || "0",
     border: border || "none",
     borderStyle: "none",
     borderColor,
