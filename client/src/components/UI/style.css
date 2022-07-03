@@ -54,13 +54,30 @@
   color: white !important;
   transition: 0.2s;
 }
+.passedScore {
+  background-color: #F3B948 !important;
+}
+.passedScore p {
+  color: white !important;
+}
 .firstJokerButton {
   position: absolute !important;
-  right: 75%;
+  right: 75% !important;
 }
 .secondJokerButton {
   position: absolute !important;
-  left: 75%;
+  left: 75% !important;
+}
+.firstUser {
+  position: absolute;
+  bottom: 2.2rem;
+  display: inline-block
+}
+.secondUser {
+  position: absolute;
+  bottom: 2.2rem;
+  left:18rem;
+  display: inline-block;
 }
 .input::placeholder {
   font-size: 1.4rem !important;

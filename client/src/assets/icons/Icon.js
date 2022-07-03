@@ -20,7 +20,7 @@ import { ReactComponent as RegisterUser } from "./Icons/UserOutlined.svg";
 import { ReactComponent as FiftyPercentJoker } from "./Icons/FiftyPercentJoker.svg";
 import { ReactComponent as PassJoker } from "./Icons/PassJoker.svg";
 
-const Icon = ({ name, width = "2.4rem", height = "2.4rem", color, style }) => {
+const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, style }) => {
   const icons = {
     User,
     Clock,
@@ -47,7 +47,7 @@ const Icon = ({ name, width = "2.4rem", height = "2.4rem", color, style }) => {
   const IconItem = icons[name];
 
   return (
-    <div style={style}>
+    <div className={className} style={style}>
       <IconItem width={width} height={height} color={color} />
     </div>
   );

@@ -13,7 +13,7 @@ svg {
 
 @font-face {
   font-family: 'Inter-SemiBold';
-  src: local('Inter-SemiBold'), url('./assets//fonts/Inter-SemiBold.ttf') format('truetype');
+  src: local('Inter-SemiBold'), url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
 }
 @font-face {
   font-family: 'MerriweatherSans-Regular' ;
