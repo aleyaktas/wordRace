@@ -6,14 +6,14 @@ import FriendItemList from "../../organisms/FriendItemList/FriendItemList";
 import { Modal } from "@mui/material";
 import style from "./FriendItemListModal.style";
 
-const FriendListModal = ({ isOpen, friends, modalClose, inviteModal, customComponent }) => {
+const FriendListModal = ({ isOpen, friends, modalClose, modalType }) => {
   const styles = style();
 
   return (
     <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <div id="friendList" className="modal" style={styles.modal}>
         <ModalHeader modalClose={modalClose} text="Your Friends" height="10rem" textMargin="0px" />
-        <FriendItemList height="40rem" friends={friends} inviteModal={inviteModal} customComponent={customComponent} />
+        <FriendItemList height="40rem" friends={friends} modalType={modalType} />
       </div>
     </Modal>
   );
@@ -24,7 +24,7 @@ FriendListModal.propTypes = {
 };
 FriendListModal.defaultProps = {
   isOpen: false,
-  inviteModal: false,
+  modalType: null,
 };
 
 export default FriendListModal;

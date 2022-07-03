@@ -1,6 +1,6 @@
 const style = ({ margin }) => ({
   cardContainer: {
-    width: "22rem",
+    width: "20rem",
     height: "20rem",
     display: "inline-block",
     margin: margin || "0.5rem",

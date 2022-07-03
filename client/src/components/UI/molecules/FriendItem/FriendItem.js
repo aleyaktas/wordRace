@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 import Button from "../../atoms/Button/Button";
 import style from "./FriendItem.style";
 
-const FriendItem = ({ index, username, inviteModal, customComponent, isOnline, color }) => {
+const FriendItem = ({ index, username, modalType, isOnline }) => {
   const [isInvite, setIsInvite] = useState(false);
-
   const inviteControl = (isInvite, setIsInvite) => (
     <>
       {isInvite ? (
@@ -30,9 +29,39 @@ const FriendItem = ({ index, username, inviteModal, customComponent, isOnline, c
       )}
     </>
   );
-
+  const onlineControl = () => <>{isOnline ? <div style={styles.online}></div> : <div style={styles.offline}></div>}</>;
+  const requestControl = () => (
+    <>
+      <Button
+        width="3rem"
+        height="3rem"
+        borderRadius="4rem"
+        buttonColor="#64A3AF"
+        padding="0.3rem"
+        text=""
+        icon
+        iconName="Tick"
+        iconColor="white"
+        iconPosition="center"
+        iconSize="2rem"
+        margin="0 1rem"
+      />
+      <Button
+        width="3rem"
+        height="3rem"
+        borderRadius="4rem"
+        buttonColor="#C75555"
+        padding="0.3rem"
+        text=""
+        icon
+        iconName="Close"
+        iconColor="white"
+        iconPosition="center"
+        iconSize="2rem"
+      />
+    </>
+  );
   const styles = style();
-
   return (
     <div className="row" style={styles.row}>
       <div style={styles.column}>
@@ -41,7 +70,9 @@ const FriendItem = ({ index, username, inviteModal, customComponent, isOnline, c
       <div style={styles.column}>
         <Text text={username} />
       </div>
-      <div style={styles.column}>{inviteModal ? inviteControl(isInvite, setIsInvite) : customComponent}</div>
+      <div style={styles.column}>
+        {modalType === "inviteModal" ? inviteControl(isInvite, setIsInvite) : modalType === "onlineModal" ? onlineControl() : modalType === "requestModal" ? requestControl() : ""}
+      </div>
     </div>
   );
 };
@@ -49,11 +80,9 @@ const FriendItem = ({ index, username, inviteModal, customComponent, isOnline, c
 FriendItem.propTypes = {
   index: PropTypes.number,
   username: PropTypes.string,
-  customComponent: PropTypes.elementType,
 };
 FriendItem.defaultProps = {
-  customComponent: null,
-  color: "#E6E6E6",
+  modalType: null,
 };
 
 export default FriendItem;

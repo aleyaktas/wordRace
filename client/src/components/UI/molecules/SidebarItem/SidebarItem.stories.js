@@ -10,5 +10,5 @@ const Template = (args) => <SidebarItem {...args} />;
 
 export const DefaultSidebarItem = Template.bind({});
 DefaultSidebarItem.args = {
-  sidebarItem: "Password",
+  sidebarItem: "Message",
 };

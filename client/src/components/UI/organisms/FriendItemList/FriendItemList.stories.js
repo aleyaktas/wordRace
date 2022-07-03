@@ -36,3 +36,17 @@ DefaultFriendItemList.args = {
   friends,
   height: "40rem",
 };
+export const OnlineFriendItemList = Template.bind({});
+
+OnlineFriendItemList.args = {
+  friends,
+  height: "40rem",
+  modalType: "onlineModal",
+};
+export const InviteFriendItemList = Template.bind({});
+
+InviteFriendItemList.args = {
+  friends,
+  height: "40rem",
+  modalType: "inviteModal",
+};
