@@ -12,7 +12,7 @@ export const DefaultQuestionCard = Template.bind({});
 DefaultQuestionCard.args = {
   question: {
     inner: "What is the answer?",
-    options: [{ text: "first option" }, { text: "second option" }, { text: "third option" }, { text: "fourth option" }],
+    options: ["first option", "second option", "third option", "fourth option"],
   },
   time: "20",
 };

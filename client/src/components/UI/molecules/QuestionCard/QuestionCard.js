@@ -23,7 +23,7 @@ const QuestionCard = ({ question, time }) => {
 };
 
 QuestionCard.propTypes = {
-  question: PropTypes.array,
+  question: PropTypes.arrayOf(PropTypes.object),
 };
 QuestionCard.defaultProps = {
   question: null,

@@ -91,20 +91,20 @@
   accent-color: #709F60 !important;
   border: none;
 }
-::-webkit-scrollbar {
-  width: 2rem;
+/* ::-webkit-scrollbar {
+  width: 1.8rem;
 }
 ::-webkit-scrollbar-track {
 box-shadow: inset 0 0 5px grey; 
 border-radius: 1rem;
 }
 ::-webkit-scrollbar-thumb {
-background: #9ac6bf; 
+background: #3B5672; 
 border-radius: 1rem;
 }
 ::-webkit-scrollbar-thumb:hover {
-background: #5b5a59 !important; 
-}
+background: #3B5672 !important; 
+} */
 .close-button:hover svg{
   color: black !important;
   transition: 0.4s !important;

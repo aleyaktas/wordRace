@@ -10,5 +10,5 @@ const Template = (args) => <QuestionItemList {...args} />;
 
 export const DefaultQuestionItemList = Template.bind({});
 DefaultQuestionItemList.args = {
-  options: [{ text: "first option" }, { text: "second option" }, { text: "third option" }, { text: "fourth option" }],
+  options: ["first option", "second option", "third option"],
 };

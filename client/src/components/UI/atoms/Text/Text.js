@@ -3,11 +3,11 @@ import "../../../../App.css";
 import PropTypes from "prop-types";
 import style from "./Text.style";
 
-const Text = ({ text, font, fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, padding, margin }) => {
-  const styles = style({ fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, margin, padding });
+const Text = ({ className, text, font, fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, lineHeight, padding, margin }) => {
+  const styles = style({ fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, lineHeight, margin, padding });
 
   return (
-    <p style={styles.text} className={font}>
+    <p style={styles.text} className={`${font} ${className}`}>
       {text}
     </p>
   );
