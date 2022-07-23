@@ -8,18 +8,18 @@ import PropTypes from "prop-types";
 import style from "./LoginModal.style";
 import ModalHeader from "../Modals/ModalHeader/ModalHeader";
 
-const LoginModal = ({ isOpen, modalClose, onClick }) => {
+const LoginModal = ({ isOpen, setIsOpen, modalClose, onClick }) => {
   const styles = style();
 
   return (
     <>
       <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
-          <ModalHeader icon iconName="LoginUser" text="Login" />
+          <ModalHeader modalClose={modalClose} icon iconName="LoginUser" text="Login" />
           <div style={styles.body}>
-            <TextInput className="input" font="InterRegular" placeHolder="Username" icon="true" iconName="User" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
+            <TextInput font="InterRegular" placeHolder="Email" icon="true" iconName="Mail" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
             <TextInput className="input" font="InterRegular" placeHolder="Password" icon="true" iconName="Lock" fontSize="1.6rem" margin="0 0 1.5rem 0" type="password" />
-            <button style={styles.button}>
+            <button className="buttonHoverBlack" style={styles.button} onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "ForgotPasswordModal" })}>
               <Text
                 color="#6B5814"
                 margin="2rem 0 0 0"
@@ -31,9 +31,9 @@ const LoginModal = ({ isOpen, modalClose, onClick }) => {
                 textDecorationLine="underline"
               />
             </button>
-            <Button onClick={onClick} text="Login" iconName="User" width="100%" margin="2rem 0" padding="1rem" buttonColor="#EBD894" />
+            <Button className="buttonHoverGold" onClick={onClick} text="Login" iconName="User" width="100%" margin="2rem 0" padding="1rem" buttonColor="#EBD894" />
           </div>
-          <button style={styles.button}>
+          <button className="buttonHoverBlack" style={styles.button} onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "RegisterModal" })}>
             <Text margin="0 0 2rem 0" textAlign="center" text="Don't have an account?" fontSize="1.6rem" font="RobotoThin" color="#6B5814" letterSpacing="0.15rem" />
           </button>
         </div>

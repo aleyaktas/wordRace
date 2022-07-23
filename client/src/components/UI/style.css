@@ -44,15 +44,28 @@
 }
 .buttonHoverGold:hover {
   background-color: #DEBF50 !important;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 .buttonHoverGold:hover p{
   color: white !important;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 .buttonHoverGold:hover svg{
   color: white !important;
-  transition: 0.2s;
+  transition: 0.3s;
+}
+.buttonHoverYellow:hover {
+  background-color: white !important;
+  transition: 0.3s;
+}
+.buttonHoverYellow:hover p{
+  color: #F3B948 !important;
+  transition: 0.3s;
+}
+.buttonHoverBlack:hover p{
+  color: black !important;
+  font: caption;
+  transition: 0.3s;
 }
 .passedScore {
   background-color: #F3B948 !important;

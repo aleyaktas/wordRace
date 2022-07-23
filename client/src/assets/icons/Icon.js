@@ -14,6 +14,7 @@ import { ReactComponent as Letter } from "./Icons/Letter.svg";
 import { ReactComponent as Tick } from "./Icons/Tick.svg";
 import { ReactComponent as AddFriend } from "./Icons/Add-Friend.svg";
 import { ReactComponent as Password } from "./Icons/Password.svg";
+import { ReactComponent as ForgotPassword } from "./Icons/Forgot-Password.svg";
 import { ReactComponent as Friend } from "./Icons/Friend.svg";
 import { ReactComponent as OutlinedPlus } from "./Icons/OutlinedPlus.svg";
 import { ReactComponent as LoginUser } from "./Icons/Login.svg";
@@ -41,6 +42,7 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
     AddFriend,
     Friend,
     Password,
+    ForgotPassword,
     OutlinedPlus,
     LoginUser,
     RegisterUser,
