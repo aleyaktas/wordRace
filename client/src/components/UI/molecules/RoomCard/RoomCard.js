@@ -7,14 +7,14 @@ const RoomCard = ({ onClick, roomName, roomImage, className, margin }) => {
   const styles = style({ margin });
 
   return (
-    <div onClick={onClick} style={styles.cardContainer} className={className}>
+    <button className="buttonHoverRoomCard" onClick={onClick} style={styles.cardContainer}>
       <div style={styles.card}>
         <img src={require(`../../../../assets/images/${roomImage}.png`)} alt="Bear" width="100" height="100" />
       </div>
       <div style={{ ...styles.card, ...styles.cardFooter }} className="card-footer">
         <Text font="InterRegular" text={roomName} color="#556577" textAlign="center" />
       </div>
-    </div>
+    </button>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import ScoreItemList from "./ScoreItemList";
 
 export default {
-  title: "Molecules/ScoreItemList",
+  title: "Organisms/ScoreItemList",
   component: ScoreItemList,
 };
 

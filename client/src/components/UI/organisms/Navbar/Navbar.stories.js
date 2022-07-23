@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 
 export default {
-  title: "Molecules/Navbar",
+  title: "Organisms/Navbar",
   component: Navbar,
 };
 

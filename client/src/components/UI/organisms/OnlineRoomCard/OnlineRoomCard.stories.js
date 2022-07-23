@@ -2,7 +2,7 @@ import React from "react";
 import OnlineRoomCard from "./OnlineRoomCard";
 
 export default {
-  title: "Molecules/OnlineRoomCard",
+  title: "Organisms/OnlineRoomCard",
   component: OnlineRoomCard,
 };
 

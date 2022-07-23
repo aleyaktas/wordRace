@@ -7,6 +7,9 @@ html {
   padding: 0px ;
   box-sizing: border-box;
 }
+body {
+  background-color: #F3F2EE;
+}
 
 svg {
   vertical-align: baseline !important;

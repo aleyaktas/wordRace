@@ -2,7 +2,7 @@ import React from "react";
 import RoomCardList from "./RoomCardList";
 
 export default {
-  title: "Molecules/RoomCardList",
+  title: "Organisms/RoomCardList",
   component: RoomCardList,
 };
 

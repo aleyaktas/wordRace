@@ -2,7 +2,7 @@ import React from "react";
 import SidebarItemList from "./SidebarItemList";
 
 export default {
-  title: "Molecules/SidebarItemList",
+  title: "Organisms/SidebarItemList",
   component: SidebarItemList,
 };
 

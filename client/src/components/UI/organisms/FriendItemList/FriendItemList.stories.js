@@ -2,7 +2,7 @@ import React from "react";
 import FriendItemList from "./FriendItemList";
 
 export default {
-  title: "Molecules/FriendItemList",
+  title: "Organisms/FriendItemList",
   component: FriendItemList,
 };
 

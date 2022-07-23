@@ -15,7 +15,7 @@ const CreateRoomModal = ({ isOpen, modalClose, onClick }) => {
     <>
       <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
-          <ModalHeader icon iconName="CreatePlus" text="Create Room" />
+          <ModalHeader modalClose={modalClose} icon iconName="CreatePlus" text="Create Room" />
           <div style={styles.body}>
             <TextInput className="input" font="InterRegular" placeHolder="Room Name" fontSize="1.8rem" type="text" />
             <div style={styles.checkbox}>

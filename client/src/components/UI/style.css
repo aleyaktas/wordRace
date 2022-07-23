@@ -67,6 +67,17 @@
   font: caption;
   transition: 0.3s;
 }
+.buttonHoverRoomCard:hover p{
+  color: black !important;
+  font-weight: bold;
+}
+.buttonHoverRoomCard:hover div>img{
+  width: 11rem !important;
+  height: 11rem !important;
+  transition: 0.3s;
+}
+.buttonHoverRoomCard:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important ;}
 .passedScore {
   background-color: #F3B948 !important;
 }
