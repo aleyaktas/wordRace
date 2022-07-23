@@ -7,6 +7,7 @@ import { ReactComponent as Lock } from "./Icons/Lock.svg";
 import { ReactComponent as Logout } from "./Icons/Logout.svg";
 import { ReactComponent as Mail } from "./Icons/Mail.svg";
 import { ReactComponent as CreatePlus } from "./Icons/CreatePlus.svg";
+import { ReactComponent as Plus } from "./Icons/Plus.svg";
 import { ReactComponent as Profile } from "./Icons/Profile-Settings.svg";
 import { ReactComponent as Refresh } from "./Icons/Refresh.svg";
 import { ReactComponent as Letter } from "./Icons/Letter.svg";
@@ -48,6 +49,7 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
     Message,
     Out,
     Question,
+    Plus,
   };
 
   const IconItem = icons[name];

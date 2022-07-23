@@ -13,6 +13,7 @@ const style = ({ margin }) => ({
     justifyContent: "center",
     alignItems: "center",
     height: "15rem",
+    backgroundColor: "#FAF9ED",
   },
   cardFooter: {
     backgroundColor: "#C4DFF3",
