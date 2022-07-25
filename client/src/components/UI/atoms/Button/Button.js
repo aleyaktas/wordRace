@@ -63,12 +63,10 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  text: "Button",
   buttonColor: null,
   border: "1px solid gray",
   icon: false,
   iconName: "User",
-  // iconPosition: "end",
   textColor: "#6B5814",
 };
 

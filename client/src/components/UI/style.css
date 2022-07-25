@@ -13,6 +13,9 @@
   display: flex;
   margin-inline-start: auto;
 }
+.__react_component_tooltip {
+  font-size: 1.8rem !important;
+}
 .modal {
   position: absolute;
   top: 50%;
@@ -84,6 +87,11 @@
 .passedScore p {
   color: white !important;
 }
+.hoverJoker:hover  {
+  background-color: #4d8278 !important;
+  transition: 0.2s;
+}
+
 .firstJokerButton {
   position: absolute !important;
   right: 75% !important;

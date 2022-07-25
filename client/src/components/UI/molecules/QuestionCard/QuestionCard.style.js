@@ -1,7 +1,7 @@
 const style = () => ({
   container: {
     width: "60rem",
-    height: "30rem",
+    height: "35rem",
     backgroundColor: "yellow",
   },
   header: {

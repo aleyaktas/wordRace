@@ -38,7 +38,6 @@ const FriendItem = ({ index, username, modalType, isOnline }) => {
         borderRadius="4rem"
         buttonColor="#64A3AF"
         padding="0.3rem"
-        text=""
         icon
         iconName="Tick"
         iconColor="white"
@@ -46,19 +45,7 @@ const FriendItem = ({ index, username, modalType, isOnline }) => {
         iconSize="2rem"
         margin="0 1rem"
       />
-      <Button
-        width="3rem"
-        height="3rem"
-        borderRadius="4rem"
-        buttonColor="#C75555"
-        padding="0.3rem"
-        text=""
-        icon
-        iconName="Close"
-        iconColor="white"
-        iconPosition="center"
-        iconSize="2rem"
-      />
+      <Button width="3rem" height="3rem" borderRadius="4rem" buttonColor="#C75555" padding="0.3rem" icon iconName="Close" iconColor="white" iconPosition="center" iconSize="2rem" />
     </>
   );
   const styles = style();

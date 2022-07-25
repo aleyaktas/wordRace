@@ -9,6 +9,4 @@ export default {
 const Template = (args) => <SidebarItemList {...args} />;
 
 export const DefaultSidebarItemList = Template.bind({});
-DefaultSidebarItemList.args = {
-  sidebarItems: ["Message", "Friends", "Question", "Out"],
-};
+DefaultSidebarItemList.args = {};

@@ -10,6 +10,7 @@ const Template = (args) => <Button {...args} />;
 
 export const defaultButton = Template.bind({});
 defaultButton.args = {
+  text: "Button",
   width: "10rem",
   height: "3rem",
   text: "Button",
@@ -19,6 +20,7 @@ defaultButton.args = {
 
 export const iconButton = Template.bind({});
 iconButton.args = {
+  text: "Button",
   width: "15rem",
   height: "5rem",
   icon: true,
@@ -29,6 +31,7 @@ iconButton.args = {
 
 export const containedButton = Template.bind({});
 containedButton.args = {
+  text: "Button",
   width: "10rem",
   height: "3rem",
   buttonColor: "#EBD894",

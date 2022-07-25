@@ -33,7 +33,7 @@ const RoomPage = ({ rooms, scores }) => {
           <Text text="😕 Currently there are no online rooms" font="PoppinsRegular" />
         </div>
         {isOpen && <CreateRoomModal isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
-        <div style={styles.button} onClick={() => setIsOpen(true)}>
+        <div onClick={() => setIsOpen(true)}>
           <Button
             className="buttonHoverGold"
             text="Create Room"
