@@ -112,7 +112,7 @@
   display: inline-block;
 }
 .input::placeholder {
-  font-size: 1.4rem !important;
+  font-size: 1.6rem !important;
 }
 .input:checked input{
   accent-color: #709F60;
