@@ -1,6 +1,7 @@
 const style = ({ height }) => ({
   container: {
-    height,
+    height: "auto",
+    maxHeight: height,
     overflowY: "auto",
   },
 });

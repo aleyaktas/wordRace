@@ -48,6 +48,24 @@ const FriendItem = ({ index, username, modalType, isOnline }) => {
       <Button width="3rem" height="3rem" borderRadius="4rem" buttonColor="#C75555" padding="0.3rem" icon iconName="Close" iconColor="white" iconPosition="center" iconSize="2rem" />
     </>
   );
+  const deleteControl = () => (
+    <>
+      <Button
+        className="buttonHoverBlack"
+        width="5rem"
+        height="5rem"
+        buttonColor="transparent"
+        padding="0.3rem"
+        icon
+        iconName="DeleteFriend2"
+        iconColor="darkslategray"
+        iconPosition="center"
+        iconSize="3rem"
+        margin="0 1rem"
+      />
+    </>
+  );
+
   const styles = style();
   return (
     <div className="row" style={styles.row}>
@@ -58,7 +76,15 @@ const FriendItem = ({ index, username, modalType, isOnline }) => {
         <Text text={username} />
       </div>
       <div style={styles.column}>
-        {modalType === "inviteModal" ? inviteControl(isInvite, setIsInvite) : modalType === "onlineModal" ? onlineControl() : modalType === "requestModal" ? requestControl() : ""}
+        {modalType === "inviteModal"
+          ? inviteControl(isInvite, setIsInvite)
+          : modalType === "onlineModal"
+          ? onlineControl()
+          : modalType === "requestModal"
+          ? requestControl()
+          : modalType === "deleteFriend"
+          ? deleteControl()
+          : ""}
       </div>
     </div>
   );

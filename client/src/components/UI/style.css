@@ -1,7 +1,3 @@
-:root {
-  --left: 50%;
-  --right: 50%;
-}
 #close-button {
   background-color:white; 
   border:none;
@@ -68,6 +64,10 @@
 .buttonHoverBlack:hover p{
   color: black !important;
   font: caption;
+  transition: 0.3s;
+}
+.buttonHoverBlack:hover svg{
+  color: black !important;
   transition: 0.3s;
 }
 .buttonHoverRoomCard:hover p{
