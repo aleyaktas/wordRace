@@ -6,7 +6,6 @@ const style = ({ margin, width, height, size, checkboxColor, textColor, fontSize
     height,
     margin: margin,
     justifyContent: "center",
-    alignItems: "center",
   },
   input: {
     accentColor: checkboxColor || "black",

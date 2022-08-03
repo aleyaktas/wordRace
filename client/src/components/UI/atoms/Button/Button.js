@@ -27,6 +27,7 @@ const Button = ({
   iconColor,
   iconSize,
   onClick,
+  onChange,
   className,
   textMargin,
 }) => {
@@ -41,12 +42,11 @@ const Button = ({
     iconPosition,
     iconSize,
     buttonColor,
-    iconPosition,
     textPosition,
   });
 
   return (
-    <button style={styles.button} className={className} onClick={onClick}>
+    <button style={styles.button} className={className} onClick={onClick} onChange={onChange}>
       <Text text={text} margin={textMargin} font={font} fontWeight={fontWeight} fontSize={fontSize} color={textColor} letterSpacing={letterSpacing} />
       {icon && <Icon style={styles.icon} name={iconName} width={iconSize} height={iconSize} color={iconColor} />}
     </button>

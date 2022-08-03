@@ -18,7 +18,7 @@ const style = ({ width, height, padding, margin, border, borderColor, borderRadi
     backgroundColor: buttonColor,
   },
   icon: {
-    position: iconPosition == "left" || iconPosition == "right" ? "" : "absolute",
+    position: iconPosition === "left" || iconPosition === "right" ? "" : "absolute",
     left: iconPosition === "start" ? "1rem" : undefined,
     right: iconPosition === "end" ? "1rem" : undefined,
     width: iconSize || "2.4rem",

@@ -13,7 +13,6 @@ const style = ({ fontSize, padding, margin, border, width, textColor, background
     border: border || "none",
     color: textColor,
     backgroundColor,
-    backgroundColor,
   },
 });
 
