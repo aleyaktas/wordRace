@@ -5,8 +5,8 @@ import HomePageSecondImg from "../../../../assets/images/HomePageSecondImg.png";
 import HomePageThirdImg from "../../../../assets/images/HomePageThirdImg.png";
 import HomePageFourthImg from "../../../../assets/images/HomePageFourthImg.png";
 import { Animated } from "react-animated-css";
-
 import style from "./HomePage.style";
+
 const HomePage = () => {
   const styles = style();
   const [scrollY, setScrollY] = useState(0);

@@ -17,8 +17,8 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose, onClick }) => {
         <div className="modal" style={styles.container}>
           <ModalHeader modalClose={modalClose} icon iconName="LoginUser" text="Login" />
           <div style={styles.body}>
-            <TextInput font="InterRegular" placeHolder="Email" icon="true" iconName="Mail" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
-            <TextInput className="input" font="InterRegular" placeHolder="Password" icon="true" iconName="Lock" fontSize="1.6rem" margin="0 0 1.5rem 0" type="password" />
+            <TextInput font="InterRegular" placeHolder="Email" icon iconName="Mail" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
+            <TextInput className="input" font="InterRegular" placeHolder="Password" icon iconName="Lock" fontSize="1.6rem" margin="0 0 1.5rem 0" type="password" />
             <button className="buttonHoverBlack" style={styles.button} onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "ForgotPasswordModal" })}>
               <Text
                 color="#6B5814"

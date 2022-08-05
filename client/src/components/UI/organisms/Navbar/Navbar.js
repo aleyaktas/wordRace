@@ -26,11 +26,11 @@ const Navbar = () => {
           <Text text="WORD RACE" color="white" fontSize="2.5rem" font="InterSemiBold" letterSpacing="0.2rem" />
         </div>
         {(isOpenState === true) & (componentName === "RegisterModal") ? (
-          <RegisterModal setIsOpen={setIsOpen} isOpen={isOpen} modalClose={() => setIsOpen(false)} />
+          <RegisterModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })} />
         ) : (isOpenState === true) & (componentName === "LoginModal") ? (
-          <LoginModal setIsOpen={setIsOpen} isOpen={isOpen} modalClose={() => setIsOpen(false)} />
+          <LoginModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })} />
         ) : (isOpenState === true) & (componentName === "ForgotPasswordModal") ? (
-          <ForgotPasswordModal setIsOpen={setIsOpen} isOpen={isOpen} modalClose={() => setIsOpen(false)} />
+          <ForgotPasswordModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen(false)} />
         ) : null}
         <div style={styles.navButton}>
           <Button
