@@ -41,7 +41,7 @@ const FriendItem = ({ index, username, modalType, isOnline }) => {
         icon
         iconName="Tick"
         iconColor="white"
-        iconPosition="center"
+        iconPosition="left"
         iconSize="2rem"
         margin="0 1rem"
       />

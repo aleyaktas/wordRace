@@ -79,6 +79,18 @@
   height: 11rem !important;
   transition: 0.3s;
 }
+.buttonHoverDropDown:hover {
+  background-color: #EBC351 !important;
+  transition: 0.3s;
+}
+.buttonHoverDropDown:hover p{
+  color: white !important;
+  transition: 0.3s;
+}
+.buttonHoverDropDown:hover svg{
+  color: white !important;
+  transition: 0.3s;
+}
 .buttonHoverRoomCard:hover {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important ;}
 .passedScore {
@@ -123,20 +135,44 @@
   accent-color: #709F60 !important;
   border: none;
 }
-/* ::-webkit-scrollbar {
-  width: 1.8rem;
+.dropbtn {
+  background-color: transparent;
+  padding: 0 3.5rem;
+  border: none;
+  cursor: pointer;
 }
-::-webkit-scrollbar-track {
-box-shadow: inset 0 0 5px grey; 
-border-radius: 1rem;
+
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
-::-webkit-scrollbar-thumb {
-background: #3B5672; 
-border-radius: 1rem;
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  border-radius: 2rem;
+  background-color: #f9f9f9;
+  min-width: 11.3rem;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  transition: 0.2s;
 }
-::-webkit-scrollbar-thumb:hover {
-background: #3B5672 !important; 
-} */
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  justify-content: space-around;
+  overflow: hidden;
+}
+
+.dropdown:hover .dropbtn div>svg {
+  color: #EBC351;
+  width: 4.5rem;
+  height: 4.5rem;
+  transition: 0.2s;
+  
+}
 .close-button:hover svg{
   color: black !important;
   transition: 0.4s !important;

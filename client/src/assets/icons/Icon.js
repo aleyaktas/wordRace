@@ -26,6 +26,7 @@ import { ReactComponent as Out } from "./Icons/Out.svg";
 import { ReactComponent as Question } from "./Icons/Question.svg";
 import { ReactComponent as DeleteFriend } from "./Icons/Delete-Friend.svg";
 import { ReactComponent as DeleteFriend2 } from "./Icons/Delete-Friend-2.svg";
+import { ReactComponent as ProfileSettings } from "./Icons/Profile-Settings.svg";
 
 const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, style }) => {
   const icons = {
@@ -56,6 +57,7 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
     Plus,
     DeleteFriend,
     DeleteFriend2,
+    ProfileSettings,
   };
 
   const IconItem = icons[name];

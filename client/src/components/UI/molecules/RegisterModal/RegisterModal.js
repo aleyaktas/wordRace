@@ -8,12 +8,13 @@ import style from "./RegisterModal.style";
 import ModalHeader from "../Modals/ModalHeader/ModalHeader";
 import { useState } from "react";
 import { useAppDispatch } from "../../../../store";
-import { loadUser, registerUser } from "../../../../store/features/auth/authSlice";
+import { getUser, registerUser } from "../../../../store/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
   const styles = style();
   const [formData, setFormData] = useState({ username: "", email: "", password: "" });
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleChange = (e) => {
@@ -26,10 +27,11 @@ const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email, password } = formData;
-
+    console.log(username);
     await dispatch(registerUser({ username, email, password }));
-    await dispatch(loadUser());
+    await dispatch(getUser());
     setFormData({ username: "", email: "", password: "" });
+    navigate("/friends");
     modalClose();
   };
 

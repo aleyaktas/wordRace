@@ -13,6 +13,11 @@ const style = () => ({
     alignItems: "center",
     marginLeft: "8rem",
   },
+  navUser: {
+    marginLeft: "auto",
+    alignSelf: "center",
+    marginRight: "8rem",
+  },
   navButton: {
     display: "flex",
     alignItems: "center",
