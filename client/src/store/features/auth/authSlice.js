@@ -7,6 +7,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   message: null,
+  loading: null,
 };
 
 export const registerUser = createAsyncThunk("registerUser", async ({ username, email, password }) => {
@@ -28,7 +29,6 @@ export const loginUser = createAsyncThunk("loginUser", async ({ username, passwo
     },
   };
   const body = JSON.stringify({ username, password });
-  await console.log(body);
   const res = await axios.post("/api/auth", body, config);
   return res.data;
 });
@@ -49,7 +49,35 @@ export const addFriend = createAsyncThunk("addFriend", async ({ username }) => {
   };
   const body = JSON.stringify({ username });
   console.log(body);
-  const res = await axios.post("/api/auth/addFriends", body, config);
+  const res = await axios.post("/api/auth/addFriend", body, config);
+  console.log(res.data);
+  return res.data;
+});
+
+export const acceptFriend = createAsyncThunk("acceptFriend", async ({ username }) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ username });
+  console.log(body);
+  const res = await axios.post("/api/auth/acceptFriend", body, config);
+  console.log(res.data);
+  return res.data;
+});
+
+export const getFriends = createAsyncThunk("getFriends", async ({ username }) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ username });
+  console.log(body);
+  const res = await axios.get("/api/auth/friends", body, config);
   console.log(res.data);
   return res.data;
 });
@@ -83,6 +111,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
       state.token = localStorage.getItem("token");
+      setAuthToken(localStorage.getItem("token"));
     });
     builder.addCase(loginUser.pending, (state, action) => {
       state.loading = true;
@@ -99,6 +128,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
       state.token = localStorage.getItem("token");
+      setAuthToken(localStorage.getItem("token"));
     });
     builder.addCase(addFriend.pending, (state, action) => {
       state.error = "";
@@ -111,6 +141,30 @@ export const authSlice = createSlice({
     builder.addCase(addFriend.fulfilled, (state, action) => {
       state.message = "Friend added";
     });
+    builder.addCase(acceptFriend.pending, (state, action) => {
+      state.error = "";
+    });
+
+    builder.addCase(acceptFriend.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+
+    builder.addCase(acceptFriend.fulfilled, (state, action) => {
+      state.message = "Friend request accepted";
+    });
+    builder.addCase(getFriends.pending, (state, action) => {
+      state.error = "";
+    });
+
+    builder.addCase(getFriends.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+
+    builder.addCase(getFriends.fulfilled, (state, action) => {
+      state.user.friends = action.payload.friends;
+      state.user.pendingRequests = action.payload.pendingRequests;
+      state.message = "Friend request accepted";
+    });
     builder.addCase(getUser.pending, (state, action) => {
       state.loading = true;
       state.error = "";
@@ -119,6 +173,9 @@ export const authSlice = createSlice({
     builder.addCase(getUser.rejected, (state, action) => {
       state.error = action.error.message;
       state.loading = false;
+      localStorage.removeItem("token");
+      state.token = null;
+      setAuthToken(null);
     });
 
     builder.addCase(getUser.fulfilled, (state, action) => {
@@ -126,6 +183,7 @@ export const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
       state.token = localStorage.getItem("token");
+      setAuthToken(localStorage.getItem("token"));
     });
   },
 });

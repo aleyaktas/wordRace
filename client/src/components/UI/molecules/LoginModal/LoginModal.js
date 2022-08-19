@@ -31,7 +31,7 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose }) => {
     await dispatch(loginUser({ username, password }));
     await dispatch(getUser());
     setFormData({ username: "", password: "" });
-    navigate("/friends");
+    navigate("/profile");
     modalClose();
   };
 

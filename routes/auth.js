@@ -42,7 +42,7 @@ router.post("/", [check("username", "Please include a valid username").not().isE
         username: user.username,
       },
     };
-    jwt.sign(payload, process.env.jwtSecret, { expiresIn: 360000 }, (err, token) => {
+    jwt.sign(payload, process.env.jwtSecret, { expiresIn: 10800 }, (err, token) => {
       if (err) throw err;
       res.json({ token });
     });
@@ -55,7 +55,7 @@ router.post("/", [check("username", "Please include a valid username").not().isE
 // POST api/auth/addFriends
 // Add friends and incoming friend requests
 // Private
-router.post("/addFriends", auth, async (req, res) => {
+router.post("/addFriend", auth, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -93,19 +93,19 @@ router.post("/addFriends", auth, async (req, res) => {
 // POST api/auth/acceptFriends
 // Accept a friend request
 // Private
-router.post("/acceptFriends", auth, async (req, res) => {
+router.post("/acceptFriend", auth, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   const { username } = req.body;
   try {
-    var me = await User.findById(req.user.id).select("-password");
-    var incomingRequest = await User.findOne({ username });
+    let me = await User.findById(req.user.id).select("-password");
+    let incomingRequest = await User.findOne({ username });
     if (me) {
-      if (!me.pendingRequests.some((pendingRequest) => (pendingRequest._id = incomingRequest.id))) {
+      if (!me.pendingRequests.some((pendingRequest) => pendingRequest._id == incomingRequest.id)) {
         return res.status(400).json({ errors: [{ msg: "this user not found" }] });
-      } else if (me.friends?.some((friend) => (friend._id = incomingRequest.id))) {
+      } else if (me.friends?.some((friend) => friend._id == incomingRequest.id)) {
         return res.status(400).json({ errors: [{ msg: "this user is already your friend" }] });
       } else {
         me.friends.push({ _id: incomingRequest.id });
@@ -116,7 +116,7 @@ router.post("/acceptFriends", auth, async (req, res) => {
       }
     }
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
     res.status(500).send("Server error");
   }
 });
@@ -178,6 +178,21 @@ router.post("/deleteFriend", auth, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+// GET api/auth/me
+// Get user's  friends
+// Private
+router.get("/friends", auth, async (req, res) => {
+  const populate = [
+    { path: "pendingRequests", select: "username _id" },
+    { path: "friends", select: "username _id" },
+  ];
+  try {
+    const me = await User.findById(req.user.id).lean().populate(populate).select("username friends pendingRequests");
+    res.send(me);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // GET api/auth/me
 // Get user's own
@@ -188,7 +203,7 @@ router.get("/me", auth, async (req, res) => {
     { path: "friends", select: "username _id" },
   ];
   try {
-    const me = await User.findById(req.user.id).lean().populate(populate);
+    const me = await User.findById(req.user.id).lean().populate(populate).select("-password");
     res.send(me);
   } catch (error) {
     console.log(error);

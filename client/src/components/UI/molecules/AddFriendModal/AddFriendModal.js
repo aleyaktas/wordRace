@@ -6,8 +6,8 @@ import style from "./AddFriendModal.style";
 import "../../style.css";
 import PropTypes from "prop-types";
 import ModalHeader from "../Modals/ModalHeader/ModalHeader";
-import { useAppDispatch, useAppSelector } from "../../../../store";
-import { addFriend, getUser } from "../../../../store/features/auth/authSlice";
+import { useAppDispatch } from "../../../../store";
+import { addFriend, getFriends } from "../../../../store/features/auth/authSlice";
 
 const AddFriendModal = ({ isOpen, modalClose }) => {
   const styles = style();
@@ -20,6 +20,7 @@ const AddFriendModal = ({ isOpen, modalClose }) => {
   const onClick = (e) => {
     e.preventDefault();
     dispatch(addFriend({ username }));
+    dispatch(getFriends({ username }));
     setUsername("");
     modalClose();
   };

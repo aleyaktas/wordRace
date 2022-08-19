@@ -31,7 +31,7 @@ const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
     await dispatch(registerUser({ username, email, password }));
     await dispatch(getUser());
     setFormData({ username: "", email: "", password: "" });
-    navigate("/friends");
+    navigate("/profile");
     modalClose();
   };
 

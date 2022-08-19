@@ -3,9 +3,19 @@ import Text from "../../atoms/Text/Text";
 import PropTypes from "prop-types";
 import Button from "../../atoms/Button/Button";
 import style from "./FriendItem.style";
+import { useAppDispatch, useAppSelector } from "../../../../store";
+import { acceptFriend, getFriends } from "../../../../store/features/auth/authSlice";
 
-const FriendItem = ({ index, username, modalType, isOnline }) => {
+const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   const [isInvite, setIsInvite] = useState(false);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user.username);
+  const onClickAccept = async (e) => {
+    e.preventDefault();
+    await dispatch(acceptFriend({ username }));
+    await dispatch(getFriends({ user }));
+    modalClose();
+  };
   const inviteControl = (isInvite, setIsInvite) => (
     <>
       {isInvite ? (
@@ -33,6 +43,7 @@ const FriendItem = ({ index, username, modalType, isOnline }) => {
   const requestControl = () => (
     <>
       <Button
+        onClick={onClickAccept}
         width="3rem"
         height="3rem"
         borderRadius="4rem"

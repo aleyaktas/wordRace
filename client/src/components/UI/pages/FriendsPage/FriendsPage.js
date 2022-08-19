@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../atoms/Button/Button";
 import FriendItemListModal from "../../molecules/FriendItemListModal/FriendItemListModal";
 import AddFriendModal from "../../molecules/AddFriendModal/AddFriendModal";
@@ -6,12 +6,21 @@ import FriendItemList from "../../organisms/FriendItemList/FriendItemList";
 import { Animated } from "react-animated-css";
 import style from "./FriendsPage.style";
 import Text from "../../atoms/Text/Text";
+import { useAppDispatch, useAppSelector } from "../../../../store";
+import { getFriends } from "../../../../store/features/auth/authSlice";
 
-const FriendsPage = ({ friends, pendingRequests }) => {
+const FriendsPage = () => {
   const styles = style();
   const [isOpen, setIsOpen] = useState({ isOpenState: false, componentName: "" });
   const { isOpenState, componentName } = isOpen;
+  const dispatch = useAppDispatch();
 
+  const { friends, pendingRequests, username } = useAppSelector((state) => state.auth.user);
+  useEffect(() => {
+    dispatch(getFriends({ username }));
+  }, [dispatch, username]);
+
+  console.log({ friends });
   const haveFriend = (
     <div style={styles.body}>
       <div style={styles.text}>
