@@ -19,8 +19,6 @@ const FriendsPage = () => {
   useEffect(() => {
     dispatch(getFriends({ username }));
   }, [dispatch, username]);
-
-  console.log({ friends });
   const haveFriend = (
     <div style={styles.body}>
       <div style={styles.text}>
@@ -48,11 +46,11 @@ const FriendsPage = () => {
               modalType="requestModal"
               title={pendingRequests.length === 0 ? "No pending requests yet" : "Pending Requests"}
               setIsOpen={setIsOpen}
-              isOpen={isOpen}
+              isOpen={isOpenState}
               modalClose={() => setIsOpen(false)}
             />
           ) : (isOpenState === true) & (componentName === "AddFriendModal") ? (
-            <AddFriendModal setIsOpen={setIsOpen} isOpen={isOpen} modalClose={() => setIsOpen(false)} />
+            <AddFriendModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen(false)} />
           ) : null}
           <Button
             className="buttonHoverGold"

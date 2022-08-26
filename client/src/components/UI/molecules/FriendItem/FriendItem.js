@@ -4,15 +4,33 @@ import PropTypes from "prop-types";
 import Button from "../../atoms/Button/Button";
 import style from "./FriendItem.style";
 import { useAppDispatch, useAppSelector } from "../../../../store";
-import { acceptFriend, getFriends } from "../../../../store/features/auth/authSlice";
+import { acceptFriend, getFriends, rejectFriend } from "../../../../store/features/auth/authSlice";
+import DeleteFriendModal from "../DeleteFriendModal/DeleteFriendModal";
 
 const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   const [isInvite, setIsInvite] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user.username);
+
   const onClickAccept = async (e) => {
     e.preventDefault();
     await dispatch(acceptFriend({ username }));
+    await dispatch(getFriends({ user }));
+    modalClose();
+  };
+
+  // const onClickDelete = async (e) => {
+  //   console.log(username);
+  //   setIsOpen(true);
+  //   e.preventDefault();
+  //   await dispatch(deleteFriend({ username }));
+  //   await dispatch(getFriends({ user }));
+  // };
+
+  const onClickReject = async (e) => {
+    e.preventDefault();
+    await dispatch(rejectFriend({ username }));
     await dispatch(getFriends({ user }));
     modalClose();
   };
@@ -52,16 +70,27 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
         icon
         iconName="Tick"
         iconColor="white"
-        iconPosition="left"
         iconSize="2rem"
         margin="0 1rem"
       />
-      <Button width="3rem" height="3rem" borderRadius="4rem" buttonColor="#C75555" padding="0.3rem" icon iconName="Close" iconColor="white" iconPosition="center" iconSize="2rem" />
+      <Button
+        onClick={onClickReject}
+        width="3rem"
+        height="3rem"
+        borderRadius="4rem"
+        buttonColor="#C75555"
+        padding="0.3rem"
+        icon
+        iconName="Close"
+        iconColor="white"
+        iconSize="2rem"
+      />
     </>
   );
   const deleteControl = () => (
     <>
       <Button
+        onClick={() => setIsOpen(true)}
         className="buttonHoverBlack"
         width="5rem"
         height="5rem"
@@ -70,7 +99,6 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
         icon
         iconName="DeleteFriend2"
         iconColor="darkslategray"
-        iconPosition="center"
         iconSize="3rem"
         margin="0 1rem"
       />
@@ -97,6 +125,7 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
           ? deleteControl()
           : ""}
       </div>
+      <DeleteFriendModal isOpen={isOpen} setIsOpen={setIsOpen} modalClose={() => setIsOpen(false)} username={username} />
     </div>
   );
 };

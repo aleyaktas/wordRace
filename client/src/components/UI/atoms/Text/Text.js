@@ -14,7 +14,6 @@ const Text = ({ className, text, font, fontSize, fontWeight, color, textDecorati
 };
 
 Text.propTypes = {
-  text: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
   textDecorationLine: PropTypes.string,

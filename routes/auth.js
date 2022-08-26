@@ -65,18 +65,18 @@ router.post("/addFriend", auth, async (req, res) => {
     let addedUser = await User.findOne({ username }).select("-password");
     let ownUser = await User.findById(req.user.id);
     if (!addedUser) {
-      return res.status(400).json({ errors: [{ msg: "This user not found" }] });
+      return res.status(404).json({ error: "This user not found" });
     }
     if (addedUser.id == ownUser.id) {
-      return res.status(400).json({ errors: [{ msg: "Request failed" }] });
+      return res.status(404).json({ error: "Request failed" });
     }
     if (addedUser) {
       if (addedUser.pendingRequests.some((pendingRequest) => pendingRequest._id == ownUser.id)) {
-        return res.status(400).json({ errors: [{ msg: "Friend request already sent" }] });
+        return res.status(404).json({ error: "Friend request already sent" });
       } else if (ownUser.pendingRequests.some((pendingRequest) => pendingRequest._id == addedUser.id)) {
-        return res.status(400).json({ errors: [{ msg: "Friend request already exists, you can accept the request" }] });
+        return res.status(404).json({ error: "Friend request already exists, you can accept the request" });
       } else if (ownUser.friends.some((friend) => friend._id == addedUser.id)) {
-        return res.status(400).json({ errors: [{ msg: "This user is already attached to your friend list" }] });
+        return res.status(404).json({ error: "This user is already attached to your friend list" });
       }
       {
         await addedUser.pendingRequests.push({ _id: ownUser.id });
@@ -121,10 +121,10 @@ router.post("/acceptFriend", auth, async (req, res) => {
   }
 });
 
-// POST api/auth/rejectFriends
+// POST api/auth/rejectFriend
 // Reject friend request
 // Private
-router.post("/rejectFriends", auth, async (req, res) => {
+router.post("/rejectFriend", auth, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });

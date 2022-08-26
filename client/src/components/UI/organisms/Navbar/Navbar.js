@@ -65,11 +65,11 @@ const Navbar = () => {
   );
   const authLinks = (
     <>
-      <div style={styles.navUser} class="dropdown">
-        <button class="dropbtn">
+      <div style={styles.navUser} className="dropdown">
+        <button className="dropbtn">
           <Icon name="User" width="4.3rem" height="4.3rem" color="white" />
         </button>
-        <div class="dropdown-content">
+        <div className="dropdown-content">
           <Button
             height="4rem"
             buttonColor="transparent"
@@ -122,7 +122,6 @@ const Navbar = () => {
       </div>
     </>
   );
-  // <>{!loading && <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}</>;
 };
 
 export default Navbar;

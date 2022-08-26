@@ -9,7 +9,9 @@ const FriendItemList = ({ friends, modalType, modalClose, height }) => {
   return (
     <div id="friendItemList" style={styles.container}>
       {friends.map((friend, index) => (
-        <FriendItem index={index + 1} username={friend.username} isOnline={friend.isOnline} modalType={modalType} modalClose={modalClose} />
+        <div key={index}>
+          <FriendItem index={index + 1} username={friend.username} isOnline={friend.isOnline} modalType={modalType} modalClose={modalClose} />
+        </div>
       ))}
     </div>
   );

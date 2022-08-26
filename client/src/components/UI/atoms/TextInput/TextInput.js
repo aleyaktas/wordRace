@@ -23,6 +23,7 @@ const TextInput = ({
   type,
   className,
   onChange,
+  value,
 }) => {
   const styles = style({
     fontSize,
@@ -37,7 +38,7 @@ const TextInput = ({
   return (
     <div style={styles.container}>
       {icon && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor} />}
-      <input name={placeHolder.toLowerCase()} type={type} className={`${font} ${className}`} style={styles.input} placeholder={placeHolder} onChange={onChange} />
+      <input value={value} name={placeHolder.toLowerCase()} type={type} className={`${font} ${className}`} style={styles.input} placeholder={placeHolder} onChange={onChange} />
     </div>
   );
 };
