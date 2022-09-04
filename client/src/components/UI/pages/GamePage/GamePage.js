@@ -26,7 +26,6 @@ const GamePage = ({ firstUser, secondUser, friends, question, time, iconName }) 
             height="4rem"
             margin="2rem 2rem 2rem auto"
             borderRadius="1rem"
-            icon
             iconPosition="right"
             buttonColor="#EBD894"
             iconName="AddFriend"

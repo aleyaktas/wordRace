@@ -25,7 +25,6 @@ const OnlineRoomCard = ({ rooms }) => {
             height="3.8rem"
             margin="2rem 1rem 2rem auto"
             borderRadius="1rem"
-            icon
             iconPosition="right"
             buttonColor="#EBD894"
             iconName="Plus"

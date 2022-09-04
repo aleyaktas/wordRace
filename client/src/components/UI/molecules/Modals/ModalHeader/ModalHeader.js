@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import style from "./ModalHeader.style";
 import "../../../style.css";
 
-const ModalHeader = ({ modalClose, text, textMargin, icon, iconName, height }) => {
+const ModalHeader = ({ modalClose, text, description, icon, iconName, height }) => {
   const styles = style({ height });
 
   return (
@@ -18,7 +18,9 @@ const ModalHeader = ({ modalClose, text, textMargin, icon, iconName, height }) =
           <Icon name={iconName} width="7rem" height="7rem" />
         </div>
       )}
-      <Text textAlign="center" text={text} font="InterRegular" letterSpacing="0.2rem" fontSize="2.5rem" margin={textMargin || "3rem 0 3rem 0"} />
+
+      <Text textAlign="center" text={text} font="SfProDisplayMedium" letterSpacing="0.05rem" fontSize="2.4rem" margin={description ? "2rem 0 1rem 0" : "3rem 0"} />
+      {description && <Text textAlign="center" text={description} font="PoppinsRegular" fontSize="1.6rem" margin="0 0 3rem 0" />}
     </div>
   );
 };

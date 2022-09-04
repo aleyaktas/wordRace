@@ -21,7 +21,6 @@ const Button = ({
   textPosition,
   textColor,
   letterSpacing,
-  icon,
   iconPosition,
   iconName,
   iconColor,
@@ -30,6 +29,7 @@ const Button = ({
   onChange,
   className,
   textMargin,
+  disabled,
 }) => {
   const styles = style({
     width,
@@ -43,19 +43,19 @@ const Button = ({
     iconSize,
     buttonColor,
     textPosition,
+    disabled,
   });
 
   return (
-    <button style={styles.button} className={className} onClick={onClick} onChange={onChange}>
+    <button disabled={disabled} style={styles.button} className={className} onClick={onClick} onChange={onChange}>
       <Text text={text} margin={textMargin} font={font} fontWeight={fontWeight} fontSize={fontSize} color={textColor} letterSpacing={letterSpacing} />
-      {icon && <Icon style={styles.icon} name={iconName} width={iconSize} height={iconSize} color={iconColor} />}
+      {iconName && <Icon style={styles.icon} name={iconName} width={iconSize} height={iconSize} color={iconColor} />}
     </button>
   );
 };
 
 Button.propTypes = {
   text: PropTypes.string,
-  icon: PropTypes.bool,
   buttonColor: PropTypes.string,
   iconColor: PropTypes.string,
   borderColor: PropTypes.string,
@@ -63,10 +63,9 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+  disabled: false,
   buttonColor: null,
   border: "1px solid gray",
-  icon: false,
-  iconName: "User",
   textColor: "#6B5814",
 };
 

@@ -210,4 +210,24 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+// POST api/auth/editProfile
+// Edit user's own profile
+// Private
+router.post("/editProfile", auth, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const { url } = req.body;
+  try {
+    const user = await User.findById(req.user.id);
+    if (user) {
+      user.profileImage = url;
+      await user.save();
+      res.send(user.profileImage);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}),
+  (module.exports = router);

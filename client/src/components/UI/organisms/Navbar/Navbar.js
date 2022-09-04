@@ -8,9 +8,11 @@ import ForgotPasswordModal from "../../molecules/ForgotPasswordModal/ForgotPassw
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import Icon from "../../../../assets/icons/Icon";
 import { logout } from "../../../../store/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const styles = style();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState({ isOpenState: false, componentName: "" });
   const dispatch = useAppDispatch();
   const { loading, isAuthenticated } = useAppSelector((state) => state.auth);
@@ -71,26 +73,24 @@ const Navbar = () => {
         </button>
         <div className="dropdown-content">
           <Button
+            onClick={() => navigate("/profile")}
             height="4rem"
             buttonColor="transparent"
             className="buttonHoverDropDown"
             color="black"
-            icon
             iconName="ProfileSettings"
             iconPosition="start"
-            textPosition="center"
             iconSize="2.2rem"
             text="Profile"
           />
           <Button
+            onClick={() => navigate("/friends")}
             height="4rem"
             buttonColor="transparent"
             className="buttonHoverDropDown"
             color="black"
-            icon
             iconName="Friends"
             iconPosition="start"
-            textPosition="center"
             iconSize="2.2rem"
             text="Friends"
           />
@@ -99,11 +99,9 @@ const Navbar = () => {
             buttonColor="transparent"
             className="buttonHoverDropDown"
             color="black"
-            icon
             iconName="Logout"
             iconPosition="start"
-            textPosition="center"
-            iconSize="2rem"
+            iconSize="2.2rem"
             text="Logout"
             onClick={onClickLogout}
           />
@@ -115,7 +113,7 @@ const Navbar = () => {
   return (
     <>
       <div style={styles.navContainer}>
-        <div style={styles.navText}>
+        <div onClick={() => navigate("/")} style={styles.navText}>
           <Text text="WORD RACE" color="white" fontSize="2.5rem" font="InterSemiBold" letterSpacing="0.2rem" />
         </div>
         {!loading && <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}

@@ -104,6 +104,17 @@ export const getFriends = createAsyncThunk("getFriends", async ({ username }) =>
   return res.data;
 });
 
+export const editProfile = createAsyncThunk("editProfile", async ({ url }) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ url });
+  const res = await axios.post("/api/auth/editProfile", body, config);
+  return res.data;
+});
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -255,6 +266,21 @@ export const authSlice = createSlice({
       state.user = action.payload;
       state.token = localStorage.getItem("token");
       setAuthToken(localStorage.getItem("token"));
+    });
+    builder.addCase(editProfile.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+    });
+
+    builder.addCase(editProfile.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.loading = false;
+    });
+
+    builder.addCase(editProfile.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.user.profileImage = action.payload;
+      state.loading = false;
     });
   },
 });

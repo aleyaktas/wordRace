@@ -12,6 +12,7 @@ const style = () => ({
     display: "flex",
     alignItems: "center",
     marginLeft: "8rem",
+    cursor: "pointer",
   },
   navUser: {
     marginLeft: "auto",

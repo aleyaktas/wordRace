@@ -27,6 +27,8 @@ import { ReactComponent as Question } from "./Icons/Question.svg";
 import { ReactComponent as DeleteFriend } from "./Icons/Delete-Friend.svg";
 import { ReactComponent as DeleteFriend2 } from "./Icons/Delete-Friend-2.svg";
 import { ReactComponent as ProfileSettings } from "./Icons/Profile-Settings.svg";
+import { ReactComponent as Trash } from "./Icons/Trash.svg";
+import { ReactComponent as Camera } from "./Icons/Camera.svg";
 
 const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, style }) => {
   const icons = {
@@ -58,6 +60,8 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
     DeleteFriend,
     DeleteFriend2,
     ProfileSettings,
+    Trash,
+    Camera,
   };
 
   const IconItem = icons[name];

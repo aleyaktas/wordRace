@@ -18,7 +18,6 @@ const TextInput = ({
   iconWidth,
   iconHeight,
   iconColor,
-  icon,
   font,
   type,
   className,
@@ -37,7 +36,7 @@ const TextInput = ({
 
   return (
     <div style={styles.container}>
-      {icon && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor} />}
+      {iconName && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor} />}
       <input value={value} name={placeHolder.toLowerCase()} type={type} className={`${font} ${className}`} style={styles.input} placeholder={placeHolder} onChange={onChange} />
     </div>
   );
@@ -46,16 +45,13 @@ const TextInput = ({
 TextInput.propTypes = {
   placeHolder: PropTypes.string,
   size: PropTypes.number,
-  icon: PropTypes.bool,
   iconWidth: PropTypes.number,
   iconHeight: PropTypes.number,
 };
 TextInput.defaultProps = {
   size: 14,
-  icon: false,
   font: "InterRegular",
   placeHolder: "placeHolder",
-  iconName: "User",
 };
 
 export default TextInput;

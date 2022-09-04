@@ -37,17 +37,16 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose }) => {
 
   return (
     <>
-      <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
-          <ModalHeader modalClose={modalClose} icon iconName="LoginUser" text="Login" />
+          <ModalHeader modalClose={modalClose} iconName="LoginUser" text="Login" />
           <div style={styles.body}>
-            <TextInput onChange={handleChange} font="InterRegular" placeHolder="Username" icon iconName="User" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
+            <TextInput onChange={handleChange} font="InterRegular" placeHolder="Username" iconName="User" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
             <TextInput
               onChange={handleChange}
               className="input"
               font="InterRegular"
               placeHolder="Password"
-              icon
               iconName="Lock"
               fontSize="1.6rem"
               margin="0 0 1.5rem 0"
@@ -65,10 +64,10 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose }) => {
                 textDecorationLine="underline"
               />
             </button>
-            <Button className="buttonHoverGold" onClick={handleSubmit} text="Login" iconName="User" width="100%" margin="2rem 0" padding="1rem" buttonColor="#EBD894" />
+            <Button className="buttonHoverGold" onClick={handleSubmit} text="Login" width="100%" margin="2rem 0" padding="1rem" buttonColor="#EBD894" />
           </div>
           <button className="buttonHoverBlack" style={styles.button} onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "RegisterModal" })}>
-            <Text margin="0 0 2rem 0" textAlign="center" text="Don't have an account?" fontSize="1.6rem" font="RobotoThin" color="#6B5814" letterSpacing="0.15rem" />
+            <Text textAlign="center" text="Don't have an account?" fontSize="1.6rem" font="RobotoThin" color="#6B5814" letterSpacing="0.15rem" />
           </button>
         </div>
       </Modal>

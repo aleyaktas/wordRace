@@ -1,4 +1,4 @@
-const style = ({ fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, margin, padding, lineHeight }) => ({
+const style = ({ fontSize, fontWeight, color, textDecorationLine, textAlign, letterSpacing, margin, padding, lineHeight, opacity }) => ({
   text: {
     fontSize: fontSize || "1.6rem",
     color,
@@ -9,6 +9,7 @@ const style = ({ fontSize, fontWeight, color, textDecorationLine, textAlign, let
     padding,
     fontWeight,
     lineHeight,
+    opacity,
   },
 });
 

@@ -8,6 +8,7 @@ import style from "./FriendsPage.style";
 import Text from "../../atoms/Text/Text";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import { getFriends } from "../../../../store/features/auth/authSlice";
+import socket from "../../../../utils/socket";
 
 const FriendsPage = () => {
   const styles = style();
@@ -16,9 +17,33 @@ const FriendsPage = () => {
   const dispatch = useAppDispatch();
 
   const { friends, pendingRequests, username } = useAppSelector((state) => state.auth.user);
+
+  const ownerUsername = useAppSelector((state) => state.auth.user.username);
+
+  useEffect(() => {
+    socket.on("incoming_request", ({ username }) => {
+      if (username === ownerUsername) {
+        dispatch(getFriends({ username }));
+      }
+    });
+
+    socket.on("accepted_request", ({ username }) => {
+      if (username === ownerUsername) {
+        dispatch(getFriends({ username }));
+      }
+    });
+
+    socket.on("deleted_friend", ({ username }) => {
+      if (username === ownerUsername) {
+        dispatch(getFriends({ username }));
+      }
+    });
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(getFriends({ username }));
   }, [dispatch, username]);
+
   const haveFriend = (
     <div style={styles.body}>
       <div style={styles.text}>
@@ -44,7 +69,7 @@ const FriendsPage = () => {
             <FriendItemListModal
               friends={pendingRequests}
               modalType="requestModal"
-              title={pendingRequests.length === 0 ? "No pending requests yet" : "Pending Requests"}
+              title="Pending Requests"
               setIsOpen={setIsOpen}
               isOpen={isOpenState}
               modalClose={() => setIsOpen(false)}
@@ -53,7 +78,8 @@ const FriendsPage = () => {
             <AddFriendModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen(false)} />
           ) : null}
           <Button
-            className="buttonHoverGold"
+            className={pendingRequests.length === 0 ? "" : "buttonHoverGold"}
+            disabled={pendingRequests.length === 0}
             onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "FriendItemListModal" })}
             text="Pending Requests"
             margin="0 3rem 0 0"
@@ -75,7 +101,6 @@ const FriendsPage = () => {
           width="20rem"
           height="3.8rem"
           borderRadius="1rem"
-          icon
           iconPosition="end"
           buttonColor="#EBD894"
           iconName="AddFriend"

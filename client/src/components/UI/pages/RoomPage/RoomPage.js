@@ -42,7 +42,6 @@ const RoomPage = ({ rooms, scores }) => {
             width="20rem"
             height="3.8rem"
             borderRadius="1rem"
-            icon
             iconPosition="right"
             buttonColor="#EBD894"
             iconName="Plus"
@@ -61,30 +60,6 @@ const RoomPage = ({ rooms, scores }) => {
           })}
         </div>
       </div>
-      // <div style={styles.containerNoRoom}>
-      /* <div style={styles.roomText}>
-          <Text text="😕 Currently there are no online rooms." font="PoppinsRegular" />
-        </div>
-        {isOpen && <CreateRoomModal isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
-        <div>
-          <div style={styles.button} onClick={() => setIsOpen(true)}>
-            <Button
-              className="buttonHoverGold"
-              text="Create Room"
-              font="RobotoMedium"
-              fontSize="1.7rem"
-              width="20rem"
-              height="3.8rem"
-              margin="2rem 1rem 2rem auto"
-              borderRadius="1rem"
-              icon
-              iconPosition="right"
-              buttonColor="#EBD894"
-              iconName="Plus"
-            />
-          </div>
-        </div>
-      </div> */
     );
   }
 };

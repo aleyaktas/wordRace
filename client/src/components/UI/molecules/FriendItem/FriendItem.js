@@ -6,6 +6,7 @@ import style from "./FriendItem.style";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import { acceptFriend, getFriends, rejectFriend } from "../../../../store/features/auth/authSlice";
 import DeleteFriendModal from "../DeleteFriendModal/DeleteFriendModal";
+import socket from "../../../../utils/socket";
 
 const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   const [isInvite, setIsInvite] = useState(false);
@@ -16,6 +17,7 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   const onClickAccept = async (e) => {
     e.preventDefault();
     await dispatch(acceptFriend({ username }));
+    socket.emit("friend_accept", { username });
     await dispatch(getFriends({ user }));
     modalClose();
   };
@@ -45,7 +47,6 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
           padding="0.3rem"
           textPosition="center"
           text="Invite"
-          icon
           iconName="Letter"
           iconPosition="left"
           buttonColor="#EBD894"
@@ -67,24 +68,12 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
         borderRadius="4rem"
         buttonColor="#64A3AF"
         padding="0.3rem"
-        icon
         iconName="Tick"
         iconColor="white"
         iconSize="2rem"
         margin="0 1rem"
       />
-      <Button
-        onClick={onClickReject}
-        width="3rem"
-        height="3rem"
-        borderRadius="4rem"
-        buttonColor="#C75555"
-        padding="0.3rem"
-        icon
-        iconName="Close"
-        iconColor="white"
-        iconSize="2rem"
-      />
+      <Button onClick={onClickReject} width="3rem" height="3rem" borderRadius="4rem" buttonColor="#C75555" padding="0.3rem" iconName="Close" iconColor="white" iconSize="2rem" />
     </>
   );
   const deleteControl = () => (
@@ -96,7 +85,6 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
         height="5rem"
         buttonColor="transparent"
         padding="0.3rem"
-        icon
         iconName="DeleteFriend2"
         iconColor="darkslategray"
         iconSize="3rem"

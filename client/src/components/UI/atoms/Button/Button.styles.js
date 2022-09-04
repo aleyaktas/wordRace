@@ -1,11 +1,12 @@
-const style = ({ width, height, padding, margin, border, borderColor, borderRadius, iconPosition, textPosition, buttonColor, iconSize }) => ({
+const style = ({ width, height, padding, margin, border, borderColor, borderRadius, iconPosition, textPosition, buttonColor, iconSize, disabled }) => ({
   button: {
     display: "flex",
     position: "relative",
     justifyContent: textPosition || "center",
     flexDirection: iconPosition === "left" ? "row-reverse" : "",
     alignItems: "center",
-    cursor: "pointer",
+    cursor: !disabled ? "pointer" : null,
+    opacity: disabled ? 0.7 : 1,
     fontSize: "1.6rem",
     width,
     height,

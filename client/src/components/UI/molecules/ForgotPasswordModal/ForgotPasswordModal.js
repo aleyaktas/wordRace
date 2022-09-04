@@ -12,12 +12,12 @@ const ForgotPasswordModal = ({ isOpen, modalClose, onClick }) => {
 
   return (
     <>
-      <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
-          <ModalHeader modalClose={modalClose} icon iconName="ForgotPassword" text="Forgot Password" />
+          <ModalHeader modalClose={modalClose} iconName="ForgotPassword" text="Forgot Password" />
           <div style={styles.body}>
-            <TextInput font="InterRegular" placeHolder="Email" icon="true" iconName="Mail" fontSize="1.6rem" margin="0 0 2rem 0" type="text" />
-            <Button className="buttonHoverGold" onClick={onClick} text="Reset Password" iconName="User" width="100%" margin="3rem 0" padding="1rem" buttonColor="#EBD894" />
+            <TextInput font="InterRegular" placeHolder="Email" iconName="Mail" fontSize="1.6rem" margin="0 0 2rem 0" type="text" />
+            <Button className="buttonHoverGold" onClick={onClick} text="Reset Password" width="100%" margin="2rem 0 0 0" padding="1rem" buttonColor="#EBD894" />
           </div>
         </div>
       </Modal>

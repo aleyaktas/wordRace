@@ -13,9 +13,9 @@ const CreateRoomModal = ({ isOpen, modalClose, onClick }) => {
 
   return (
     <>
-      <Modal open={isOpen} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
-          <ModalHeader modalClose={modalClose} icon iconName="CreatePlus" text="Create Room" />
+          <ModalHeader modalClose={modalClose} iconName="CreatePlus" text="Create Room" />
           <div style={styles.body}>
             <TextInput className="input" font="InterRegular" placeHolder="Room Name" fontSize="1.8rem" type="text" />
             <div style={styles.checkbox}>
@@ -26,7 +26,7 @@ const CreateRoomModal = ({ isOpen, modalClose, onClick }) => {
               className="buttonHoverGold"
               onClick={onClick}
               fontSize="1.6rem"
-              margin="3rem 0"
+              margin="2rem 0 0 0"
               padding="1rem"
               text="Create"
               iconName="User"

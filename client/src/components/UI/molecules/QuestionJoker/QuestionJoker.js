@@ -13,7 +13,6 @@ const QuestionJoker = ({ time }) => {
         width="5rem"
         height="5rem"
         borderRadius="5rem"
-        icon
         iconName="FiftyPercentJoker"
         iconSize="5rem"
         iconColor="white"
@@ -21,17 +20,7 @@ const QuestionJoker = ({ time }) => {
       <div style={styles.time}>
         <Text text={time} fontSize="2.5rem" color="white" />
       </div>
-      <Button
-        className="secondJokerButton hoverJoker"
-        buttonColor="#6EBA9D"
-        width="5rem"
-        height="5rem"
-        borderRadius="5rem"
-        icon
-        iconName="PassJoker"
-        iconSize="5rem"
-        iconColor="white"
-      />
+      <Button className="secondJokerButton hoverJoker" buttonColor="#6EBA9D" width="5rem" height="5rem" borderRadius="5rem" iconName="PassJoker" iconSize="5rem" iconColor="white" />
     </div>
   );
 };
