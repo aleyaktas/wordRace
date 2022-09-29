@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import style from "./ScoreItemList.style";
 import ScoreItem from "../../molecules/ScoreItem/ScoreItem";
 
 const ScoreItemList = ({ scores }) => {
-  const styles = style();
   return (
     <div>
       {scores.map((score) => (

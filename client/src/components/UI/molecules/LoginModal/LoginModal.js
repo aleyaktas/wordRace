@@ -27,11 +27,10 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = formData;
-
     await dispatch(loginUser({ username, password }));
     await dispatch(getUser());
     setFormData({ username: "", password: "" });
-    navigate("/profile");
+    navigate("/rooms");
     modalClose();
   };
 

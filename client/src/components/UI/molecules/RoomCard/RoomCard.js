@@ -2,9 +2,19 @@ import React from "react";
 import Text from "../../atoms/Text/Text";
 import PropTypes from "prop-types";
 import style from "./RoomCard.style";
+import socket from "../../../../utils/socket";
+import { useAppSelector } from "../../../../store";
+import { useNavigate } from "react-router-dom";
 
-const RoomCard = ({ onClick, roomName, roomImage, className, margin }) => {
+const RoomCard = ({ roomId, roomName, roomImage, margin }) => {
   const styles = style({ margin });
+  const username = useAppSelector((state) => state.auth?.user?.username);
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    socket.emit("join_room", username, roomName, roomId);
+    navigate(`/rooms/:${roomId}`);
+  };
 
   return (
     <button className="buttonHoverRoomCard" onClick={onClick} style={styles.cardContainer}>

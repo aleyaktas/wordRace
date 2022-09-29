@@ -3,16 +3,17 @@ import FriendItem from "../../molecules/FriendItem/FriendItem";
 import PropTypes from "prop-types";
 import style from "./FriendItemList.style";
 
-const FriendItemList = ({ friends, modalType, modalClose, height }) => {
+const FriendItemList = ({ modalType, friends, modalClose, height }) => {
   const styles = style({ height });
 
   return (
     <div id="friendItemList" style={styles.container}>
-      {friends.map((friend, index) => (
-        <div key={index}>
-          <FriendItem index={index + 1} username={friend.username} isOnline={friend.isOnline} modalType={modalType} modalClose={modalClose} />
-        </div>
-      ))}
+      {friends.length > 0 &&
+        friends.map((friend, index) => (
+          <div key={index}>
+            <FriendItem index={index + 1} username={friend.username} isOnline="friend.isOnline}" modalType={modalType} modalClose={modalClose} />
+          </div>
+        ))}
     </div>
   );
 };

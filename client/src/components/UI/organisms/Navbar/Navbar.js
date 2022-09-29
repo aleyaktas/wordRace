@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../../store";
 import Icon from "../../../../assets/icons/Icon";
 import { logout } from "../../../../store/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import socket from "../../../../utils/socket";
 
 const Navbar = () => {
   const styles = style();
@@ -16,6 +17,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState({ isOpenState: false, componentName: "" });
   const dispatch = useAppDispatch();
   const { loading, isAuthenticated } = useAppSelector((state) => state.auth);
+  const username = useAppSelector((state) => state.auth?.user?.username);
   const onClick = (modalName) => {
     setIsOpen({
       ...isOpen,
@@ -23,8 +25,9 @@ const Navbar = () => {
       componentName: modalName,
     });
   };
-  const onClickLogout = () => {
-    dispatch(logout());
+  const onClickLogout = async () => {
+    socket.emit("logout_user", { username });
+    await dispatch(logout());
   };
   const { isOpenState, componentName } = isOpen;
   const guestLinks = (

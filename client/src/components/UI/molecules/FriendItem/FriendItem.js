@@ -12,28 +12,25 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   const [isInvite, setIsInvite] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user.username);
+  const ownerUser = useAppSelector((state) => state.auth.user.username);
 
-  const onClickAccept = async (e) => {
+  const onClickInvite = () => {
+    setIsInvite(true);
+    socket.emit("invite_user", { username, ownerUser });
+  };
+
+  const onClickAccept = (e) => {
     e.preventDefault();
-    await dispatch(acceptFriend({ username }));
+    dispatch(acceptFriend({ username }));
     socket.emit("friend_accept", { username });
-    await dispatch(getFriends({ user }));
+    dispatch(getFriends({ ownerUser }));
     modalClose();
   };
 
-  // const onClickDelete = async (e) => {
-  //   console.log(username);
-  //   setIsOpen(true);
-  //   e.preventDefault();
-  //   await dispatch(deleteFriend({ username }));
-  //   await dispatch(getFriends({ user }));
-  // };
-
-  const onClickReject = async (e) => {
+  const onClickReject = (e) => {
     e.preventDefault();
-    await dispatch(rejectFriend({ username }));
-    await dispatch(getFriends({ user }));
+    dispatch(rejectFriend({ username }));
+    dispatch(getFriends({ ownerUser }));
     modalClose();
   };
   const inviteControl = (isInvite, setIsInvite) => (
@@ -42,7 +39,7 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
         <Text text="invited" />
       ) : (
         <Button
-          onClick={() => setIsInvite(true)}
+          onClick={onClickInvite}
           width="12rem"
           padding="0.3rem"
           textPosition="center"

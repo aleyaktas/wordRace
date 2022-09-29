@@ -10,6 +10,7 @@ const initialState = {
   user: null,
   message: null,
   loading: null,
+  onlineUsers: [],
 };
 
 export const registerUser = createAsyncThunk("registerUser", async ({ username, email, password }) => {
@@ -126,6 +127,9 @@ export const authSlice = createSlice({
       state.user = {};
       state.loading = false;
       state.token = null;
+    },
+    getOnlineUsers: (state, action) => {
+      state.onlineUsers = action.payload.users;
     },
   },
   extraReducers: (builder) => {
@@ -278,12 +282,11 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(editProfile.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.user.profileImage = action.payload;
       state.loading = false;
     });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, getOnlineUsers } = authSlice.actions;
 export default authSlice.reducer;

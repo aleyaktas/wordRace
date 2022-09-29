@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAppSelector } from "../store";
+import { Navigate, Outlet } from "react-router-dom";
 
 const PublicRoute = ({ redirectPath = "/profile" }) => {
   if (!localStorage.getItem("token")) {

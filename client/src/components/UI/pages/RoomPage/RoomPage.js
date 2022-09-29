@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../atoms/Button/Button";
 import Text from "../../atoms/Text/Text";
 import CreateRoomModal from "../../molecules/CreateRoomModal/CreateRoomModal";
 import OnlineRoomCard from "../../organisms/OnlineRoomCard/OnlineRoomCard";
 import style from "./RoomPage.style";
-const RoomPage = ({ rooms, scores }) => {
+import socket from "../../../../utils/socket";
+
+const RoomPage = ({ scores }) => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
+  const [roomList, setRoomList] = useState([]);
 
-  if (rooms.length > 0) {
+  useEffect(() => {
+    socket.on("get_rooms", ({ rooms }) => {
+      setRoomList(rooms);
+    });
+    socket.on("room_created", ({ rooms }) => {
+      setRoomList(rooms);
+    });
+  }, [setRoomList]);
+
+  if (roomList.length > 0) {
     return (
       <div style={styles.container}>
-        <OnlineRoomCard rooms={rooms} />
+        <OnlineRoomCard rooms={roomList} />
         <div style={styles.scoreCard}>
           <div style={styles.text}>
             <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />
@@ -26,12 +38,13 @@ const RoomPage = ({ rooms, scores }) => {
         </div>
       </div>
     );
-  } else if (rooms.length === 0) {
+  } else if (roomList.length === 0) {
     return (
       <div style={styles.containerNoRoom}>
         <div style={styles.roomText}>
           <Text text="😕 Currently there are no online rooms" font="PoppinsRegular" />
         </div>
+
         {isOpen && <CreateRoomModal isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
         <div onClick={() => setIsOpen(true)}>
           <Button
@@ -47,6 +60,7 @@ const RoomPage = ({ rooms, scores }) => {
             iconName="Plus"
           />
         </div>
+
         <div style={styles.scoreCard}>
           <div style={styles.text}>
             <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />

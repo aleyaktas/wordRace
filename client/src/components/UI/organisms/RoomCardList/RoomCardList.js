@@ -9,7 +9,7 @@ const RoomCardList = ({ rooms }) => {
   return (
     <div style={styles.container}>
       {rooms.map((room) => (
-        <RoomCard roomName={room.name} roomImage={room.image} />
+        <RoomCard roomId={room.id} roomName={room.name} roomImage={room.image} />
       ))}
     </div>
   );

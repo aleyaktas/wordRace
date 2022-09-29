@@ -6,34 +6,54 @@ import GamePage from "./components/UI/pages/GamePage/GamePage";
 import ProfilePage from "./components/UI/pages/ProfilePage/ProfilePage";
 import RoomPage from "./components/UI/pages/RoomPage/RoomPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import PrivateRoute from "./route/PrivateRoute";
 import PublicRoute from "./route/PublicRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import store, { persistor } from "./store";
+import store, { persistor, useAppDispatch } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import setAuthToken from "./utils/setAuthToken";
+import socketIO from "socket.io-client";
+import { getOnlineUsers } from "./store/features/auth/authSlice";
+import GameInviteModal from "./components/UI/molecules/GameInviteModal/GameInviteModal";
 
 function App() {
+  const [room, setRoom] = useState({});
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
   }, []);
+  let findUsername = useSelector((state) => state.auth?.user?.username);
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (findUsername !== undefined) {
+      const socket = socketIO("http://localhost:3000", {
+        query: {
+          username: findUsername,
+        },
+      });
+      socket.emit("user_status", { findUsername });
+      socket.on("online_users", ({ users }) => {
+        dispatch(getOnlineUsers({ users }));
+      });
+      socket.on(`invited_${findUsername}`, ({ roomId, roomName, roomImage, roomPlayers }) => {
+        setIsOpen(true);
+        setRoom((room) => ({
+          ...room,
+          roomId,
+          roomName,
+          roomImage,
+          roomPlayers,
+          username: findUsername,
+        }));
+      });
+    }
+  }, [findUsername]);
 
-  const rooms = [
-    { name: "Room 1", image: "Bear" },
-    { name: "Room 2", image: "Cat" },
-    { name: "Room 3", image: "Bird" },
-    { name: "Room 4", image: "Bug" },
-    { name: "Room 5", image: "Crown" },
-    { name: "Room 6", image: "Elephant" },
-    { name: "Room 7", image: "Flower" },
-    { name: "Room 8", image: "Turtle" },
-  ];
   const scores = [
     { name: "firstUser", score: 10 },
     { name: "secondUser", score: 5 },
@@ -55,18 +75,19 @@ function App() {
         <BrowserRouter>
           <ToastContainer />
           <Navbar />
+          <GameInviteModal room={room} isOpen={isOpen} modalClose={() => setIsOpen(false) && setRoom({})} />
           <Routes>
             <Route element={<PublicRoute />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/*" element={<HomePage />} />
             </Route>
             <Route element={<PrivateRoute />}>
-              <Route path="game/:roomId" element={<GamePage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="friends" element={<FriendsPage />} />
-              <Route path="rooms" element={<RoomPage rooms={rooms} scores={scores} />} />
-              <Route path="/*" element={<ProfilePage />} />
-              <Route path="/" element={<ProfilePage />} />
+              <Route path="rooms" element={<RoomPage scores={scores} />} />
+              <Route path="rooms/:id" element={<GamePage firstUser="firstUser" secondUser="" />} />
+              <Route path="/*" element={<RoomPage />} />
+              <Route path="/" element={<RoomPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

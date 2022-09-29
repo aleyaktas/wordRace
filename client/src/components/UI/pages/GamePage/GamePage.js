@@ -7,15 +7,21 @@ import FriendItemListModal from "../../molecules/FriendItemListModal/FriendItemL
 import SidebarItemList from "../../organisms/SidebarItemList/SidebarItemList";
 import QuestionCard from "../../molecules/QuestionCard/QuestionCard";
 import ScoreCard from "../../molecules/ScoreCard/ScoreCard";
+import { useAppSelector } from "../../../../store";
 
-const GamePage = ({ firstUser, secondUser, friends, question, time, iconName }) => {
+const GamePage = ({ firstUser, secondUser, question, time, iconName }) => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
+  const { username } = useAppSelector((state) => state.auth.user);
+
+  const onlineUsers = useAppSelector((state) => state.auth.onlineUsers.filter((user) => user.username !== username));
+  const allFriends = useAppSelector((state) => state.auth.user.friends);
+  const onlineFriends = onlineUsers.filter((item) => allFriends.some((i) => i.username === item.username));
 
   if (secondUser === "") {
     return (
       <div>
-        {isOpen && <FriendItemListModal modalType="inviteModal" friends={friends} isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
+        {isOpen && <FriendItemListModal friends={onlineFriends} modalType="inviteModal" isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
         <div style={styles.button} onClick={() => setIsOpen(true)}>
           <Button
             className="buttonHoverGold"
