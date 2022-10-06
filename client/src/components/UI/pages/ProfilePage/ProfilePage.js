@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./ProfilePage.style";
 import Button from "../../atoms/Button/Button";
 import Text from "../../atoms/Text/Text";
@@ -11,7 +11,7 @@ import { editProfile } from "../../../../store/features/auth/authSlice";
 
 const ProfilePage = () => {
   const styles = style();
-  const { username, email, profileImage } = useAppSelector((state) => state.auth.user);
+  const { username, email, profileImage } = useAppSelector((state) => state?.auth?.user);
   const [image, setImage] = useState(profileImage);
   const [showImage, setShowImage] = useState(profileImage);
   const [isChecked, setIsChecked] = useState(false);

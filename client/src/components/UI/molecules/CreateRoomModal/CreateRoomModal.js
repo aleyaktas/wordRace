@@ -15,7 +15,7 @@ const { v4: uuidv4 } = require("uuid");
 const CreateRoomModal = ({ isOpen, modalClose }) => {
   const styles = style();
   const [roomName, setRoomName] = useState("");
-  const username = useAppSelector((state) => state.auth.user.username);
+  const { username, profileImage } = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const handleChange = (e) => {
     e.preventDefault();
@@ -25,8 +25,15 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
   const onClick = (e) => {
     e.preventDefault();
     const roomId = uuidv4();
-    socket.emit("create_room", { username, roomName, roomId });
-    navigate(`/rooms/:${roomId}`);
+    socket.emit("create_room", {
+      user: {
+        username,
+        image: profileImage,
+      },
+      roomName,
+      roomId,
+    });
+    navigate(`/rooms/${roomId}`);
     modalClose();
   };
 

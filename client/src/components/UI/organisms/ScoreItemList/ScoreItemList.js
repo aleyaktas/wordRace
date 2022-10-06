@@ -12,11 +12,11 @@ const ScoreItemList = ({ scores }) => {
   );
 };
 
-ScoreItemList.propTypes = {
-  scores: PropTypes.arrayOf(PropTypes.object),
-};
-ScoreItemList.defaultProps = {
-  scores: null,
-};
+// ScoreItemList.propTypes = {
+//   scores: PropTypes.arrayOf(PropTypes.object),
+// };
+// ScoreItemList.defaultProps = {
+//   scores: null,
+// };
 
 export default ScoreItemList;

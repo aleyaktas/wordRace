@@ -5,7 +5,7 @@ import CreateRoomModal from "../../molecules/CreateRoomModal/CreateRoomModal";
 import Button from "../../atoms/Button/Button";
 import style from "./OnlineRoomCard.style";
 
-const OnlineRoomCard = ({ rooms }) => {
+const OnlineRoomCard = () => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -30,7 +30,7 @@ const OnlineRoomCard = ({ rooms }) => {
             iconName="Plus"
           />
         </div>
-        <RoomCardList rooms={rooms} />
+        <RoomCardList />
       </div>
     </div>
   );

@@ -27,7 +27,13 @@ const DeleteFriendModal = ({ isOpen, modalClose, username }) => {
     <>
       <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
-          <ModalHeader iconName="Trash" modalClose={modalClose} text="Are you sure?" description="Do you want to delete your friend? You can then send a friend request again" />
+          <ModalHeader
+            icon
+            iconName="Trash"
+            modalClose={modalClose}
+            text="Are you sure?"
+            description="Do you want to delete your friend? You can then send a friend request again"
+          />
           <div style={styles.body}>
             <Button className="buttonHoverGold" onClick={modalClose} fontSize="1.6rem" padding="0.8rem" text="No" width="40%" buttonColor="#EBD894" />
             <Button className="buttonHoverGold" onClick={onClick} fontSize="1.6rem" padding="0.8rem" text="Yes" width="40%" buttonColor="#EBD894" />

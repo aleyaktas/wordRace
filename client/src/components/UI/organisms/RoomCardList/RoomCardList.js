@@ -1,24 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import style from "./RoomCardList.style";
 import RoomCard from "../../molecules/RoomCard/RoomCard";
+import { useAppSelector } from "../../../../store";
 
-const RoomCardList = ({ rooms }) => {
+const RoomCardList = () => {
   const styles = style();
+  const rooms = useAppSelector((state) => state.auth.rooms);
 
   return (
     <div style={styles.container}>
-      {rooms.map((room) => (
-        <RoomCard roomId={room.id} roomName={room.name} roomImage={room.image} />
+      {rooms?.map((room) => (
+        <RoomCard room={room} />
       ))}
     </div>
   );
-};
-RoomCardList.propTypes = {
-  rooms: PropTypes.arrayOf(PropTypes.object),
-};
-RoomCardList.defaultProps = {
-  rooms: null,
 };
 
 export default RoomCardList;

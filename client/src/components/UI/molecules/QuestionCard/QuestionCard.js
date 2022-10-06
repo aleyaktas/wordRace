@@ -5,8 +5,13 @@ import QuestionItemList from "../../organisms/QuestionItemList/QuestionItemList"
 import Text from "../../atoms/Text/Text";
 import QuestionJoker from "../QuestionJoker/QuestionJoker";
 
-const QuestionCard = ({ question, time }) => {
+const QuestionCard = () => {
   const styles = style();
+  const question = {
+    inner: "What is the answer?",
+    options: ["first option", "second option", "third option", "fourth option"],
+  };
+  const time = "20";
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -22,11 +27,11 @@ const QuestionCard = ({ question, time }) => {
   );
 };
 
-QuestionCard.propTypes = {
-  question: PropTypes.arrayOf(PropTypes.object),
-};
-QuestionCard.defaultProps = {
-  question: null,
-};
+// QuestionCard.propTypes = {
+//   question: PropTypes.arrayOf(PropTypes.object),
+// };
+// QuestionCard.defaultProps = {
+//   question: null,
+// };
 
 export default QuestionCard;

@@ -26,9 +26,60 @@ app.use("/api/privateWord", privateWordRoute);
 app.use(fileUpload({ useTempFiles: true }));
 
 let rooms = [];
+/* 
+  room = 
+  {
+     id: string;
+     name: string;
+     image: string;
+     timer: number;
+     questions: [
+      {
+        question: string;
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+        answer: string: 
+      },
+      {
+        question: string;
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+        answer: string: 
+      },
+      {
+        question: string;
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+        answer: string: 
+      },
+     ],
+     players: [
+      {
+        username: string;
+        score: number;
+        image: string;
+        isYourTurn: boolean;
+      },
+      {
+        username: string;
+        score: number;
+        image: string;
+        isYourTurn: boolean;
+      }
+     ]
+  }
+
+*/
 let users = [];
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
+  socket.emit("get_rooms", { rooms });
   socket.on("friend_request", ({ username }) => {
     socket.broadcast.emit("incoming_request", { username });
   });
@@ -39,30 +90,53 @@ io.on("connection", async (socket) => {
     socket.broadcast.emit("deleted_friend", { username });
   });
 
-  socket.on("create_room", ({ username, roomName, roomId }) => {
+  socket.on("create_room", ({ user, roomName, roomId, timer }) => {
+    const { username, image } = user;
     socket.join(roomId);
-    rooms.push({ id: roomId, name: roomName, image: "Bear", players: [username] });
-    socket.emit("room_created", { rooms });
-    socket.broadcast.emit("room_created", { rooms });
-    socket.emit("get_rooms", { rooms });
+    const createRoom = {
+      id: roomId,
+      name: roomName,
+      image: "Bear",
+      timer,
+      questions: [],
+      players: [
+        {
+          username,
+          image,
+          score: 0,
+          isYourTurn: true,
+        },
+      ],
+    };
+    rooms.push(createRoom);
+    socket.emit("room_created", { room: createRoom });
+    io.emit("get_rooms", { rooms });
   });
-  socket.emit("get_rooms", { rooms });
 
-  socket.on("join_room", function (username, roomId) {
-    rooms.forEach((room) => {
-      if (room.id === roomId) {
-        if (room.players.length < 2) {
-          socket.join(roomId);
-          room.players.push(username);
-          socket.emit("room_joined", { room });
-        }
-      }
-    });
+  socket.on("join_room", ({ user, roomId }) => {
+    const { username, image } = user;
+    const room = rooms.find((room) => room.id === roomId);
+    if (room && room.players.length < 2) {
+      socket.join(roomId);
+      room.players.push({
+        username,
+        image,
+        score: 0,
+        isYourTurn: false,
+      });
+      socket.emit("room_joined", { room });
+      socket.to(roomId).emit("room_joined", { room });
+      io.emit("get_rooms", { rooms });
+    }
   });
+
   socket.on("invite_user", ({ username, ownerUser }) => {
+    console.log(ownerUser);
     rooms.forEach((room) => {
-      if (room.players.includes(ownerUser)) {
-        io.emit(`invited_${username}`, { roomId: room.id, roomName: room.name, roomImage: room.image, roomPlayers: room.players });
+      console.log(room.players);
+      if (room.players.find((player) => player.username === ownerUser)) {
+        console.log("room");
+        io.emit(`invited_${username}`, { room });
       }
     });
   });
@@ -85,6 +159,25 @@ io.on("connection", async (socket) => {
     socket.broadcast.emit("online_users", { users });
   });
 
+  socket.on("left_room", ({ username }) => {
+    //find room according to username
+    const findRoom = rooms.find((room) => room.players.find((player) => player.username === username));
+    console.log(findRoom?.players);
+    if (findRoom) {
+      //player delete according to username
+      const findPlayer = findRoom.players.find((player) => player.username === username);
+      const indexPlayer = findRoom.players.indexOf(findPlayer);
+      findRoom.players.splice(indexPlayer, 1);
+      console.log(findRoom?.players);
+      if (findRoom.players.length === 0) {
+        const indexRoom = rooms.indexOf(findRoom);
+        rooms.splice(indexRoom, 1);
+      }
+      socket.to(findRoom.id).emit("leave_room", { room: findRoom });
+      io.emit("get_rooms", { rooms });
+    }
+  });
+
   socket.on("disconnect", () => {
     let disconnectUser = socket.handshake.query.username;
     let indexUser = users.findIndex((x) => x.username === disconnectUser);
@@ -93,6 +186,17 @@ io.on("connection", async (socket) => {
     }
     socket.emit("online_users", { users });
     socket.broadcast.emit("online_users", { users });
+
+    rooms.forEach((room) => {
+      let index = room.players.findIndex((x) => x.username === disconnectUser);
+      console.log(index);
+      if (index !== -1) {
+        console.log("disconnected room");
+        room.players.splice(index, 1);
+        socket.to(room.id).emit("leave_room", { room });
+        io.emit("get_rooms", { rooms });
+      }
+    });
   });
 });
 

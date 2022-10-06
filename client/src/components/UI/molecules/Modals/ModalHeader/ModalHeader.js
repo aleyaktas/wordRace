@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import style from "./ModalHeader.style";
 import "../../../style.css";
 
-const ModalHeader = ({ modalClose, text, description, icon, iconName, height }) => {
+const ModalHeader = ({ modalClose, text, description, iconName, height }) => {
   const styles = style({ height });
 
   return (
@@ -13,7 +13,7 @@ const ModalHeader = ({ modalClose, text, description, icon, iconName, height }) 
       <button id="close-button" onClick={modalClose}>
         <Icon name="Close" width="1.8rem" height="1.8rem" color="#8F8F8F" />
       </button>
-      {icon && (
+      {iconName && (
         <div style={styles.iconContainer}>
           <Icon name={iconName} width="7rem" height="7rem" />
         </div>

@@ -5,24 +5,35 @@ import style from "./RoomCard.style";
 import socket from "../../../../utils/socket";
 import { useAppSelector } from "../../../../store";
 import { useNavigate } from "react-router-dom";
+import { showMessage } from "../../../../utils/showMessage";
 
-const RoomCard = ({ roomId, roomName, roomImage, margin }) => {
+const RoomCard = ({ room, margin }) => {
   const styles = style({ margin });
-  const username = useAppSelector((state) => state.auth?.user?.username);
+  const { username, profileImage } = useAppSelector((state) => state?.auth?.user);
+  const { rooms } = useAppSelector((state) => state?.auth);
   const navigate = useNavigate();
+  const { id, name, image, timer, players, questions } = room;
+  const roomId = id;
 
   const onClick = () => {
-    socket.emit("join_room", username, roomName, roomId);
-    navigate(`/rooms/:${roomId}`);
+    const joinRoom = rooms.find((room) => room.id === roomId);
+
+    if (joinRoom && joinRoom.players.length < 2) {
+      socket.emit("join_room", { user: { username, image: profileImage }, roomId });
+      navigate(`/rooms/${id}`);
+      showMessage("You have joined the room", "success");
+    } else {
+      showMessage("This room is full", "warning");
+    }
   };
 
   return (
     <button className="buttonHoverRoomCard" onClick={onClick} style={styles.cardContainer}>
       <div style={styles.card}>
-        <img src={require(`../../../../assets/images/${roomImage}.png`)} alt="Bear" width="100" height="100" />
+        <img src={require(`../../../../assets/images/${image}.png`)} alt="Bear" width="100" height="100" />
       </div>
       <div style={{ ...styles.card, ...styles.cardFooter }} className="card-footer">
-        <Text font="InterRegular" text={roomName} color="#556577" textAlign="center" />
+        <Text font="InterRegular" text={name} color="#556577" textAlign="center" />
       </div>
     </button>
   );
@@ -36,8 +47,8 @@ RoomCard.propTypes = {
 RoomCard.defaultProps = {
   width: "22rem",
   height: "20rem",
-  roomName: "Room Name",
-  roomImage: "Bear",
+  name: "Room Name",
+  image: "Bear",
 };
 
 export default RoomCard;

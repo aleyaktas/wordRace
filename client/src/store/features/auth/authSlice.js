@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import setAuthToken from "../../../utils/setAuthToken";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { showMessage } from "../../../utils/showMessage";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -11,6 +10,7 @@ const initialState = {
   message: null,
   loading: null,
   onlineUsers: [],
+  rooms: [],
 };
 
 export const registerUser = createAsyncThunk("registerUser", async ({ username, email, password }) => {
@@ -131,6 +131,9 @@ export const authSlice = createSlice({
     getOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload.users;
     },
+    getRooms: (state, action) => {
+      state.rooms = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state, action) => {
@@ -174,35 +177,12 @@ export const authSlice = createSlice({
 
     builder.addCase(addFriend.rejected, (state, action) => {
       state.message = action.payload.error;
-      toast(action.payload.error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        type: "warning",
-        style: {
-          fontSize: "1.8rem",
-        },
-      });
+      showMessage(action.payload.error, "error");
     });
 
     builder.addCase(addFriend.fulfilled, (state, action) => {
       state.message = "Friend added";
-      toast(state.message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        style: {
-          fontSize: "1.8rem",
-        },
-      });
+      showMessage("Friend added", "success");
     });
     builder.addCase(acceptFriend.pending, (state, action) => {
       state.error = "";
@@ -288,5 +268,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout, getOnlineUsers } = authSlice.actions;
+export const { logout, getOnlineUsers, getRooms } = authSlice.actions;
 export default authSlice.reducer;

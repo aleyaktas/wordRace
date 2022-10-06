@@ -26,7 +26,8 @@ function App() {
       setAuthToken(localStorage.token);
     }
   }, []);
-  let findUsername = useSelector((state) => state.auth?.user?.username);
+  let findUsername = useSelector((state) => state?.auth?.user?.username);
+  console.log(findUsername);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -40,16 +41,10 @@ function App() {
       socket.on("online_users", ({ users }) => {
         dispatch(getOnlineUsers({ users }));
       });
-      socket.on(`invited_${findUsername}`, ({ roomId, roomName, roomImage, roomPlayers }) => {
+      socket.on(`invited_${findUsername}`, ({ room }) => {
+        console.log(room);
         setIsOpen(true);
-        setRoom((room) => ({
-          ...room,
-          roomId,
-          roomName,
-          roomImage,
-          roomPlayers,
-          username: findUsername,
-        }));
+        setRoom(room);
       });
     }
   }, [findUsername]);
@@ -85,7 +80,7 @@ function App() {
               <Route path="profile" element={<ProfilePage />} />
               <Route path="friends" element={<FriendsPage />} />
               <Route path="rooms" element={<RoomPage scores={scores} />} />
-              <Route path="rooms/:id" element={<GamePage firstUser="firstUser" secondUser="" />} />
+              <Route path="/rooms/:id" element={<GamePage />} />
               <Route path="/*" element={<RoomPage />} />
               <Route path="/" element={<RoomPage />} />
             </Route>

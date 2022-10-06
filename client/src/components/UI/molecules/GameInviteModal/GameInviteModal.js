@@ -9,18 +9,30 @@ import style from "./GameInviteModal.style";
 import socket from "../../../../utils/socket";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../../store";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { showMessage } from "../../../../utils/showMessage";
 
-const GameInviteModal = ({ isOpen, room, modalClose, roomImage, roomFounder }) => {
+const GameInviteModal = ({ room, isOpen, modalClose }) => {
   const styles = style();
   const username = useAppSelector((state) => state?.auth?.user?.username);
+  const profileImage = useAppSelector((state) => state?.auth?.user?.profileImage);
+
+  const { rooms } = useAppSelector((state) => state?.auth);
   const navigate = useNavigate();
+  const { id, name, image, timer, players, questions } = room;
+  const roomId = id;
   const onClick = () => {
-    let { roomId } = room;
-    socket.emit("join_room", username, roomId);
-    socket.on("room_joined", ({ room }) => {
-      navigate(`/rooms/${roomId}`);
-    });
-    modalClose();
+    const joinRoom = rooms.find((room) => room.id === roomId);
+    if (joinRoom && joinRoom.players.length < 2) {
+      socket.emit("join_room", { user: { username, image: profileImage }, roomId });
+      navigate(`/rooms/${id}`);
+      showMessage("You have joined the room", "success");
+      modalClose();
+    } else {
+      showMessage("This room is full", "warning");
+      modalClose();
+    }
   };
 
   return (
@@ -32,11 +44,11 @@ const GameInviteModal = ({ isOpen, room, modalClose, roomImage, roomFounder }) =
               <Icon name="Close" width="1.8rem" height="1.8rem" color="#8F8F8F" />
             </button>
             <div style={styles.card} className="card">
-              <img src={require(`../../../../assets/images/${roomImage}.png`)} alt={roomImage} width="100%" height="100%" />
+              <img src={image && require(`../../../../assets/images/${image}.png`)} alt={image} width="100%" height="100%" />
             </div>
           </div>
           <div style={styles.cardText}>
-            <Text font="RobotoMedium" text={`${roomFounder} invites you to the game`} color="#6A685E" />
+            <Text font="RobotoMedium" text={players && `${players[0]?.username} invites you to the game`} color="#6A685E" />
           </div>
           <Button
             onClick={onClick}
@@ -59,9 +71,9 @@ GameInviteModal.propTypes = {
 };
 GameInviteModal.defaultProps = {
   isOpen: false,
-  roomName: "Room Name",
-  roomImage: "Bear",
-  roomFounder: "Username",
+  // roomName: "Room Name",
+  // roomImage: "Bear",
+  // roomFounder: "Username",
 };
 
 export default GameInviteModal;

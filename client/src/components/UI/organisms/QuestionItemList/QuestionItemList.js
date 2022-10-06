@@ -14,11 +14,11 @@ const QuestionItemList = ({ options }) => {
     </div>
   );
 };
-QuestionItemList.propTypes = {
-  options: PropTypes.array,
-};
-QuestionItemList.defaultProps = {
-  options: null,
-};
+// QuestionItemList.propTypes = {
+//   options: PropTypes.array,
+// };
+// QuestionItemList.defaultProps = {
+//   options: null,
+// };
 
 export default QuestionItemList;

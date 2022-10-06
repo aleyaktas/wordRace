@@ -26,11 +26,11 @@ const QuestionItem = ({ option, className }) => {
   );
 };
 
-QuestionItem.propTypes = {
-  option: PropTypes.string,
-};
-QuestionItem.defaultProps = {
-  option: null,
-};
+// QuestionItem.propTypes = {
+//   option: PropTypes.string,
+// };
+// QuestionItem.defaultProps = {
+//   option: null,
+// };
 
 export default QuestionItem;
