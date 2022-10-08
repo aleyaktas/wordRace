@@ -1,12 +1,12 @@
 const style = () => ({
   questionList: {
     display: "flex",
-    height: "28rem",
-    width: "60rem",
+    height: "38rem",
+    width: "65rem",
     backgroundColor: "white",
     flexWrap: "wrap",
     alignContent: "space-between",
-    padding: "2rem 0",
+    padding: "4rem 0",
     boxSizing: "border-box",
   },
 });

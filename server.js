@@ -16,6 +16,7 @@ app.use(cors());
 
 const connectDB = require("./config/db");
 const fileUpload = require("express-fileupload");
+const CreateQuestion = require("./utils/CreateQuestion");
 dotenv.config();
 
 connectDB();
@@ -24,7 +25,6 @@ app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/privateWord", privateWordRoute);
 app.use(fileUpload({ useTempFiles: true }));
-
 let rooms = [];
 /* 
   room = 
@@ -33,6 +33,7 @@ let rooms = [];
      name: string;
      image: string;
      timer: number;
+     isPublic: boolean;
      questions: [
       {
         question: string;
@@ -77,6 +78,7 @@ let rooms = [];
 
 */
 let users = [];
+// const scores = [0,10,25,50,100,250,500,1000,2500,5000,10000]
 
 io.on("connection", (socket) => {
   socket.emit("get_rooms", { rooms });
@@ -90,7 +92,7 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("deleted_friend", { username });
   });
 
-  socket.on("create_room", ({ user, roomName, roomId, timer }) => {
+  socket.on("create_room", ({ user, roomName, roomId, timer, isPublic }) => {
     const { username, image } = user;
     socket.join(roomId);
     const createRoom = {
@@ -98,13 +100,16 @@ io.on("connection", (socket) => {
       name: roomName,
       image: "Bear",
       timer,
+      isPublic,
       questions: [],
+      questionIndex: 0,
       players: [
         {
           username,
           image,
-          score: 0,
+          scoreIndex: 0,
           isYourTurn: true,
+          usedJokers: [],
         },
       ],
     };
@@ -121,13 +126,42 @@ io.on("connection", (socket) => {
       room.players.push({
         username,
         image,
-        score: 0,
+        scoreIndex: 0,
         isYourTurn: false,
+        usedJokers: [],
       });
-      socket.emit("room_joined", { room });
-      socket.to(roomId).emit("room_joined", { room });
+      room.questions = CreateQuestion();
+      socket.to(roomId).emit("room_joined", { room, joinUser: username });
+      socket.emit("room_joined", { room, joinUser: username });
       io.emit("get_rooms", { rooms });
     }
+  });
+  socket.on("correct_answer", ({ username, roomId }) => {
+    const room = rooms.find((room) => room.id === roomId);
+    const player = room.players.find((player) => player.username === username);
+    player.scoreIndex += 1;
+    player.isYourTurn = false;
+    const nextPlayer = room.players.find((player) => player.username !== username);
+    const indexNextPlayer = room.players.indexOf(nextPlayer);
+    if (indexNextPlayer) {
+      room.players[indexNextPlayer].isYourTurn = true;
+    }
+    room.questionIndex += 1;
+    socket.to(roomId).emit("correct_answered", { room });
+    socket.emit("correct_answered", { room });
+  });
+  socket.on("wrong_answer", ({ username, roomId }) => {
+    const room = rooms.find((room) => room.id === roomId);
+    const player = room.players.find((player) => player.username === username);
+    room.questionIndex += 1;
+    player.isYourTurn = false;
+    const nextPlayer = room.players.find((player) => player.username !== username);
+    const indexNextPlayer = room.players.indexOf(nextPlayer);
+    if (indexNextPlayer) {
+      room.players[indexNextPlayer].isYourTurn = true;
+    }
+    socket.to(roomId).emit("wrong_answered", { room });
+    socket.emit("wrong_answered", { room });
   });
 
   socket.on("invite_user", ({ username, ownerUser }) => {
@@ -173,6 +207,11 @@ io.on("connection", (socket) => {
         const indexRoom = rooms.indexOf(findRoom);
         rooms.splice(indexRoom, 1);
       }
+      const nextPlayer = findRoom.players.find((player) => player.username !== username);
+      const indexNextPlayer = findRoom.players.indexOf(nextPlayer);
+      if (indexNextPlayer) {
+        findRoom.players[indexNextPlayer].isYourTurn = true;
+      }
       socket.to(findRoom.id).emit("leave_room", { room: findRoom });
       io.emit("get_rooms", { rooms });
     }
@@ -193,7 +232,8 @@ io.on("connection", (socket) => {
       if (index !== -1) {
         console.log("disconnected room");
         room.players.splice(index, 1);
-        socket.to(room.id).emit("leave_room", { room });
+        socket.to(room.id).emit("leave_room", { room, disconnectUser });
+        socket.emit("leave_room", { room, disconnectUser });
         io.emit("get_rooms", { rooms });
       }
     });

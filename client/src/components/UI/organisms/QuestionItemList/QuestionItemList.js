@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import "./style.css";
 import style from "./QuestionItemList.style";
 
-const QuestionItemList = ({ options }) => {
+const QuestionItemList = ({ options, onClick }) => {
   const styles = style();
   return (
     <div style={styles.questionList}>
-      {options.map((option) => (
-        <QuestionItem option={option} />
-      ))}
+      <QuestionItem option={options.a} onClick={() => onClick("a")} />
+      <QuestionItem option={options.b} onClick={() => onClick("b")} />
+      <QuestionItem option={options.c} onClick={() => onClick("c")} />
+      <QuestionItem option={options.d} onClick={() => onClick("d")} />
     </div>
   );
 };

@@ -15,6 +15,7 @@ const style = () => ({
   },
   checkbox: {
     display: "flex",
+    margin: "2rem 0",
   },
 });
 

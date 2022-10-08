@@ -11,7 +11,7 @@ const RoomCardList = () => {
   return (
     <div style={styles.container}>
       {rooms?.map((room) => (
-        <RoomCard room={room} />
+        <>{room.isPublic === true && <RoomCard room={room} />}</>
       ))}
     </div>
   );

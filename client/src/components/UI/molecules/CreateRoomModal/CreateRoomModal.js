@@ -10,16 +10,28 @@ import ModalHeader from "../Modals/ModalHeader/ModalHeader";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../../utils/socket";
 import { useAppSelector } from "../../../../store";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
 const { v4: uuidv4 } = require("uuid");
 
 const CreateRoomModal = ({ isOpen, modalClose }) => {
   const styles = style();
   const [roomName, setRoomName] = useState("");
+  const [timer, setTimer] = useState(20);
+  const [isPublic, setIsPublic] = useState("Public");
   const { username, profileImage } = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const handleChange = (e) => {
     e.preventDefault();
     setRoomName(e.target.value.trim());
+  };
+  const handlePublicChange = (e) => {
+    setIsPublic(e.target.value);
+  };
+  const handleTimerChange = (e) => {
+    setTimer(e.target.value);
   };
 
   const onClick = (e) => {
@@ -32,6 +44,8 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
       },
       roomName,
       roomId,
+      timer,
+      isPublic: isPublic === "Public" ? true : false,
     });
     navigate(`/rooms/${roomId}`);
     modalClose();
@@ -45,8 +59,28 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
           <div style={styles.body}>
             <TextInput value={roomName} onChange={handleChange} className="input" font="InterRegular" placeHolder="Room Name" fontSize="1.8rem" type="text" />
             <div style={styles.checkbox}>
-              <Checkbox className="input" fontSize="1.5rem" margin="2rem 0.8rem 0 0" checboxColor="#709F60" color="#6B5814" text="Public" isCheck />
-              <Checkbox className="input" fontSize="1.5rem" margin="2rem 0 0 0" checboxColor="#709F60" color="#6B5814" text="Private" />
+              <Box sx={{ width: "20%", margin: "0 3rem 0 0" }}>
+                <FormControl fullWidth>
+                  <InputLabel sx={{ fontSize: "2rem" }} variant="standard" htmlFor="uncontrolled-native">
+                    Timer
+                  </InputLabel>
+                  <NativeSelect
+                    onChange={handleTimerChange}
+                    sx={{ fontSize: "1.5rem" }}
+                    defaultValue={30}
+                    inputProps={{
+                      name: "timer",
+                      id: "uncontrolled-native",
+                    }}
+                  >
+                    <option value={10}>10</option>
+                    <option value={20}>15</option>
+                    <option value={30}>20</option>
+                  </NativeSelect>
+                </FormControl>
+              </Box>
+              <Checkbox onChange={handlePublicChange} isCheck className="input" fontSize="1.5rem" margin="2rem 0.8rem 0 0" checboxColor="#709F60" color="#6B5814" text="Public" />
+              <Checkbox onChange={handlePublicChange} className="input" fontSize="1.5rem" margin="2rem 0 0 0" checboxColor="#709F60" color="#6B5814" text="Private" />
             </div>
             <Button className="buttonHoverGold" onClick={onClick} fontSize="1.6rem" margin="2rem 0 0 0" padding="1rem" text="Create" width="100%" buttonColor="#EBD894" />
           </div>

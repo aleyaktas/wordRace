@@ -1,26 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import style from "./QuestionCard.style";
 import QuestionItemList from "../../organisms/QuestionItemList/QuestionItemList";
 import Text from "../../atoms/Text/Text";
 import QuestionJoker from "../QuestionJoker/QuestionJoker";
 
-const QuestionCard = () => {
+const QuestionCard = ({ timer, question, onClick, handleJoker, usedJokers }) => {
   const styles = style();
-  const question = {
-    inner: "What is the answer?",
-    options: ["first option", "second option", "third option", "fourth option"],
-  };
-  const time = "20";
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <Text text={question.inner} fontSize="2rem" color="white" />
+        <Text text={question.question} fontSize="3rem" color="white" />
       </div>
       <div style={styles.body}>
-        <QuestionItemList options={question.options} />
+        <QuestionItemList options={question} onClick={(option) => onClick(option)} />
         <div style={styles.joker}>
-          <QuestionJoker time={time} />
+          <QuestionJoker time={timer} handleJoker={(joker) => handleJoker(joker)} usedJokers={usedJokers} />
         </div>
       </div>
     </div>

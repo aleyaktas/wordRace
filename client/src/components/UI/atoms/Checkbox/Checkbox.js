@@ -8,7 +8,7 @@ const Checkbox = ({ width, height, size, onChange, checboxColor, font, fontSize,
   return (
     <div style={styles.container}>
       <input style={styles.input} className={className} onChange={onChange} type="radio" name="input" value={text} checked={isCheck} />
-      <label style={styles.label} class={font}>
+      <label style={styles.label} className={font}>
         {text}
       </label>
     </div>

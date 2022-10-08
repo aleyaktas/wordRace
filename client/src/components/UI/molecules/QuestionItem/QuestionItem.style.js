@@ -1,7 +1,7 @@
 export const style = () => ({
   container: {
-    width: "30rem",
-    height: "5rem",
+    width: "32rem",
+    height: "6rem",
     textAlign: "-webkit-center",
   },
 });

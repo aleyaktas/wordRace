@@ -3,12 +3,13 @@ import Button from "../../atoms/Button/Button";
 import PropTypes from "prop-types";
 import style from "./QuestionItem.style";
 
-const QuestionItem = ({ option, className }) => {
+const QuestionItem = ({ option, className, onClick }) => {
   const styles = style();
   return (
     <>
       <div style={styles.container}>
         <Button
+          onClick={onClick}
           className="buttonHoverGold"
           text={option}
           fontWeight="600"
@@ -16,7 +17,7 @@ const QuestionItem = ({ option, className }) => {
           fontSize="1.8rem"
           letterSpacing="0.1rem"
           width="80%"
-          height="5rem"
+          height="6rem"
           buttonColor="#E9D8A6"
           padding="1rem 2rem"
           textPosition="center"

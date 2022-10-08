@@ -1,14 +1,13 @@
 const style = () => ({
   container: {
-    width: "60rem",
-    height: "35rem",
-    backgroundColor: "yellow",
+    width: "65rem",
+    height: "46rem",
   },
   header: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "7rem",
+    height: "8rem",
     backgroundColor: "#6EBA9D",
   },
   body: {

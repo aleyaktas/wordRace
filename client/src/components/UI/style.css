@@ -175,10 +175,20 @@ input:checked + .slider:before {
 }
 .firstUser {
   position: absolute;
-  bottom: 2.2rem;
-  display: inline-block
+  bottom: 8.5rem;
+  /* left: -2rem; */
+  right: 18rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  object-fit: cover;
+  border-radius: 50%;
+  display: inline-block;
 }
 .secondUser {
+  width: 3.6rem;
+  height: 3.6rem;
+  object-fit: cover;
+  border-radius: 50%;
   position: absolute;
   bottom: 2.2rem;
   left:18rem;
