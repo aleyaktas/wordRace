@@ -6,12 +6,13 @@ import style from "./QuestionItemList.style";
 
 const QuestionItemList = ({ options, onClick }) => {
   const styles = style();
+
   return (
     <div style={styles.questionList}>
-      <QuestionItem option={options.a} onClick={() => onClick("a")} />
-      <QuestionItem option={options.b} onClick={() => onClick("b")} />
-      <QuestionItem option={options.c} onClick={() => onClick("c")} />
-      <QuestionItem option={options.d} onClick={() => onClick("d")} />
+      <QuestionItem disabled={options.a === "" && true} option={options.a} onClick={() => onClick("a")} />
+      <QuestionItem disabled={options.b === "" && true} option={options.b} onClick={() => onClick("b")} />
+      <QuestionItem disabled={options.c === "" && true} option={options.c} onClick={() => onClick("c")} />
+      <QuestionItem disabled={options.d === "" && true} option={options.d} onClick={() => onClick("d")} />
     </div>
   );
 };

@@ -9,10 +9,10 @@ const QuestionJoker = ({ time, handleJoker, usedJokers }) => {
   return (
     <div style={styles.container}>
       <Button
-        onClick={() => handleJoker(0)}
-        disabled={usedJokers.includes(0)}
-        className="firstJokerButton hoverJoker"
-        buttonColor={usedJokers.includes(0) ? "gray" : "#6EBA9D"}
+        onClick={() => handleJoker("fifty_fifty")}
+        disabled={usedJokers.includes("fifty_fifty")}
+        className={`firstJokerButton ${usedJokers.includes("fifty_fifty") ? "" : "hoverJoker"}`}
+        buttonColor={usedJokers.includes("fifty_fifty") ? "gray" : "#6EBA9D"}
         width="5rem"
         height="5rem"
         borderRadius="5rem"
@@ -24,14 +24,14 @@ const QuestionJoker = ({ time, handleJoker, usedJokers }) => {
         <Text text={time} fontSize="2.5rem" color="white" />
       </div>
       <Button
-        onClick={() => handleJoker(1)}
-        disabled={usedJokers.includes(1)}
-        className="secondJokerButton hoverJoker"
-        buttonColor={usedJokers.includes(1) ? "gray" : "#6EBA9D"}
+        onClick={() => handleJoker("double_chance")}
+        disabled={usedJokers.includes("double_chance")}
+        className={`secondJokerButton ${usedJokers.includes("double_chance") ? "" : "hoverJoker"}`}
+        buttonColor={usedJokers.includes("double_chance") ? "gray" : "#6EBA9D"}
         width="5rem"
         height="5rem"
         borderRadius="5rem"
-        iconName="PassJoker"
+        iconName="DoubleChanceJoker"
         iconSize="5rem"
         iconColor="white"
       />

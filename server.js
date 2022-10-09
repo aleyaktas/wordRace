@@ -138,12 +138,15 @@ io.on("connection", (socket) => {
   });
   socket.on("correct_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
-    const player = room.players.find((player) => player.username === username);
-    player.scoreIndex += 1;
-    player.isYourTurn = false;
+    room.players.forEach((player) => {
+      if (player.username === username) {
+        player.scoreIndex += 1;
+        player.isYourTurn = false;
+      }
+    });
     const nextPlayer = room.players.find((player) => player.username !== username);
     const indexNextPlayer = room.players.indexOf(nextPlayer);
-    if (indexNextPlayer) {
+    if (nextPlayer) {
       room.players[indexNextPlayer].isYourTurn = true;
     }
     room.questionIndex += 1;
@@ -152,16 +155,65 @@ io.on("connection", (socket) => {
   });
   socket.on("wrong_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
-    const player = room.players.find((player) => player.username === username);
-    room.questionIndex += 1;
-    player.isYourTurn = false;
+    room.players.forEach((player) => {
+      if (player.username === username) {
+        player.scoreIndex += 1;
+        player.isYourTurn = false;
+      }
+    });
     const nextPlayer = room.players.find((player) => player.username !== username);
     const indexNextPlayer = room.players.indexOf(nextPlayer);
-    if (indexNextPlayer) {
+    if (nextPlayer) {
       room.players[indexNextPlayer].isYourTurn = true;
     }
+    room.questionIndex += 1;
     socket.to(roomId).emit("wrong_answered", { room });
     socket.emit("wrong_answered", { room });
+  });
+
+  socket.on("fifty_fifty_joker", ({ username, roomId }) => {
+    const room = rooms.find((room) => room.id === roomId);
+    room.players.map((player) => {
+      if (player.username === username) {
+        player.usedJokers.push("fifty_fifty");
+      }
+    });
+    const question = room.questions[room.questionIndex];
+    const answer = question.answer;
+    const wrongAnswers = [];
+    if (answer !== "a") {
+      wrongAnswers.push("a");
+    }
+    if (answer !== "b") {
+      wrongAnswers.push("b");
+    }
+    if (answer !== "c") {
+      wrongAnswers.push("c");
+    }
+    if (answer !== "d") {
+      wrongAnswers.push("d");
+    }
+    const randomIndex = Math.floor(Math.random() * wrongAnswers.length);
+    const wrongAnswer = wrongAnswers[randomIndex];
+    console.log(room.players);
+    wrongAnswers.map((item) => {
+      if (item !== wrongAnswer) {
+        question[item] = "";
+      }
+    });
+    room.questions[room.questionIndex] = question;
+    socket.to(roomId).emit("fifty_fifty_joker_used", { room });
+    socket.emit("fifty_fifty_joker_used", { room });
+  });
+  socket.on("double_chance_joker", ({ username, roomId }) => {
+    const room = rooms.find((room) => room.id === roomId);
+    room.players.map((player) => {
+      if (player.username === username) {
+        player.usedJokers.push("double_chance");
+      }
+    });
+    socket.to(roomId).emit("double_chance_joker_used", { room });
+    socket.emit("double_chance_joker_used", { room });
   });
 
   socket.on("invite_user", ({ username, ownerUser }) => {
@@ -209,7 +261,7 @@ io.on("connection", (socket) => {
       }
       const nextPlayer = findRoom.players.find((player) => player.username !== username);
       const indexNextPlayer = findRoom.players.indexOf(nextPlayer);
-      if (indexNextPlayer) {
+      if (nextPlayer) {
         findRoom.players[indexNextPlayer].isYourTurn = true;
       }
       socket.to(findRoom.id).emit("leave_room", { room: findRoom });

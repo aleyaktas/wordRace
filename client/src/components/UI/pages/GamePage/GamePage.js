@@ -20,8 +20,8 @@ const GamePage = () => {
   const allFriends = useAppSelector((state) => state.auth.user.friends);
   const onlineFriends = onlineUsers.filter((item) => allFriends.some((i) => i.username === item.username));
   const [room, setRoom] = useState({});
+  const [doubleChance, setDoubleChance] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     socket.on("room_created", ({ room }) => {
@@ -53,6 +53,13 @@ const GamePage = () => {
       console.log(room);
       setRoom(room);
     });
+    socket.on("fifty_fifty_joker_used", ({ room }) => {
+      console.log(room);
+      setRoom(room);
+    });
+    socket.on("double_chance_joker_used", ({ room }) => {
+      setRoom(room);
+    });
   }, []);
 
   useEffect(() => {
@@ -70,6 +77,12 @@ const GamePage = () => {
         socket.emit("correct_answer", { username, roomId: room.id });
         return showMessage("Correct Answer", "success");
       }
+      if (doubleChance) {
+        console.log("b");
+        setDoubleChance(false);
+        return showMessage("Wrong Answer", "error");
+      }
+      console.log("c");
       socket.emit("wrong_answer", { username, roomId: room.id });
       showMessage("Wrong Answer", "error");
     }
@@ -77,8 +90,18 @@ const GamePage = () => {
 
   const handleJoker = (joker) => {
     const findMe = room.players.find((player) => player.username === username);
-    if (findMe.isYourTurn) {
+    console.log(joker);
+    console.log(findMe.usedJokers);
+
+    if (findMe.isYourTurn && !findMe.usedJokers.includes(joker)) {
       console.log(joker);
+      if (joker === "fifty_fifty") {
+        socket.emit("fifty_fifty_joker", { username, roomId: room.id });
+      }
+      if (joker === "double_chance") {
+        setDoubleChance(true);
+        socket.emit("double_chance_joker", { username, roomId: room.id });
+      }
     }
   };
 

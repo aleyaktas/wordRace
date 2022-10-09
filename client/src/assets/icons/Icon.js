@@ -20,7 +20,7 @@ import { ReactComponent as OutlinedPlus } from "./Icons/OutlinedPlus.svg";
 import { ReactComponent as LoginUser } from "./Icons/Login.svg";
 import { ReactComponent as RegisterUser } from "./Icons/UserOutlined.svg";
 import { ReactComponent as FiftyPercentJoker } from "./Icons/FiftyPercentJoker.svg";
-import { ReactComponent as PassJoker } from "./Icons/PassJoker.svg";
+import { ReactComponent as DoubleChanceJoker } from "./Icons/DoubleChance.svg";
 import { ReactComponent as Message } from "./Icons/Message.svg";
 import { ReactComponent as Out } from "./Icons/Out.svg";
 import { ReactComponent as Question } from "./Icons/Question.svg";
@@ -52,7 +52,6 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
     LoginUser,
     RegisterUser,
     FiftyPercentJoker,
-    PassJoker,
     Message,
     Out,
     Question,
@@ -62,6 +61,7 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
     ProfileSettings,
     Trash,
     Camera,
+    DoubleChanceJoker,
   };
 
   const IconItem = icons[name];

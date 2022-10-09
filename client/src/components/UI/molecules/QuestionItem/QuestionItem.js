@@ -3,14 +3,15 @@ import Button from "../../atoms/Button/Button";
 import PropTypes from "prop-types";
 import style from "./QuestionItem.style";
 
-const QuestionItem = ({ option, className, onClick }) => {
+const QuestionItem = ({ option, className, onClick, disabled }) => {
   const styles = style();
   return (
     <>
       <div style={styles.container}>
         <Button
           onClick={onClick}
-          className="buttonHoverGold"
+          disabled={disabled}
+          className={!disabled && "buttonHoverGold"}
           text={option}
           fontWeight="600"
           borderRadius="3.6rem"
