@@ -10,7 +10,7 @@ import ScoreCard from "../../molecules/ScoreCard/ScoreCard";
 import { useAppSelector } from "../../../../store";
 import socket from "../../../../utils/socket";
 import { showMessage } from "../../../../utils/showMessage";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const GamePage = () => {
   const styles = style();
@@ -22,6 +22,7 @@ const GamePage = () => {
   const [room, setRoom] = useState({});
   const [doubleChance, setDoubleChance] = useState(false);
   const navigate = useNavigate();
+  const [timeProgress, setTimeProgress] = useState(0);
 
   useEffect(() => {
     socket.on("room_created", ({ room }) => {
@@ -32,6 +33,7 @@ const GamePage = () => {
       console.log(room);
       console.log(username);
       setRoom(room);
+      setTimeProgress(room.timer);
       if (joinUser !== username) {
         showMessage(`${username} has joined the room`, "success");
       }
@@ -48,10 +50,12 @@ const GamePage = () => {
     socket.on("correct_answered", ({ room }) => {
       console.log(room);
       setRoom(room);
+      setTimeProgress(room.timer);
     });
     socket.on("wrong_answered", ({ room }) => {
       console.log(room);
       setRoom(room);
+      setTimeProgress(room.timer);
     });
     socket.on("fifty_fifty_joker_used", ({ room }) => {
       console.log(room);
@@ -68,6 +72,23 @@ const GamePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeProgress((prevProgress) => (prevProgress <= 0 ? 0 : prevProgress - 1));
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (room.players && timeProgress === 0 && room.players.find((player) => player.isYourTurn).username === username) {
+      socket.emit("wrong_answer", { username, roomId: room.id });
+      setTimeProgress(room.timer);
+      showMessage("Time is up!!!", "error");
+    }
+  }, [timeProgress]);
+
   const checkAnswer = (answer) => {
     const findMe = room.players.find((player) => player.username === username);
     if (findMe.isYourTurn) {
@@ -82,7 +103,6 @@ const GamePage = () => {
         setDoubleChance(false);
         return showMessage("Wrong Answer", "error");
       }
-      console.log("c");
       socket.emit("wrong_answer", { username, roomId: room.id });
       showMessage("Wrong Answer", "error");
     }
@@ -149,7 +169,7 @@ const GamePage = () => {
         <div style={styles.container}>
           <SidebarItemList />
           <QuestionCard
-            timer={room?.timer}
+            timer={timeProgress}
             question={room.questions[room.questionIndex]}
             onClick={(option) => checkAnswer(option)}
             handleJoker={(joker) => handleJoker(joker)}

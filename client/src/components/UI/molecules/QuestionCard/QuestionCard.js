@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import style from "./QuestionCard.style";
 import QuestionItemList from "../../organisms/QuestionItemList/QuestionItemList";
 import Text from "../../atoms/Text/Text";
@@ -16,18 +15,11 @@ const QuestionCard = ({ timer, question, onClick, handleJoker, usedJokers }) => 
       <div style={styles.body}>
         <QuestionItemList options={question} onClick={(option) => onClick(option)} />
         <div style={styles.joker}>
-          <QuestionJoker time={timer} handleJoker={(joker) => handleJoker(joker)} usedJokers={usedJokers} />
+          <QuestionJoker timer={timer} handleJoker={(joker) => handleJoker(joker)} usedJokers={usedJokers} />
         </div>
       </div>
     </div>
   );
 };
-
-// QuestionCard.propTypes = {
-//   question: PropTypes.arrayOf(PropTypes.object),
-// };
-// QuestionCard.defaultProps = {
-//   question: null,
-// };
 
 export default QuestionCard;

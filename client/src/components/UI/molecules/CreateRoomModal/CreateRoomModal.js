@@ -31,7 +31,7 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
     setIsPublic(e.target.value);
   };
   const handleTimerChange = (e) => {
-    setTimer(e.target.value);
+    setTimer(parseInt(e.target.value));
   };
 
   const onClick = (e) => {
@@ -67,15 +67,15 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
                   <NativeSelect
                     onChange={handleTimerChange}
                     sx={{ fontSize: "1.5rem" }}
-                    defaultValue={30}
+                    defaultValue={20}
                     inputProps={{
                       name: "timer",
                       id: "uncontrolled-native",
                     }}
                   >
                     <option value={10}>10</option>
-                    <option value={20}>15</option>
-                    <option value={30}>20</option>
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
                   </NativeSelect>
                 </FormControl>
               </Box>

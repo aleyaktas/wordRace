@@ -3,7 +3,7 @@ import Button from "../../atoms/Button/Button";
 import Text from "../../atoms/Text/Text";
 import style from "./QuestionJoker.style";
 
-const QuestionJoker = ({ time, handleJoker, usedJokers }) => {
+const QuestionJoker = ({ timer, handleJoker, usedJokers }) => {
   const styles = style();
 
   return (
@@ -21,7 +21,7 @@ const QuestionJoker = ({ time, handleJoker, usedJokers }) => {
         iconColor="white"
       />
       <div style={styles.time}>
-        <Text text={time} fontSize="2.5rem" color="white" />
+        <Text text={timer} fontSize="3rem" color="white" />
       </div>
       <Button
         onClick={() => handleJoker("double_chance")}
