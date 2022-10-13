@@ -19,12 +19,14 @@ const RoomPage = ({ scores }) => {
     socket.on("get_rooms", ({ rooms }) => {
       setRooms(rooms);
       dispatch(getRooms(rooms));
+      console.log(rooms);
     });
   }, []);
 
+  let publicRoomCount = rooms.filter((room) => room.isPublic).length;
   return (
     <div>
-      {rooms && rooms.length > 0 && (
+      {rooms && rooms.length > 0 && publicRoomCount > 0 && (
         <div style={styles.container}>
           <OnlineRoomCard />
           <div style={styles.scoreCard}>
@@ -41,7 +43,7 @@ const RoomPage = ({ scores }) => {
           </div>
         </div>
       )}
-      {rooms.length === 0 && (
+      {publicRoomCount === 0 && (
         <div style={styles.containerNoRoom}>
           <div style={styles.roomText}>
             <Text text="😕 Currently there are no online rooms" font="PoppinsRegular" />

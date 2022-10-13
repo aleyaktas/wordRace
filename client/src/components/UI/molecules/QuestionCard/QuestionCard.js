@@ -10,7 +10,7 @@ const QuestionCard = ({ timer, question, onClick, handleJoker, usedJokers }) => 
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <Text text={question.question} fontSize="3rem" color="white" />
+        <Text text={question?.question} fontSize="3rem" color="white" />
       </div>
       <div style={styles.body}>
         <QuestionItemList options={question} onClick={(option) => onClick(option)} />

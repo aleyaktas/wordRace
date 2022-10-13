@@ -21,7 +21,7 @@ const QuestionJoker = ({ timer, handleJoker, usedJokers }) => {
         iconColor="white"
       />
       <div style={styles.time}>
-        <Text text={timer} fontSize="3rem" color="white" />
+        <Text text={timer} fontSize="2.5rem" color="white" />
       </div>
       <Button
         onClick={() => handleJoker("double_chance")}

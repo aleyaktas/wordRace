@@ -11,15 +11,19 @@ import { useAppSelector } from "../../../../store";
 import socket from "../../../../utils/socket";
 import { showMessage } from "../../../../utils/showMessage";
 import { useNavigate } from "react-router-dom";
+import PlayAgainModal from "../../molecules/PlayAgainModal/PlayAgainModal";
 
 const GamePage = () => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenPlayAgain, setIsOpenPlayAgain] = useState(false);
+  const [pause, setPause] = useState(false);
   const { username } = useAppSelector((state) => state.auth.user);
   const onlineUsers = useAppSelector((state) => state.auth.onlineUsers.filter((user) => user.username !== username));
   const allFriends = useAppSelector((state) => state.auth.user.friends);
   const onlineFriends = onlineUsers.filter((item) => allFriends.some((i) => i.username === item.username));
   const [room, setRoom] = useState({});
+  const [gameResult, setGameResult] = useState("");
   const [doubleChance, setDoubleChance] = useState(false);
   const navigate = useNavigate();
   const [timeProgress, setTimeProgress] = useState(0);
@@ -33,7 +37,9 @@ const GamePage = () => {
       console.log(room);
       console.log(username);
       setRoom(room);
+      setPause(false);
       setTimeProgress(room.timer);
+
       if (joinUser !== username) {
         showMessage(`${username} has joined the room`, "success");
       }
@@ -49,13 +55,28 @@ const GamePage = () => {
     });
     socket.on("correct_answered", ({ room }) => {
       console.log(room);
-      setRoom(room);
-      setTimeProgress(room.timer);
+      console.log(room.questionIndex);
+      console.log(room.questions.length - 1);
+
+      if (room.questionIndex <= room.questions.length - 1) {
+        setTimeProgress(room.timer);
+        setRoom(room);
+      }
     });
     socket.on("wrong_answered", ({ room }) => {
       console.log(room);
-      setRoom(room);
-      setTimeProgress(room.timer);
+      console.log(room.questionIndex);
+      console.log(room.questions.length);
+      // if (room.questionIndex === 20) {
+      //   socket.emit("game_over", { roomId: room.id });
+      // } else {
+      //   setTimeProgress(room.timer);
+      //   setRoom(room);
+      // }
+      if (room.questionIndex <= room.questions.length - 1) {
+        setTimeProgress(room.timer);
+        setRoom(room);
+      }
     });
     socket.on("fifty_fifty_joker_used", ({ room }) => {
       console.log(room);
@@ -63,6 +84,30 @@ const GamePage = () => {
     });
     socket.on("double_chance_joker_used", ({ room }) => {
       setRoom(room);
+    });
+    socket.on("game_finished", ({ result }) => {
+      setPause(true);
+      {
+        result === "draw" ? setGameResult("draw") : setGameResult(result.username);
+      }
+      setIsOpenPlayAgain(true);
+    });
+    socket.on("started_play_again", ({ room, isReadyCount }) => {
+      const findMe = room.players.find((player) => player.username === username);
+      if (isReadyCount === 1) {
+        showMessage("Waiting for other player to start play again", "info");
+        setPause(true);
+      } else if (isReadyCount === 2) {
+        setRoom(room);
+        setTimeProgress(room.timer);
+        setPause(false);
+      }
+    });
+    socket.on("opponent_quit", ({ username, room }) => {
+      setRoom(room);
+      showMessage(`${username} has left the room`, "info");
+
+      console.log(room);
     });
   }, []);
 
@@ -82,10 +127,10 @@ const GamePage = () => {
   }, []);
 
   useEffect(() => {
-    if (room.players && timeProgress === 0 && room.players.find((player) => player.isYourTurn).username === username) {
+    if (room.players && timeProgress === 0 && room.players.find((player) => player.isYourTurn).username === username && !pause) {
       socket.emit("wrong_answer", { username, roomId: room.id });
       setTimeProgress(room.timer);
-      showMessage("Time is up!!!", "error");
+      showMessage("Time is up!", "error");
     }
   }, [timeProgress]);
 
@@ -93,7 +138,12 @@ const GamePage = () => {
     const findMe = room.players.find((player) => player.username === username);
     if (findMe.isYourTurn) {
       console.log(answer);
+
       console.log(room.questions[room.questionIndex].answer);
+      if (room.questionIndex === 19) {
+        socket.emit("game_over", { roomId: room.id });
+        setRoom(room);
+      }
       if (answer === room.questions[room.questionIndex].answer) {
         socket.emit("correct_answer", { username, roomId: room.id });
         return showMessage("Correct Answer", "success");
@@ -105,6 +155,16 @@ const GamePage = () => {
       }
       socket.emit("wrong_answer", { username, roomId: room.id });
       showMessage("Wrong Answer", "error");
+    }
+  };
+
+  const onClickAgainGame = (value) => {
+    setIsOpenPlayAgain(false);
+    if (value === "yes") {
+      socket.emit("play_again", { roomId: room.id, username });
+    } else {
+      navigate("/rooms");
+      socket.emit("quit_game", { roomId: room.id, username });
     }
   };
 
@@ -169,15 +229,24 @@ const GamePage = () => {
         <div style={styles.container}>
           <SidebarItemList />
           <QuestionCard
-            timer={timeProgress}
+            timer={room.players.find((player) => player.username === username).isYourTurn && !pause ? timeProgress : pause ? 0 : "Wait"}
+            // timer={pause === true ? 0 : room.players.find(plsyer)  : timeProgress}
             question={room.questions[room.questionIndex]}
             onClick={(option) => checkAnswer(option)}
             handleJoker={(joker) => handleJoker(joker)}
             usedJokers={room.players.find((player) => player.username === username).usedJokers}
           />
-          <ScoreCard iconName="User" room={room} />
+          <ScoreCard firstUser={room.players[0]} secondUser={room.players[1]} />
         </div>
       )}
+      <PlayAgainModal
+        onClick={(value) => onClickAgainGame(value)}
+        gameResult={gameResult}
+        isOpen={isOpenPlayAgain}
+        setIsOpen={setIsOpenPlayAgain}
+        modalClose={() => setIsOpenPlayAgain(false)}
+        username={username}
+      />
     </div>
   );
 };

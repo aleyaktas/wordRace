@@ -114,6 +114,19 @@ input:checked + .slider:before {
   color: white !important;
   transition: 0.3s;
 }
+.buttonHoverGoldenYellow:hover {
+  border: none !important;
+
+  background-color: #EBD894 !important;
+  transition: 0.3s;
+}
+.buttonHoverGoldenYellow:hover p{
+  transition: 0.3s;
+}
+.buttonHoverGoldenYellow:hover svg{
+  color: white !important;
+  transition: 0.3s;
+}
 .buttonHoverYellow:hover {
   background-color: white !important;
   transition: 0.3s;
@@ -174,10 +187,10 @@ input:checked + .slider:before {
   left: 75% !important;
 }
 .firstUser {
-  position: absolute;
-  bottom: 8.5rem;
+  /* position: absolute; */
+  /* bottom: 8.5rem; */
   /* left: -2rem; */
-  right: 18rem;
+  /* right: 18rem; */
   width: 3.6rem;
   height: 3.6rem;
   object-fit: cover;
@@ -189,9 +202,10 @@ input:checked + .slider:before {
   height: 3.6rem;
   object-fit: cover;
   border-radius: 50%;
-  position: absolute;
-  bottom: 2.2rem;
-  left:18rem;
+  /* position: absolute; */
+  /* bottom: 2.2rem;
+  left:18rem; */
+  /* left: 18rem; */
   display: inline-block;
 }
 .input::placeholder {

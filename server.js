@@ -78,6 +78,7 @@ let rooms = [];
 
 */
 let users = [];
+let isReadyCount = 0;
 // const scores = [0,10,25,50,100,250,500,1000,2500,5000,10000]
 
 io.on("connection", (socket) => {
@@ -121,6 +122,7 @@ io.on("connection", (socket) => {
   socket.on("join_room", ({ user, roomId }) => {
     const { username, image } = user;
     const room = rooms.find((room) => room.id === roomId);
+    isReadyCount = 0;
     if (room && room.players.length < 2) {
       socket.join(roomId);
       room.players.push({
@@ -136,6 +138,52 @@ io.on("connection", (socket) => {
       io.emit("get_rooms", { rooms });
     }
   });
+
+  socket.on("play_again", ({ roomId, username }) => {
+    console.log("play_again");
+    const room = rooms.find((room) => room.id === roomId);
+    console.log("ready 1", isReadyCount);
+    if (room) {
+      room.questionIndex = 0;
+      console.log(room.questionIndex);
+      room.players.forEach((player) => {
+        if (player.username === username) {
+          player.scoreIndex = 0;
+          player.usedJokers = [];
+          isReadyCount += 1;
+          console.log("ready", isReadyCount);
+        }
+        room.questions = CreateQuestion();
+      });
+      room.players[0].isYourTurn = true;
+    }
+
+    if (isReadyCount === 1) {
+      room.players.forEach((player) => {
+        {
+          player.username === username && player.isYourTurn === true;
+        }
+      });
+      socket.emit("started_play_again", { room, isReadyCount });
+    } else if (isReadyCount === 2) {
+      io.to(roomId).emit("started_play_again", { room, isReadyCount });
+      isReadyCount = 0;
+    }
+    console.log(isReadyCount);
+  });
+
+  socket.on("quit_game", ({ roomId, username }) => {
+    const room = rooms.find((room) => room.id === roomId);
+    const player = room.players.find((player) => player.username === username);
+    if (room) {
+      if (player) {
+        room.players = room.players.filter((player) => player.username !== username);
+      }
+
+      socket.to(roomId).emit("opponent_quit", { username, room });
+    }
+  });
+
   socket.on("correct_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
     room.players.forEach((player) => {
@@ -149,7 +197,10 @@ io.on("connection", (socket) => {
     if (nextPlayer) {
       room.players[indexNextPlayer].isYourTurn = true;
     }
-    room.questionIndex += 1;
+    if (room.questionIndex < room.questions.length - 1) {
+      room.questionIndex += 1;
+    }
+    console.log(room.questionIndex);
     socket.to(roomId).emit("correct_answered", { room });
     socket.emit("correct_answered", { room });
   });
@@ -157,7 +208,6 @@ io.on("connection", (socket) => {
     const room = rooms.find((room) => room.id === roomId);
     room.players.forEach((player) => {
       if (player.username === username) {
-        player.scoreIndex += 1;
         player.isYourTurn = false;
       }
     });
@@ -166,9 +216,28 @@ io.on("connection", (socket) => {
     if (nextPlayer) {
       room.players[indexNextPlayer].isYourTurn = true;
     }
-    room.questionIndex += 1;
+    if (room.questionIndex < room.questions.length - 1) {
+      room.questionIndex += 1;
+    }
+    console.log(room.questionIndex);
     socket.to(roomId).emit("wrong_answered", { room });
     socket.emit("wrong_answered", { room });
+  });
+  socket.on("game_over", ({ roomId }) => {
+    const room = rooms.find((room) => room.id === roomId);
+    let result;
+    //find winner player
+    result = room.players.reduce((prev, current) => (prev.scoreIndex > current.scoreIndex ? prev : current));
+    //find equal score players
+    const equalScorePlayers = room.players.filter((player) => player.scoreIndex === result.scoreIndex);
+
+    if (equalScorePlayers.length > 1) {
+      result = "draw";
+    }
+
+    console.log("a");
+    socket.to(roomId).emit("game_finished", { result, room });
+    socket.emit("game_finished", { result, room });
   });
 
   socket.on("fifty_fifty_joker", ({ username, roomId }) => {
@@ -202,7 +271,6 @@ io.on("connection", (socket) => {
       }
     });
     room.questions[room.questionIndex] = question;
-    socket.to(roomId).emit("fifty_fifty_joker_used", { room });
     socket.emit("fifty_fifty_joker_used", { room });
   });
   socket.on("double_chance_joker", ({ username, roomId }) => {
@@ -212,7 +280,6 @@ io.on("connection", (socket) => {
         player.usedJokers.push("double_chance");
       }
     });
-    socket.to(roomId).emit("double_chance_joker_used", { room });
     socket.emit("double_chance_joker_used", { room });
   });
 
