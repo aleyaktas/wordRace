@@ -229,5 +229,28 @@ router.post("/editProfile", auth, async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-}),
-  (module.exports = router);
+});
+
+// GET api/auth/getTopScores
+// Get top 10 scores
+// Public
+router.get("/getTopScores", async (req, res) => {
+  let topScores = await User.find().sort({ score: -1 }).limit(10);
+  res.send(topScores);
+});
+
+// GET api/auth/getScore
+// Get own score
+// Private
+router.get("/getScore", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (user) {
+      res.send(user.score.toString());
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+module.exports = router;

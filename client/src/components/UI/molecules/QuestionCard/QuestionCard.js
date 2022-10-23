@@ -3,9 +3,11 @@ import style from "./QuestionCard.style";
 import QuestionItemList from "../../organisms/QuestionItemList/QuestionItemList";
 import Text from "../../atoms/Text/Text";
 import QuestionJoker from "../QuestionJoker/QuestionJoker";
+import MessageBox from "../MessageBox/MessageBox";
 
-const QuestionCard = ({ timer, question, onClick, handleJoker, usedJokers }) => {
-  const styles = style();
+const QuestionCard = ({ username, messages, timer, question, onClick, handleJoker, usedJokers }) => {
+  const styles = style({ length: messages.length });
+  var scroll = document.getElementById("scroll");
 
   return (
     <div style={styles.container}>
@@ -17,6 +19,11 @@ const QuestionCard = ({ timer, question, onClick, handleJoker, usedJokers }) => 
         <div style={styles.joker}>
           <QuestionJoker timer={timer} handleJoker={(joker) => handleJoker(joker)} usedJokers={usedJokers} />
         </div>
+      </div>
+      <div id="scroll" style={styles.messagesContainer}>
+        {messages.length > 0 &&
+          (((scroll.scrollTop = scroll.scrollHeight), scroll.scrollIntoView({ behavior: "smooth" })),
+          messages.map((item, index) => <MessageBox image={item.img} message={item.msg} isOwnUser={item.username === username ? true : false} username={username} />))}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import Icon from "../../../../assets/icons/Icon";
 import { storage } from "../../../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { editProfile } from "../../../../store/features/auth/authSlice";
+import { getScore } from "./actions";
 
 const ProfilePage = () => {
   const styles = style();
@@ -15,8 +16,14 @@ const ProfilePage = () => {
   const [image, setImage] = useState(profileImage);
   const [showImage, setShowImage] = useState(profileImage);
   const [isChecked, setIsChecked] = useState(false);
+  const [score, setScore] = useState(0);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    getScore(setScore);
+  }, []);
+
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);

@@ -13,6 +13,8 @@ const initialState = {
   rooms: [],
 };
 
+const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
+
 export const registerUser = createAsyncThunk("registerUser", async ({ username, email, password }) => {
   const config = {
     headers: {
@@ -116,6 +118,7 @@ export const editProfile = createAsyncThunk("editProfile", async ({ url }) => {
   const res = await axios.post("/api/auth/editProfile", body, config);
   return res.data;
 });
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,

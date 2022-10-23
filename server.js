@@ -17,6 +17,7 @@ app.use(cors());
 const connectDB = require("./config/db");
 const fileUpload = require("express-fileupload");
 const CreateQuestion = require("./utils/CreateQuestion");
+const User = require("./models/User");
 dotenv.config();
 
 connectDB();
@@ -79,16 +80,18 @@ let rooms = [];
 */
 let users = [];
 let isReadyCount = 0;
-// const scores = [0,10,25,50,100,250,500,1000,2500,5000,10000]
+const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
 
 io.on("connection", (socket) => {
   socket.emit("get_rooms", { rooms });
   socket.on("friend_request", ({ username }) => {
     socket.broadcast.emit("incoming_request", { username });
   });
+
   socket.on("friend_accept", ({ username }) => {
     socket.broadcast.emit("accepted_request", { username });
   });
+
   socket.on("friend_delete", ({ username }) => {
     socket.broadcast.emit("deleted_friend", { username });
   });
@@ -104,6 +107,7 @@ io.on("connection", (socket) => {
       isPublic,
       questions: [],
       questionIndex: 0,
+      messages: [],
       players: [
         {
           username,
@@ -122,7 +126,7 @@ io.on("connection", (socket) => {
   socket.on("join_room", ({ user, roomId }) => {
     const { username, image } = user;
     const room = rooms.find((room) => room.id === roomId);
-    isReadyCount = 0;
+    isReadyCount += 1;
     if (room && room.players.length < 2) {
       socket.join(roomId);
       room.players.push({
@@ -136,27 +140,26 @@ io.on("connection", (socket) => {
       socket.to(roomId).emit("room_joined", { room, joinUser: username });
       socket.emit("room_joined", { room, joinUser: username });
       io.emit("get_rooms", { rooms });
+      isReadyCount = 0;
     }
   });
 
   socket.on("play_again", ({ roomId, username }) => {
     console.log("play_again");
     const room = rooms.find((room) => room.id === roomId);
-    console.log("ready 1", isReadyCount);
     if (room) {
       room.questionIndex = 0;
-      console.log(room.questionIndex);
       room.players.forEach((player) => {
         if (player.username === username) {
           player.scoreIndex = 0;
           player.usedJokers = [];
           isReadyCount += 1;
-          console.log("ready", isReadyCount);
         }
         room.questions = CreateQuestion();
       });
       room.players[0].isYourTurn = true;
     }
+    console.log(isReadyCount);
 
     if (isReadyCount === 1) {
       room.players.forEach((player) => {
@@ -169,7 +172,7 @@ io.on("connection", (socket) => {
       io.to(roomId).emit("started_play_again", { room, isReadyCount });
       isReadyCount = 0;
     }
-    console.log(isReadyCount);
+    console.log(room.players);
   });
 
   socket.on("quit_game", ({ roomId, username }) => {
@@ -179,7 +182,7 @@ io.on("connection", (socket) => {
       if (player) {
         room.players = room.players.filter((player) => player.username !== username);
       }
-
+      // console.log(room.players);
       socket.to(roomId).emit("opponent_quit", { username, room });
     }
   });
@@ -200,10 +203,10 @@ io.on("connection", (socket) => {
     if (room.questionIndex < room.questions.length - 1) {
       room.questionIndex += 1;
     }
-    console.log(room.questionIndex);
     socket.to(roomId).emit("correct_answered", { room });
     socket.emit("correct_answered", { room });
   });
+
   socket.on("wrong_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
     room.players.forEach((player) => {
@@ -219,10 +222,10 @@ io.on("connection", (socket) => {
     if (room.questionIndex < room.questions.length - 1) {
       room.questionIndex += 1;
     }
-    console.log(room.questionIndex);
     socket.to(roomId).emit("wrong_answered", { room });
     socket.emit("wrong_answered", { room });
   });
+
   socket.on("game_over", ({ roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
     let result;
@@ -235,7 +238,16 @@ io.on("connection", (socket) => {
       result = "draw";
     }
 
-    console.log("a");
+    room.players.map(async (player) => {
+      const user = await User.findOne({ username: player.username });
+      if (user) {
+        user.score += scores[player.scoreIndex];
+        await user.save();
+      }
+    });
+
+    console.log("game over");
+    console.log(room.players);
     socket.to(roomId).emit("game_finished", { result, room });
     socket.emit("game_finished", { result, room });
   });
@@ -273,6 +285,7 @@ io.on("connection", (socket) => {
     room.questions[room.questionIndex] = question;
     socket.emit("fifty_fifty_joker_used", { room });
   });
+
   socket.on("double_chance_joker", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
     room.players.map((player) => {
@@ -281,6 +294,19 @@ io.on("connection", (socket) => {
       }
     });
     socket.emit("double_chance_joker_used", { room });
+  });
+
+  socket.on("send_message", ({ username, roomId, msg }) => {
+    const room = rooms.find((room) => room.id === roomId);
+    const findMe = room.players.find((player) => player.username === username);
+    const message = {
+      username,
+      msg,
+      img: findMe.image,
+    };
+    room.messages.push(message);
+    socket.to(roomId).emit("message_received", { message });
+    socket.emit("message_received", { message });
   });
 
   socket.on("invite_user", ({ username, ownerUser }) => {
@@ -303,6 +329,7 @@ io.on("connection", (socket) => {
       socket.broadcast.emit("online_users", { users });
     }
   });
+
   socket.on("logout_user", ({ username }) => {
     let indexUser = users.findIndex((x) => x.username === username);
     if (indexUser !== -1) {
@@ -315,16 +342,17 @@ io.on("connection", (socket) => {
   socket.on("left_room", ({ username }) => {
     //find room according to username
     const findRoom = rooms.find((room) => room.players.find((player) => player.username === username));
-    console.log(findRoom?.players);
+    // console.log(findRoom?.players);
     if (findRoom) {
       //player delete according to username
       const findPlayer = findRoom.players.find((player) => player.username === username);
       const indexPlayer = findRoom.players.indexOf(findPlayer);
       findRoom.players.splice(indexPlayer, 1);
-      console.log(findRoom?.players);
+      // console.log(findRoom?.players);
       if (findRoom.players.length === 0) {
         const indexRoom = rooms.indexOf(findRoom);
         rooms.splice(indexRoom, 1);
+        return io.emit("get_rooms", { rooms });
       }
       const nextPlayer = findRoom.players.find((player) => player.username !== username);
       const indexNextPlayer = findRoom.players.indexOf(nextPlayer);
@@ -332,6 +360,7 @@ io.on("connection", (socket) => {
         findRoom.players[indexNextPlayer].isYourTurn = true;
       }
       socket.to(findRoom.id).emit("leave_room", { room: findRoom });
+      socket.emit("leave_room", { room: findRoom });
       io.emit("get_rooms", { rooms });
     }
   });
@@ -347,7 +376,7 @@ io.on("connection", (socket) => {
 
     rooms.forEach((room) => {
       let index = room.players.findIndex((x) => x.username === disconnectUser);
-      console.log(index);
+      // console.log(index);
       if (index !== -1) {
         console.log("disconnected room");
         room.players.splice(index, 1);

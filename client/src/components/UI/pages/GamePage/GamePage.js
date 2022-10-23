@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../atoms/Button/Button";
 import Text from "../../atoms/Text/Text";
 import style from "./GamePage.style";
@@ -7,7 +7,7 @@ import FriendItemListModal from "../../molecules/FriendItemListModal/FriendItemL
 import SidebarItemList from "../../organisms/SidebarItemList/SidebarItemList";
 import QuestionCard from "../../molecules/QuestionCard/QuestionCard";
 import ScoreCard from "../../molecules/ScoreCard/ScoreCard";
-import { useAppSelector } from "../../../../store";
+import { useAppDispatch, useAppSelector } from "../../../../store";
 import socket from "../../../../utils/socket";
 import { showMessage } from "../../../../utils/showMessage";
 import { useNavigate } from "react-router-dom";
@@ -15,18 +15,27 @@ import PlayAgainModal from "../../molecules/PlayAgainModal/PlayAgainModal";
 
 const GamePage = () => {
   const styles = style();
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMsgBox, setIsOpenMsgBox] = useState(false);
+
   const [isOpenPlayAgain, setIsOpenPlayAgain] = useState(false);
+  const chatRef = useRef();
   const [pause, setPause] = useState(false);
+  const [room, setRoom] = useState({});
+  const [gameResult, setGameResult] = useState("");
+  const [doubleChance, setDoubleChance] = useState(false);
+  const [timeProgress, setTimeProgress] = useState(0);
+  const [msg, setMsg] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const { username } = useAppSelector((state) => state.auth.user);
   const onlineUsers = useAppSelector((state) => state.auth.onlineUsers.filter((user) => user.username !== username));
   const allFriends = useAppSelector((state) => state.auth.user.friends);
   const onlineFriends = onlineUsers.filter((item) => allFriends.some((i) => i.username === item.username));
-  const [room, setRoom] = useState({});
-  const [gameResult, setGameResult] = useState("");
-  const [doubleChance, setDoubleChance] = useState(false);
-  const navigate = useNavigate();
-  const [timeProgress, setTimeProgress] = useState(0);
 
   useEffect(() => {
     socket.on("room_created", ({ room }) => {
@@ -39,6 +48,7 @@ const GamePage = () => {
       setRoom(room);
       setPause(false);
       setTimeProgress(room.timer);
+      console.log(room);
 
       if (joinUser !== username) {
         showMessage(`${username} has joined the room`, "success");
@@ -87,14 +97,13 @@ const GamePage = () => {
     });
     socket.on("game_finished", ({ result }) => {
       setPause(true);
-      {
-        result === "draw" ? setGameResult("draw") : setGameResult(result.username);
-      }
+      result === "draw" ? setGameResult("draw") : setGameResult(result.username);
       setIsOpenPlayAgain(true);
     });
+
     socket.on("started_play_again", ({ room, isReadyCount }) => {
       const findMe = room.players.find((player) => player.username === username);
-      if (isReadyCount === 1) {
+      if (isReadyCount === 1 && room.players.length === 1) {
         showMessage("Waiting for other player to start play again", "info");
         setPause(true);
       } else if (isReadyCount === 2) {
@@ -108,6 +117,9 @@ const GamePage = () => {
       showMessage(`${username} has left the room`, "info");
 
       console.log(room);
+    });
+    socket.on("message_received", ({ message }) => {
+      setMessages((oldMessages) => [...oldMessages, message]);
     });
   }, []);
 
@@ -127,12 +139,24 @@ const GamePage = () => {
   }, []);
 
   useEffect(() => {
-    if (room.players && timeProgress === 0 && room.players.find((player) => player.isYourTurn).username === username && !pause) {
+    if (room.players && timeProgress === 0 && room.players.find((player) => player.isYourTurn)?.username === username && !pause) {
       socket.emit("wrong_answer", { username, roomId: room.id });
       setTimeProgress(room.timer);
       showMessage("Time is up!", "error");
     }
   }, [timeProgress]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (chatRef.current && !chatRef.current.contains(event.target)) {
+        setIsOpenMsgBox(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [chatRef]);
 
   const checkAnswer = (answer) => {
     const findMe = room.players.find((player) => player.username === username);
@@ -140,21 +164,23 @@ const GamePage = () => {
       console.log(answer);
 
       console.log(room.questions[room.questionIndex].answer);
-      if (room.questionIndex === 19) {
-        socket.emit("game_over", { roomId: room.id });
-        setRoom(room);
-      }
       if (answer === room.questions[room.questionIndex].answer) {
         socket.emit("correct_answer", { username, roomId: room.id });
-        return showMessage("Correct Answer", "success");
+        showMessage("Correct Answer", "success");
+      }
+      if (room.questionIndex === 19) {
+        socket.emit("game_over", { roomId: room.id });
+        // setRoom(room);
       }
       if (doubleChance) {
         console.log("b");
         setDoubleChance(false);
         return showMessage("Wrong Answer", "error");
       }
-      socket.emit("wrong_answer", { username, roomId: room.id });
-      showMessage("Wrong Answer", "error");
+      if (answer !== room.questions[room.questionIndex].answer) {
+        socket.emit("wrong_answer", { username, roomId: room.id });
+        showMessage("Wrong Answer", "error");
+      }
     }
   };
 
@@ -165,6 +191,25 @@ const GamePage = () => {
     } else {
       navigate("/rooms");
       socket.emit("quit_game", { roomId: room.id, username });
+    }
+  };
+
+  const onClickSidebarItem = (sidebarItem) => {
+    console.log(sidebarItem);
+    if (sidebarItem === "Message") {
+      setIsOpenMsgBox(true);
+    }
+  };
+
+  const handleMessageChange = (e) => {
+    setMsg(e.target.value);
+  };
+
+  const onClickSendMsg = () => {
+    if (msg.trim() !== "") {
+      socket.emit("send_message", { username, roomId: room.id, msg });
+      setMsg("");
+      setIsOpenMsgBox(false);
     }
   };
 
@@ -227,16 +272,26 @@ const GamePage = () => {
       )}
       {room && room.players && room.players.length === 2 && (
         <div style={styles.container}>
-          <SidebarItemList />
+          <SidebarItemList
+            onClickSend={onClickSendMsg}
+            onChangeMsg={(e) => handleMessageChange(e)}
+            isOpen={isOpenMsgBox}
+            onClick={(sidebarItem) => onClickSidebarItem(sidebarItem)}
+            chatRef={chatRef}
+          />
           <QuestionCard
+            username={username}
+            messages={messages}
             timer={room.players.find((player) => player.username === username).isYourTurn && !pause ? timeProgress : pause ? 0 : "Wait"}
-            // timer={pause === true ? 0 : room.players.find(plsyer)  : timeProgress}
             question={room.questions[room.questionIndex]}
             onClick={(option) => checkAnswer(option)}
             handleJoker={(joker) => handleJoker(joker)}
             usedJokers={room.players.find((player) => player.username === username).usedJokers}
           />
-          <ScoreCard firstUser={room.players[0]} secondUser={room.players[1]} />
+          <ScoreCard
+            firstUser={room.players[0].username === username ? room.players[1] : room.players[0]}
+            secondUser={room.players[1].username === username ? room.players[1] : room.players[0]}
+          />
         </div>
       )}
       <PlayAgainModal

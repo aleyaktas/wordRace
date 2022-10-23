@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import style from "./PlayAgainModal.style";
 import Button from "../../atoms/Button/Button";
 import ModalHeader from "../Modals/ModalHeader/ModalHeader";
-import { deleteFriend, getFriends } from "../../../../store/features/auth/authSlice";
+import { deleteFriend, editGameHistory, getFriends } from "../../../../store/features/auth/authSlice";
 import { useAppDispatch } from "../../../../store";
 import socket from "../../../../utils/socket";
 import { useNavigate } from "react-router-dom";

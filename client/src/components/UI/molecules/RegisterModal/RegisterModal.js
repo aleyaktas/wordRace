@@ -24,11 +24,11 @@ const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email, password } = formData;
-    dispatch(registerUser({ username, email, password }));
-    dispatch(getUser());
+    await dispatch(registerUser({ username, email, password }));
+    await dispatch(getUser());
     setFormData({ username: "", email: "", password: "" });
     navigate("/rooms");
     modalClose();

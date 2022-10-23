@@ -7,11 +7,13 @@ import style from "./RoomPage.style";
 import socket from "../../../../utils/socket";
 import { useAppDispatch } from "../../../../store";
 import { getRooms } from "../../../../store/features/auth/authSlice";
+import { getTopScores } from "./actions";
 
 const RoomPage = ({ scores }) => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
   const [rooms, setRooms] = useState([]);
+  const [topScores, setTopScores] = useState([]);
 
   const dispatch = useAppDispatch();
 
@@ -21,6 +23,7 @@ const RoomPage = ({ scores }) => {
       dispatch(getRooms(rooms));
       console.log(rooms);
     });
+    getTopScores(setTopScores);
   }, []);
 
   let publicRoomCount = rooms.filter((room) => room.isPublic).length;
@@ -33,10 +36,10 @@ const RoomPage = ({ scores }) => {
             <div style={styles.text}>
               <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />
             </div>
-            {scores.map((score, index) => {
+            {topScores.map((player, index) => {
               return (
                 <div key={index} style={styles.score}>
-                  <Text font="InterSemiBold" fontSize="1.8rem" text={`${index + 1}. ${score.name} ${score.score}`} />
+                  <Text font="InterSemiBold" fontSize="1.8rem" text={`${index + 1}. ${player.username} ${player.score}`} />
                 </div>
               );
             })}
@@ -69,10 +72,10 @@ const RoomPage = ({ scores }) => {
             <div style={styles.text}>
               <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />
             </div>
-            {scores.map((score, index) => {
+            {topScores.map((player, index) => {
               return (
                 <div key={index} style={styles.score}>
-                  <Text font="InterSemiBold" fontSize="1.8rem" text={`${index + 1}. ${score.name} ${score.score}`} />
+                  <Text font="InterSemiBold" fontSize="1.8rem" text={`${index + 1}. ${player.username} ${player.score}`} />
                 </div>
               );
             })}

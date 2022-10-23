@@ -48,6 +48,10 @@ input:checked + .slider:before {
   -ms-transform: translateX(2.6rem);
   transform: translateX(2.6rem);
 }
+#messageInput::placeholder {
+  font-size: 1.20rem;
+  font-style: italic;
+}
 
 /* Rounded sliders */
 .slider.round {

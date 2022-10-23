@@ -79,7 +79,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="profile" element={<ProfilePage />} />
               <Route path="friends" element={<FriendsPage />} />
-              <Route path="rooms" element={<RoomPage scores={scores} />} />
+              <Route path="rooms" element={<RoomPage />} />
               <Route path="/rooms/:id" element={<GamePage />} />
               <Route path="/*" element={<RoomPage />} />
               <Route path="/" element={<RoomPage />} />
