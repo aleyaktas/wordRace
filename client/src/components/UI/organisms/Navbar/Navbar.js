@@ -7,9 +7,10 @@ import LoginModal from "../../molecules/LoginModal/LoginModal";
 import ForgotPasswordModal from "../../molecules/ForgotPasswordModal/ForgotPasswordModal";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import Icon from "../../../../assets/icons/Icon";
-import { logout } from "../../../../store/features/auth/authSlice";
+import { forgotPassword, logout } from "../../../../store/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../../utils/socket";
+import { showMessage } from "../../../../utils/showMessage";
 
 const Navbar = () => {
   const styles = style();
@@ -25,6 +26,17 @@ const Navbar = () => {
       componentName: modalName,
     });
   };
+  const onClickResetPassword = async (email) => {
+    console.log(email);
+    if (email) {
+      dispatch(forgotPassword({ email }));
+      showMessage("Password reset link sent to your email", "success");
+    } else {
+      showMessage("Please enter your email", "error");
+    }
+
+    setIsOpen({ isOpenState: false, componentName: "" });
+  };
   const onClickLogout = async () => {
     socket.emit("logout_user", { username });
     await dispatch(logout());
@@ -37,7 +49,12 @@ const Navbar = () => {
       ) : (isOpenState === true) & (componentName === "LoginModal") ? (
         <LoginModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })} />
       ) : (isOpenState === true) & (componentName === "ForgotPasswordModal") ? (
-        <ForgotPasswordModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen(false)} />
+        <ForgotPasswordModal
+          onClick={(email) => onClickResetPassword(email)}
+          setIsOpen={setIsOpen}
+          isOpen={isOpenState}
+          modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })}
+        />
       ) : null}
       <div style={styles.navButton}>
         <Button

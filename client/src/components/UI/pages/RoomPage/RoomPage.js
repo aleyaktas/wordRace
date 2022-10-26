@@ -8,6 +8,7 @@ import socket from "../../../../utils/socket";
 import { useAppDispatch } from "../../../../store";
 import { getRooms } from "../../../../store/features/auth/authSlice";
 import { getTopScores } from "./actions";
+import Icon from "../../../../assets/icons/Icon";
 
 const RoomPage = ({ scores }) => {
   const styles = style();
@@ -37,11 +38,19 @@ const RoomPage = ({ scores }) => {
               <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />
             </div>
             {topScores.map((player, index) => {
-              return (
-                <div key={index} style={styles.score}>
-                  <Text font="InterSemiBold" fontSize="1.8rem" text={`${index + 1}. ${player.username} ${player.score}`} />
-                </div>
-              );
+              if (player.score > 0) {
+                return (
+                  <div key={index} style={styles.score}>
+                    <div style={{ display: "contents" }}>
+                      <Text font="InterSemiBold" fontSize="1.4rem" text={`${index + 1}.\u00A0`} />
+                      <Text font="InterSemiBold" fontSize="1.4rem" text={` ${player.username}`} />
+                    </div>
+                    <div style={{ marginLeft: "auto" }}>
+                      <Text color="#0b852d" font="InterSemiBold" fontSize="1.4rem" text={`${player.score}p`} />{" "}
+                    </div>
+                  </div>
+                );
+              }
             })}
           </div>
         </div>
@@ -70,14 +79,23 @@ const RoomPage = ({ scores }) => {
 
           <div style={styles.scoreCard}>
             <div style={styles.text}>
-              <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />
+              <Icon name="Winners" color="rgb(235, 216, 148)" width="2rem" height="2rem" />
+              <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" margin="0 0 0 0.4rem" />
             </div>
             {topScores.map((player, index) => {
-              return (
-                <div key={index} style={styles.score}>
-                  <Text font="InterSemiBold" fontSize="1.8rem" text={`${index + 1}. ${player.username} ${player.score}`} />
-                </div>
-              );
+              if (player.score > 0) {
+                return (
+                  <div key={index} style={styles.score}>
+                    <div style={{ display: "contents" }}>
+                      <Text font="InterSemiBold" fontSize="1.4rem" text={`${index + 1}.\u00A0`} />
+                      <Text font="InterSemiBold" fontSize="1.4rem" text={` ${player.username}`} />
+                    </div>
+                    <div style={{ marginLeft: "auto" }}>
+                      <Text color="#0b852d" font="InterSemiBold" fontSize="1.4rem" text={`${player.score}p`} />{" "}
+                    </div>
+                  </div>
+                );
+              }
             })}
           </div>
         </div>

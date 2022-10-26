@@ -253,4 +253,27 @@ router.get("/getScore", auth, async (req, res) => {
   }
 });
 
+// // POST api/auth/changePassword
+// // Change password
+// // Private
+// router.post("/changePassword", auth, async (req, res) => {
+//   const { password, newPassword } = req.body;
+//   try {
+//     const user = await User.findById(req.user.id);
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(400).json({ errors: [{ msg: "Invalid credentials" }] });
+//     }
+//     const salt = await bcrypt.genSalt(10);
+//     user.password = await bcrypt.hash(newPassword, salt);
+//     await user.save();
+//     res.json({ msg: "Password changed successfully" });
+//   } catch (err) {
+//     console.log(err.message);
+//     res.status(500).send("Server error");
+//   }
+// });
+
+//
+
 module.exports = router;

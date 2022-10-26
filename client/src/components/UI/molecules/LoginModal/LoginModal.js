@@ -34,6 +34,13 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose }) => {
     modalClose();
   };
 
+  const handleKeyPress = (e) => {
+    console.log(e.key);
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <>
       <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -43,6 +50,7 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose }) => {
             <TextInput onChange={handleChange} font="InterRegular" placeHolder="Username" iconName="User" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
             <TextInput
               onChange={handleChange}
+              onKeyDown={handleKeyPress}
               className="input"
               font="InterRegular"
               placeHolder="Password"

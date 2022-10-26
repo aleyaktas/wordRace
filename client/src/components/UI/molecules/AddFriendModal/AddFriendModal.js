@@ -16,10 +16,11 @@ const AddFriendModal = ({ isOpen, modalClose }) => {
   const [username, setUsername] = useState("");
 
   const handleChange = (e) => {
+    console.log(e.key);
     setUsername(e.target.value.trim());
   };
 
-  const onClick = async (e) => {
+  const onClickAdd = async (e) => {
     e.preventDefault();
     const res = await dispatch(addFriend({ username }));
     if (!res.error) {
@@ -30,14 +31,31 @@ const AddFriendModal = ({ isOpen, modalClose }) => {
     modalClose();
   };
 
+  const handleKeyPress = (e) => {
+    console.log(e);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onClickAdd(e);
+    }
+  };
+
   return (
     <>
       <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
           <ModalHeader modalClose={modalClose} iconName="Friend" text="Add Friend" />
           <div style={styles.body}>
-            <TextInput value={username} onChange={handleChange} className="input" font="InterRegular" placeHolder="Enter your friend username" fontSize="1.8rem" type="text" />
-            <Button className="buttonHoverGold" onClick={onClick} fontSize="1.6rem" margin="2rem 0 0 0" padding="1rem" text="Add" width="100%" buttonColor="#EBD894" />
+            <TextInput
+              value={username}
+              onKeyDown={handleKeyPress}
+              onChange={handleChange}
+              className="input"
+              font="InterRegular"
+              placeHolder="Enter your friend username"
+              fontSize="1.8rem"
+              type="text"
+            />
+            <Button className="buttonHoverGold" onClick={onClickAdd} fontSize="1.6rem" margin="2rem 0 0 0" padding="1rem" text="Add" width="100%" buttonColor="#EBD894" />
           </div>
         </div>
       </Modal>

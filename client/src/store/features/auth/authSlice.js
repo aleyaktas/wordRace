@@ -119,6 +119,39 @@ export const editProfile = createAsyncThunk("editProfile", async ({ url }) => {
   return res.data;
 });
 
+export const changePassword = createAsyncThunk("changePassword", async ({ oldPassword, newPassword }, { rejectWithValue }) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ password: oldPassword, newPassword });
+  try {
+    const res = await axios.post("/api/profile/changePassword", body, config);
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err.response.data);
+  }
+});
+
+export const forgotPassword = createAsyncThunk("forgotPassword", async ({ email }, { rejectWithValue }) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  console.log({ email });
+  const body = JSON.stringify({ email });
+  console.log(body);
+  try {
+    const res = await axios.post("/api/profile/forgotPassword", body, config);
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err.response.data);
+  }
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -266,6 +299,19 @@ export const authSlice = createSlice({
 
     builder.addCase(editProfile.fulfilled, (state, action) => {
       state.user.profileImage = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(changePassword.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+    });
+
+    builder.addCase(changePassword.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.loading = false;
+    });
+
+    builder.addCase(changePassword.fulfilled, (state, action) => {
       state.loading = false;
     });
   },

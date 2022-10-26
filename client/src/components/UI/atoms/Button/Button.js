@@ -30,6 +30,7 @@ const Button = ({
   className,
   textMargin,
   disabled,
+  type,
 }) => {
   const styles = style({
     width,
@@ -47,7 +48,7 @@ const Button = ({
   });
 
   return (
-    <button disabled={disabled} style={styles.button} className={className} onClick={onClick} onChange={onChange}>
+    <button type={type} disabled={disabled} style={styles.button} className={className} onClick={onClick} onChange={onChange}>
       <Text text={text} margin={textMargin} font={font} fontWeight={fontWeight} fontSize={fontSize} color={textColor} letterSpacing={letterSpacing} />
       {iconName && <Icon style={styles.icon} name={iconName} width={iconSize} height={iconSize} color={iconColor} />}
     </button>

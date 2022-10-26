@@ -22,6 +22,7 @@ const TextInput = ({
   type,
   className,
   onChange,
+  onKeyDown,
   value,
 }) => {
   const styles = style({
@@ -37,7 +38,16 @@ const TextInput = ({
   return (
     <div style={styles.container}>
       {iconName && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor} />}
-      <input value={value} name={placeHolder.toLowerCase()} type={type} className={`${font} ${className}`} style={styles.input} placeholder={placeHolder} onChange={onChange} />
+      <input
+        value={value}
+        name={placeHolder.toLowerCase()}
+        type={type}
+        className={`${font} ${className}`}
+        style={styles.input}
+        placeholder={placeHolder}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+      />
     </div>
   );
 };

@@ -18,7 +18,7 @@ const style = () => ({
   },
   text: {
     backgroundColor: "#5B5B5B",
-    height: "5rem",
+    height: "3.8rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -32,7 +32,11 @@ const style = () => ({
     backgroundColor: "#FAEEED",
   },
   score: {
-    margin: "3rem 2rem",
+    margin: "1.6rem 2rem",
+    padding: "1rem",
+    display: "flex",
+    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+    backgroundColor: "#ffffff3d",
   },
 });
 export default style;

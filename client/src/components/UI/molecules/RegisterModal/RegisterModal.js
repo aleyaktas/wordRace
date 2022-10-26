@@ -34,6 +34,13 @@ const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
     modalClose();
   };
 
+  const handleKeyPress = (e) => {
+    console.log(e.key);
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <>
       <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -42,7 +49,16 @@ const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
           <div style={styles.body}>
             <TextInput onChange={handleChange} font="InterRegular" placeHolder="Username" iconName="User" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
             <TextInput onChange={handleChange} font="InterRegular" placeHolder="Email" iconName="Mail" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
-            <TextInput onChange={handleChange} font="InterRegular" placeHolder="Password" iconName="Lock" fontSize="1.6rem" margin="0 0 1.5rem 0" type="password" />
+            <TextInput
+              onChange={handleChange}
+              onKeyDown={handleKeyPress}
+              font="InterRegular"
+              placeHolder="Password"
+              iconName="Lock"
+              fontSize="1.6rem"
+              margin="0 0 1.5rem 0"
+              type="password"
+            />
             <Button className="buttonHoverGold" onClick={handleSubmit} text="Sign Up" width="100%" margin="2rem 0" padding="1rem" buttonColor="#EBD894" />
             <button className="buttonHoverBlack" style={styles.button} onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "LoginModal" })}>
               <Text textAlign="center" text="Do you have an account?" font="RobotoThin" color="#6B5814" letterSpacing="0.15rem" />
