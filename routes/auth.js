@@ -105,7 +105,7 @@ router.post("/acceptFriend", auth, async (req, res) => {
     if (me) {
       if (!me.pendingRequests.some((pendingRequest) => pendingRequest._id == incomingRequest.id)) {
         return res.status(400).json({ errors: [{ msg: "this user not found" }] });
-      } else if (me.friends?.some((friend) => friend._id == incomingRequest.id)) {
+      } else if (me.friends.some((friend) => friend._id == incomingRequest.id)) {
         return res.status(400).json({ errors: [{ msg: "this user is already your friend" }] });
       } else {
         me.friends.push({ _id: incomingRequest.id });
