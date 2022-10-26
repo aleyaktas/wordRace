@@ -110,7 +110,8 @@ router.post("/acceptFriend", auth, async (req, res) => {
       } else {
         me.friends.push({ _id: incomingRequest.id });
         incomingRequest.friends.push({ _id: me.id });
-        (me.pendingRequests = me.pendingRequests?.filter((pendingRequest) => pendingRequest._id != incomingRequest.id)), await me.save();
+        me.pendingRequests = me.pendingRequests?.filter((pendingRequest) => pendingRequest._id != incomingRequest.id);
+        await me.save();
         await incomingRequest.save();
         res.send(me);
       }
