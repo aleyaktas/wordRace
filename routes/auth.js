@@ -110,7 +110,7 @@ router.post("/acceptFriend", auth, async (req, res) => {
       } else {
         me.friends.push({ _id: incomingRequest.id });
         incomingRequest.friends.push({ _id: me.id });
-        me.pendingRequests = me.pendingRequests?.filter((pendingRequest) => pendingRequest._id != incomingRequest.id);
+        me.pendingRequests = me.pendingRequests.filter((pendingRequest) => pendingRequest._id != incomingRequest.id);
         await me.save();
         await incomingRequest.save();
         res.send(me);
@@ -138,8 +138,8 @@ router.post("/rejectFriend", auth, async (req, res) => {
       if (!me.pendingRequests.some((pendingRequest) => (pendingRequest._id = incomingRequest.id))) {
         return res.status(400).json({ errors: [{ msg: "Request does not exist!" }] });
       }
-      if (me.pendingRequests?.some((pendingRequest) => (pendingRequest._id = incomingRequest.id))) {
-        me.pendingRequests = me.pendingRequests?.filter((pendingRequest) => pendingRequest._id != incomingRequest.id);
+      if (me.pendingRequests.some((pendingRequest) => (pendingRequest._id = incomingRequest.id))) {
+        me.pendingRequests = me.pendingRequests.filter((pendingRequest) => pendingRequest._id != incomingRequest.id);
         await me.save();
         res.send(me);
       }
@@ -166,7 +166,8 @@ router.post("/deleteFriend", auth, async (req, res) => {
       if (!me.friends.some((friend) => (friend._id = user.id))) {
         return res.status(400).json({ errors: [{ msg: "User not found" }] });
       } else if (me.friends.some((friend) => (friend._id = user.id))) {
-        (me.friends = me.friends?.filter((friend) => friend._id != user.id)), (user.friends = user.friends?.filter((friend) => friend._id != me.id));
+        me.friends = me.friends.filter((friend) => friend._id != user.id);
+        user.friends = user.friends.filter((friend) => friend._id != me.id);
         await me.save();
         await user.save();
         res.send(me);
