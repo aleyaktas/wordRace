@@ -56,6 +56,11 @@ const style = () => ({
     alignItems: "center",
     fontSize: "12rem",
   },
+  score: {
+    width: "25rem",
+    marginBottom: "2.2rem",
+    display: "flex",
+  },
 });
 
 export default style;
