@@ -10,6 +10,8 @@ This project was made to improve English interactively. You can create a room or
 
 **Backend:** Node, Express, Socket-io
 
+**Database:** MongoDB, Firebase
+
 
 
   
