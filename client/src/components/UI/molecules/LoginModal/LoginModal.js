@@ -29,9 +29,11 @@ const LoginModal = ({ isOpen, setIsOpen, modalClose }) => {
     const { username, password } = formData;
     await dispatch(loginUser({ username, password }));
     await dispatch(getUser());
-    setFormData({ username: "", password: "" });
-    navigate("/rooms");
-    modalClose();
+    // setFormData({ username: "", password: "" });
+    if (localStorage.getItem("token")) {
+      modalClose();
+      navigate("/room");
+    }
   };
 
   const handleKeyPress = (e) => {

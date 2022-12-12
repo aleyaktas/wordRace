@@ -43,13 +43,9 @@ const GamePage = () => {
       setRoom(room);
     });
     socket.on("room_joined", ({ room, joinUser }) => {
-      console.log(room);
-      console.log(username);
       setRoom(room);
       setPause(false);
       setTimeProgress(room.timer);
-      console.log(room);
-
       if (joinUser !== username) {
         showMessage(`${username} has joined the room`, "success");
       }
@@ -254,7 +250,9 @@ const GamePage = () => {
           <div style={styles.headerText}>
             {room && room.name && (
               <Text
-                text={`${room?.players[0]?.username || "Waiting"}  ${room?.players[0]?.score || 0} ${room?.players[1]?.score || 0} ${room?.players[1]?.username || "Waiting"} `}
+                text={`${room?.players[0]?.username || "Waiting"}  ${room?.players[0]?.score || 0} ${room?.players[1]?.score || 0} ${
+                  room?.players[1]?.username || "Waiting"
+                } `}
                 font="InterBold"
                 fontSize="2.4rem"
                 color="#6B5814"

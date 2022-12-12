@@ -21,7 +21,7 @@ router.get("/", auth, async (req, res) => {
 // POST api/auth
 // Login user
 // Public
-router.post("/", [check("username", "Please include a valid username").not().isEmpty(), check("password", "Password is required").exists()], async (req, res) => {
+router.post("/", [check("username", "Please include a valid username").not().isEmpty(), check("password", "Password is required").not().isEmpty()], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });

@@ -5,32 +5,33 @@ import CreateRoomModal from "../../molecules/CreateRoomModal/CreateRoomModal";
 import OnlineRoomCard from "../../organisms/OnlineRoomCard/OnlineRoomCard";
 import style from "./RoomPage.style";
 import socket from "../../../../utils/socket";
-import { useAppDispatch } from "../../../../store";
+import { useAppDispatch, useAppSelector } from "../../../../store";
 import { getRooms } from "../../../../store/features/auth/authSlice";
 import { getTopScores } from "./actions";
 import Icon from "../../../../assets/icons/Icon";
+import { useFocusEffect } from "@react-navigation/core";
 
-const RoomPage = ({ scores }) => {
+const RoomPage = () => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
-  const [rooms, setRooms] = useState([]);
   const [topScores, setTopScores] = useState([]);
 
   const dispatch = useAppDispatch();
+  const rooms = useAppSelector((state) => state.auth.rooms);
 
   useEffect(() => {
     socket.on("get_rooms", ({ rooms }) => {
-      setRooms(rooms);
       dispatch(getRooms(rooms));
-      console.log(rooms);
     });
     getTopScores(setTopScores);
-  }, []);
+  }, [rooms, dispatch]);
+
+  console.log(rooms);
 
   let publicRoomCount = rooms.filter((room) => room.isPublic).length;
   return (
     <div>
-      {rooms && rooms.length > 0 && publicRoomCount > 0 && (
+      {rooms && rooms?.length > 0 && publicRoomCount > 0 && (
         <div style={styles.container}>
           <OnlineRoomCard />
           <div style={styles.scoreCard}>
@@ -61,7 +62,7 @@ const RoomPage = ({ scores }) => {
             <Text text="😕 Currently there are no online rooms" font="PoppinsRegular" />
           </div>
 
-          {isOpen && <CreateRoomModal isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
+          {isOpen && <CreateRoomModal rooms={rooms} isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
           <div onClick={() => setIsOpen(true)}>
             <Button
               className="buttonHoverGold"

@@ -25,13 +25,15 @@ const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
   };
 
   const handleSubmit = async (e) => {
+    //control username, email, password
     e.preventDefault();
     const { username, email, password } = formData;
     await dispatch(registerUser({ username, email, password }));
     await dispatch(getUser());
-    setFormData({ username: "", email: "", password: "" });
-    navigate("/rooms");
-    modalClose();
+    if (localStorage.getItem("token")) {
+      modalClose();
+      navigate("/room");
+    }
   };
 
   const handleKeyPress = (e) => {

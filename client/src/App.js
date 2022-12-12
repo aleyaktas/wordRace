@@ -16,7 +16,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider, useSelector } from "react-redux";
 import setAuthToken from "./utils/setAuthToken";
 import socketIO from "socket.io-client";
-import { getOnlineUsers } from "./store/features/auth/authSlice";
+import { getOnlineUsers, getRooms } from "./store/features/auth/authSlice";
 import GameInviteModal from "./components/UI/molecules/GameInviteModal/GameInviteModal";
 import axios from "axios";
 
@@ -33,7 +33,7 @@ function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (findUsername !== undefined) {
-      const socket = socketIO("https://api-wordrace.aleynaaktas.me", {
+      const socket = socketIO("http://localhost:3000", {
         query: {
           username: findUsername,
         },
@@ -64,12 +64,12 @@ function App() {
     { name: "secondUser", score: 5 },
     { name: "firstUser", score: 10 },
   ];
-  axios.defaults.baseURL = "https://api-wordrace.aleynaaktas.me";
+  // axios.defaults.baseURL = "https://api-wordrace.aleynaaktas.me";
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <BrowserRouter>
-          <ToastContainer />
+          <ToastContainer newestOnTop={true} />
           <Navbar />
           <GameInviteModal room={room} isOpen={isOpen} modalClose={() => setIsOpen(false) && setRoom({})} />
           <Routes>

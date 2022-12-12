@@ -9,11 +9,12 @@ import style from "./CreateRoomModal.style";
 import ModalHeader from "../Modals/ModalHeader/ModalHeader";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../../utils/socket";
-import { useAppSelector } from "../../../../store";
+import { useAppDispatch, useAppSelector } from "../../../../store";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
+import { showMessage } from "../../../../utils/showMessage";
 const { v4: uuidv4 } = require("uuid");
 
 const CreateRoomModal = ({ isOpen, modalClose }) => {
@@ -22,7 +23,9 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
   const [timer, setTimer] = useState(20);
   const [isPublic, setIsPublic] = useState("Public");
   const { username, profileImage } = useAppSelector((state) => state.auth.user);
+  const { rooms } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     e.preventDefault();
     setRoomName(e.target.value.trim());
@@ -36,23 +39,31 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
 
   const onClickSubmit = (e) => {
     e.preventDefault();
+    console.log(rooms);
     const roomId = uuidv4();
-    socket.emit("create_room", {
-      user: {
-        username,
-        image: profileImage,
-      },
-      roomName,
-      roomId,
-      timer,
-      isPublic: isPublic === "Public" ? true : false,
-    });
-    navigate(`/rooms/${roomId}`);
-    modalClose();
+    if (roomName.length === 0) {
+      showMessage("Room name cannot be empty", "error");
+    } else if (roomName.length < 3) {
+      showMessage("Room name must be at least 4 characters", "error");
+    } else if (rooms.find((room) => room.name === roomName)) {
+      showMessage("Room name already exists", "error");
+    } else if (roomName.length > 3) {
+      socket.emit("create_room", {
+        user: {
+          username,
+          image: profileImage,
+        },
+        roomName,
+        roomId,
+        timer,
+        isPublic: isPublic === "Public" ? true : false,
+      });
+      navigate(`/rooms/${roomId}`);
+      modalClose();
+    }
   };
 
   const handleKeyPress = (e) => {
-    console.log(e.key);
     if (e.key === "Enter") {
       onClickSubmit(e);
     }
@@ -95,10 +106,28 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
                   </NativeSelect>
                 </FormControl>
               </Box>
-              <Checkbox onChange={handlePublicChange} isCheck className="input" fontSize="1.5rem" margin="2rem 0.8rem 0 0" checboxColor="#709F60" color="#6B5814" text="Public" />
+              <Checkbox
+                onChange={handlePublicChange}
+                isCheck
+                className="input"
+                fontSize="1.5rem"
+                margin="2rem 0.8rem 0 0"
+                checboxColor="#709F60"
+                color="#6B5814"
+                text="Public"
+              />
               <Checkbox onChange={handlePublicChange} className="input" fontSize="1.5rem" margin="2rem 0 0 0" checboxColor="#709F60" color="#6B5814" text="Private" />
             </div>
-            <Button className="buttonHoverGold" onClick={onClickSubmit} fontSize="1.6rem" margin="2rem 0 0 0" padding="1rem" text="Create" width="100%" buttonColor="#EBD894" />
+            <Button
+              className="buttonHoverGold"
+              onClick={onClickSubmit}
+              fontSize="1.6rem"
+              margin="2rem 0 0 0"
+              padding="1rem"
+              text="Create"
+              width="100%"
+              buttonColor="#EBD894"
+            />
           </div>
         </div>
       </Modal>

@@ -13,7 +13,10 @@ dotenv.config();
 router.post(
   "/",
   [
-    check("username", "username is required").not().isEmpty().isLength({ min: 3 }),
+    check("username", "Username must be between 3 and 20 characters").isLength({
+      min: 3,
+      max: 20,
+    }),
     check("email", "Please include a valid email").isEmail(),
     check("password", "Please enter a password with 6 or more characters").isLength({ min: 6 }),
   ],
@@ -26,7 +29,13 @@ router.post(
     try {
       let user = await User.findOne({ email });
       if (user) {
+        //if user include, error msg push errors
         return res.status(400).json({ errors: [{ msg: "User already exists" }] });
+      }
+      //username uniqueness
+      let isUniqueUsername = await User.findOne({ username });
+      if (isUniqueUsername) {
+        return res.status(400).json({ errors: [{ msg: "Unfortunately, there is a user with this name. you should choose another username" }] });
       }
       user = new User({
         username,

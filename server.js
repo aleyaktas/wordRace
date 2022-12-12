@@ -83,9 +83,18 @@ let rooms = [];
 let users = [];
 let isReadyCount = 0;
 const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
+const items = ["Bear", "Bird", "Bug", "Cat", "Crown", "Elephant", "Flower", "Horse", "Parrot", "Snake", "Turtle"];
 
 io.on("connection", (socket) => {
+  //if not players in room, this room delete
+  rooms.find((room, index) => {
+    if (room.players.length === 0) {
+      rooms.splice(index, 1);
+    }
+  });
   socket.emit("get_rooms", { rooms });
+  socket.broadcast.emit("get_rooms", { rooms });
+
   socket.on("friend_request", ({ username }) => {
     socket.broadcast.emit("incoming_request", { username });
   });
@@ -99,30 +108,39 @@ io.on("connection", (socket) => {
   });
 
   socket.on("create_room", ({ user, roomName, roomId, timer, isPublic }) => {
+    var item = items[Math.floor(Math.random() * items.length)];
     const { username, image } = user;
-    socket.join(roomId);
-    const createRoom = {
-      id: roomId,
-      name: roomName,
-      image: "Bear",
-      timer,
-      isPublic,
-      questions: [],
-      questionIndex: 0,
-      messages: [],
-      players: [
-        {
-          username,
-          image,
-          scoreIndex: 0,
-          isYourTurn: true,
-          usedJokers: [],
-        },
-      ],
-    };
-    rooms.push(createRoom);
-    socket.emit("room_created", { room: createRoom });
-    io.emit("get_rooms", { rooms });
+    //unique room name
+    if (rooms.find((room) => room.name === roomName)) {
+      socket.emit("room_name_error");
+      return;
+    }
+    if (roomName !== "") {
+      socket.join(roomId);
+      const createRoom = {
+        id: roomId,
+        name: roomName,
+        image: item,
+        timer,
+        isPublic,
+        questions: [],
+        questionIndex: 0,
+        messages: [],
+        players: [
+          {
+            username,
+            image,
+            scoreIndex: 0,
+            isYourTurn: true,
+            usedJokers: [],
+          },
+        ],
+      };
+
+      rooms.push(createRoom);
+      socket.emit("room_created", { room: createRoom });
+      io.emit("get_rooms", { rooms });
+    }
   });
 
   socket.on("join_room", ({ user, roomId }) => {
@@ -184,9 +202,14 @@ io.on("connection", (socket) => {
       if (player) {
         room.players = room.players.filter((player) => player.username !== username);
       }
+      if (room.players.length === 0) {
+        rooms = rooms.filter((room) => room.id !== roomId);
+      }
       // console.log(room.players);
       socket.to(roomId).emit("opponent_quit", { username, room });
     }
+    socket.emit("get_rooms", { rooms });
+    socket.broadcast.emit("get_rooms", { rooms });
   });
 
   socket.on("correct_answer", ({ username, roomId }) => {

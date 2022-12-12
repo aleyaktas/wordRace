@@ -19,9 +19,9 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
     socket.emit("invite_user", { username, ownerUser });
   };
 
-  const onClickAccept = (e) => {
+  const onClickAccept = async (e) => {
     e.preventDefault();
-    dispatch(acceptFriend({ username }));
+    await dispatch(acceptFriend({ username }));
     socket.emit("friend_accept", { username });
     dispatch(getFriends({ ownerUser }));
     modalClose();
@@ -70,7 +70,17 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
         iconSize="2rem"
         margin="0 1rem"
       />
-      <Button onClick={onClickReject} width="3rem" height="3rem" borderRadius="4rem" buttonColor="#C75555" padding="0.3rem" iconName="Close" iconColor="white" iconSize="2rem" />
+      <Button
+        onClick={onClickReject}
+        width="3rem"
+        height="3rem"
+        borderRadius="4rem"
+        buttonColor="#C75555"
+        padding="0.3rem"
+        iconName="Close"
+        iconColor="white"
+        iconSize="2rem"
+      />
     </>
   );
   const deleteControl = () => (

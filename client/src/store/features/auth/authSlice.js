@@ -15,7 +15,7 @@ const initialState = {
 
 const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
 
-export const registerUser = createAsyncThunk("registerUser", async ({ username, email, password }) => {
+export const registerUser = createAsyncThunk("registerUser", async ({ username, email, password }, { rejectWithValue }) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -23,19 +23,29 @@ export const registerUser = createAsyncThunk("registerUser", async ({ username, 
   };
 
   const body = JSON.stringify({ username, email, password });
-  const res = await axios.post("/api/users/", body, config);
-  return res.data;
+  try {
+    const res = await axios.post("/api/users/", body, config);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    console.log(username, email, password);
+    return rejectWithValue(err.response.data.errors);
+  }
 });
 
-export const loginUser = createAsyncThunk("loginUser", async ({ username, password }) => {
+export const loginUser = createAsyncThunk("loginUser", async ({ username, password }, { rejectWithValue }) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
   const body = JSON.stringify({ username, password });
-  const res = await axios.post("/api/auth", body, config);
-  return res.data;
+  try {
+    const res = await axios.post("/api/auth", body, config);
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err.response.data.errors);
+  }
 });
 
 export const getUser = createAsyncThunk("getUser", async () => {
@@ -178,8 +188,9 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(registerUser.rejected, (state, action) => {
-      state.error = action.error.message;
+      state.error = action.payload;
       state.loading = false;
+      showMessage(action.payload[0].msg, "error");
     });
 
     builder.addCase(registerUser.fulfilled, (state, action) => {
@@ -188,6 +199,7 @@ export const authSlice = createSlice({
       state.loading = false;
       state.token = localStorage.getItem("token");
       setAuthToken(localStorage.getItem("token"));
+      console.log(action);
     });
     builder.addCase(loginUser.pending, (state, action) => {
       state.loading = true;
@@ -197,6 +209,7 @@ export const authSlice = createSlice({
     builder.addCase(loginUser.rejected, (state, action) => {
       state.error = action.error.message;
       state.loading = false;
+      showMessage(action.payload[0].msg, "error");
     });
 
     builder.addCase(loginUser.fulfilled, (state, action) => {
@@ -230,6 +243,7 @@ export const authSlice = createSlice({
 
     builder.addCase(acceptFriend.fulfilled, (state, action) => {
       state.message = "Friend request accepted";
+      showMessage("Friend request accepted", "success");
     });
 
     builder.addCase(deleteFriend.pending, (state, action) => {
@@ -242,6 +256,7 @@ export const authSlice = createSlice({
 
     builder.addCase(deleteFriend.fulfilled, (state, action) => {
       state.message = "Friend deleted";
+      showMessage("Friend deleted", "success");
     });
 
     builder.addCase(rejectFriend.pending, (state, action) => {

@@ -27,15 +27,13 @@ const Navbar = () => {
     });
   };
   const onClickResetPassword = async (email) => {
-    console.log(email);
     if (email) {
       dispatch(forgotPassword({ email }));
       showMessage("Password reset link sent to your email", "success");
+      setIsOpen({ isOpenState: false, componentName: "" });
     } else {
       showMessage("Please enter your email", "error");
     }
-
-    setIsOpen({ isOpenState: false, componentName: "" });
   };
   const onClickLogout = async () => {
     socket.emit("logout_user", { username });
@@ -136,7 +134,7 @@ const Navbar = () => {
         <div onClick={() => navigate("/")} style={styles.navText}>
           <Text text="WORD RACE" color="white" fontSize="2.5rem" font="InterSemiBold" letterSpacing="0.2rem" />
         </div>
-        {!loading && <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}
+        {<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}
       </div>
     </>
   );
