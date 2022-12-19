@@ -81,7 +81,7 @@ let rooms = [];
 
 */
 let users = [];
-let isReadyCount = 0;
+
 const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
 const items = ["Bear", "Bird", "Bug", "Cat", "Crown", "Elephant", "Flower", "Horse", "Parrot", "Snake", "Turtle"];
 
@@ -132,6 +132,7 @@ io.on("connection", (socket) => {
             image,
             scoreIndex: 0,
             isYourTurn: true,
+            isReady: true,
             usedJokers: [],
           },
         ],
@@ -146,7 +147,7 @@ io.on("connection", (socket) => {
   socket.on("join_room", ({ user, roomId }) => {
     const { username, image } = user;
     const room = rooms.find((room) => room.id === roomId);
-    isReadyCount += 1;
+
     if (room && room.players.length < 2) {
       socket.join(roomId);
       room.players.push({
@@ -154,45 +155,69 @@ io.on("connection", (socket) => {
         image,
         scoreIndex: 0,
         isYourTurn: false,
+        isReady: true,
         usedJokers: [],
       });
       room.questions = CreateQuestion();
       socket.to(roomId).emit("room_joined", { room, joinUser: username });
       socket.emit("room_joined", { room, joinUser: username });
       io.emit("get_rooms", { rooms });
-      isReadyCount = 0;
     }
   });
 
   socket.on("play_again", ({ roomId, username }) => {
     console.log("play_again");
-    const room = rooms.find((room) => room.id === roomId);
-    if (room) {
-      room.questionIndex = 0;
-      room.players.forEach((player) => {
-        if (player.username === username) {
-          player.scoreIndex = 0;
-          player.usedJokers = [];
-          isReadyCount += 1;
-        }
-        room.questions = CreateQuestion();
-      });
-      room.players[0].isYourTurn = true;
-    }
-    console.log(isReadyCount);
+    const findRoom = rooms.find((room) => room.id === roomId);
+    if (findRoom) {
+      const newRooms = rooms.map((room) => {
+        if (room.id === roomId) {
+          room.players.map((player) => {
+            if (player.username === username) {
+              player.isReady = true;
+              socket.emit("started_play_again", { room });
+              return socket.to(roomId).emit("started_play_again", { room });
+            }
+          });
+          if (room.players.filter((player) => player.isReady === true).length === 2) {
+            room.players[0].isYourTurn = true;
+            room.players[1].isYourTurn = false;
+            room.players[0].scoreIndex = 0;
+            room.players[1].scoreIndex = 0;
+            room.players[0].usedJokers = [];
+            room.players[1].usedJokers = [];
+            room.questionIndex = 0;
+            room.questions = CreateQuestion();
 
-    if (isReadyCount === 1) {
-      room.players.forEach((player) => {
-        {
-          player.username === username && player.isYourTurn === true;
+            socket.emit("started_play_again", { room });
+            socket.to(roomId).emit("started_play_again", { room });
+          }
         }
       });
-      socket.emit("started_play_again", { room, isReadyCount });
-    } else if (isReadyCount === 2) {
-      io.to(roomId).emit("started_play_again", { room, isReadyCount });
-      isReadyCount = 0;
+
+      socket.emit("get_rooms", { rooms: newRooms });
+      socket.broadcast.emit("get_rooms", { rooms: newRooms });
     }
-    console.log(room.players);
+
+    // if (isReadyCount === 1) {
+    //   room.players.forEach((player) => {
+    //     {
+    //       player.username === username && player.isYourTurn === true;
+    //     }
+    //   });
+    //   console.log("isPublicState", isPublicState);
+    //   if (isPublicState === "Public") {
+    //     room.isPublic = true;
+    //     rooms.find((room) => room.id === roomId).isPublic = true;
+    //   }
+
+    //   socket.emit("started_play_again", { room, isReadyCount });
+    //   socket.to("started_play_again", { room, isReadyCount });
+    // } else if (isReadyCount === 2) {
+    //   io.to(roomId).emit("started_play_again", { room, isReadyCount });
+    //   isReadyCount = 0;
+    // }
+    // socket.emit("get_rooms", { rooms });
+    // socket.broadcast.emit("get_rooms", { rooms });
   });
 
   socket.on("quit_game", ({ roomId, username }) => {
@@ -201,12 +226,14 @@ io.on("connection", (socket) => {
     if (room) {
       if (player) {
         room.players = room.players.filter((player) => player.username !== username);
+        const newRoom = rooms.find((room) => room.id === roomId);
       }
       if (room.players.length === 0) {
         rooms = rooms.filter((room) => room.id !== roomId);
       }
       // console.log(room.players);
       socket.to(roomId).emit("opponent_quit", { username, room });
+      socket.emit("opponent_quit", { username, room });
     }
     socket.emit("get_rooms", { rooms });
     socket.broadcast.emit("get_rooms", { rooms });
@@ -273,8 +300,24 @@ io.on("connection", (socket) => {
 
     console.log("game over");
     console.log(room.players);
+
+    const newRooms = rooms.map((room) => {
+      if (room.id === roomId) {
+        room.players[0].isYourTurn = true;
+        room.players.forEach((player) => {
+          player.scoreIndex = 0;
+          player.usedJokers = [];
+          player.isReady = false;
+        });
+        room.questionIndex = 0;
+      }
+      return room;
+    });
+    console.log(newRooms);
+
     socket.to(roomId).emit("game_finished", { result, room });
     socket.emit("game_finished", { result, room });
+    io.emit("get_rooms", { rooms: newRooms });
   });
 
   socket.on("fifty_fifty_joker", ({ username, roomId }) => {
@@ -384,6 +427,7 @@ io.on("connection", (socket) => {
       if (nextPlayer) {
         findRoom.players[indexNextPlayer].isYourTurn = true;
       }
+      socket.leave(findRoom.id);
       socket.to(findRoom.id).emit("leave_room", { room: findRoom });
       socket.emit("leave_room", { room: findRoom });
       io.emit("get_rooms", { rooms });

@@ -21,6 +21,7 @@ const RoomPage = () => {
 
   useEffect(() => {
     socket.on("get_rooms", ({ rooms }) => {
+      console.log(rooms);
       dispatch(getRooms(rooms));
     });
     getTopScores(setTopScores);
@@ -28,7 +29,7 @@ const RoomPage = () => {
 
   console.log(rooms);
 
-  let publicRoomCount = rooms.filter((room) => room.isPublic).length;
+  let publicRoomCount = rooms?.filter((room) => room?.isPublic)?.length;
   return (
     <div>
       {rooms && rooms?.length > 0 && publicRoomCount > 0 && (

@@ -10,7 +10,7 @@ import ScoreCard from "../../molecules/ScoreCard/ScoreCard";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import socket from "../../../../utils/socket";
 import { showMessage } from "../../../../utils/showMessage";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PlayAgainModal from "../../molecules/PlayAgainModal/PlayAgainModal";
 
 const GamePage = () => {
@@ -18,7 +18,6 @@ const GamePage = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenMsgBox, setIsOpenMsgBox] = useState(false);
-
   const [isOpenPlayAgain, setIsOpenPlayAgain] = useState(false);
   const chatRef = useRef();
   const [pause, setPause] = useState(false);
@@ -28,10 +27,8 @@ const GamePage = () => {
   const [timeProgress, setTimeProgress] = useState(0);
   const [msg, setMsg] = useState("");
   const [messages, setMessages] = useState([]);
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const { username } = useAppSelector((state) => state.auth.user);
   const onlineUsers = useAppSelector((state) => state.auth.onlineUsers.filter((user) => user.username !== username));
   const allFriends = useAppSelector((state) => state.auth.user.friends);
@@ -45,6 +42,7 @@ const GamePage = () => {
     socket.on("room_joined", ({ room, joinUser }) => {
       setRoom(room);
       setPause(false);
+
       setTimeProgress(room.timer);
       if (joinUser !== username) {
         showMessage(`${username} has joined the room`, "success");
@@ -91,27 +89,32 @@ const GamePage = () => {
     socket.on("double_chance_joker_used", ({ room }) => {
       setRoom(room);
     });
-    socket.on("game_finished", ({ result }) => {
+    socket.on("game_finished", ({ result, room }) => {
       setPause(true);
+      console.log("game finished", room);
+      setRoom(room);
       result === "draw" ? setGameResult("draw") : setGameResult(result.username);
       setIsOpenPlayAgain(true);
     });
 
-    socket.on("started_play_again", ({ room, isReadyCount }) => {
+    socket.on("started_play_again", ({ room }) => {
+      console.log(room);
+      setTimeProgress(room.timer);
+      setRoom(room);
       const findMe = room.players.find((player) => player.username === username);
-      if (isReadyCount === 1 && room.players.length === 1) {
-        showMessage("Waiting for other player to start play again", "info");
-        setPause(true);
-      } else if (isReadyCount === 2) {
-        setRoom(room);
-        setTimeProgress(room.timer);
-        setPause(false);
-      }
+      // if (isReadyCount === 1 && room.players.length === 1) {
+      //   showMessage("Waiting for other player to start play again", "info");
+      //   setPause(true);
+      //   setRoom(room);
+      // } else if (isReadyCount === 2) {
+      //   setRoom(room);
+      //   setTimeProgress(room.timer);
+      //   setPause(false);
+      // }
     });
     socket.on("opponent_quit", ({ username, room }) => {
       setRoom(room);
       showMessage(`${username} has left the room`, "info");
-
       console.log(room);
     });
     socket.on("message_received", ({ message }) => {
@@ -166,7 +169,6 @@ const GamePage = () => {
       }
       if (room.questionIndex === 19) {
         socket.emit("game_over", { roomId: room.id });
-        // setRoom(room);
       }
       if (doubleChance) {
         console.log("b");
@@ -228,7 +230,7 @@ const GamePage = () => {
 
   return (
     <div>
-      {room && room.players && room.players.length === 1 && (
+      {room && room.players && room.players?.filter((player) => player.isReady).length === 1 && (
         <div>
           {isOpen && <FriendItemListModal friends={onlineFriends} modalType="inviteModal" isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
           <div style={styles.button} onClick={() => setIsOpen(true)}>
@@ -268,7 +270,7 @@ const GamePage = () => {
           </div>
         </div>
       )}
-      {room && room.players && room.players.length === 2 && (
+      {room && room.players && room.players.length === 2 && room.players?.filter((player) => player.isReady).length === 2 && (
         <div style={styles.container}>
           <SidebarItemList
             onClickSend={onClickSendMsg}
@@ -277,15 +279,28 @@ const GamePage = () => {
             onClick={(sidebarItem) => onClickSidebarItem(sidebarItem)}
             chatRef={chatRef}
           />
+          {/* {room.players?.filter((player) => player.isReady).length === 1 ? (
+            <Animated animationIn="zoomIn" animationInDuration={1200} isVisible={true}>
+              {" "}
+              <Text text="Waiting for other player's decision" font="RedHatMonoRegular" fontSize="2.4rem" color="#6B5814" />
+            </Animated>
+          ) : ( */}
           <QuestionCard
             username={username}
             messages={messages}
-            timer={room.players.find((player) => player.username === username).isYourTurn && !pause ? timeProgress : pause ? 0 : "Wait"}
+            timer={
+              room.players.find((player) => player.username === username).isYourTurn &&
+              room.players.length === 2 &&
+              room.players?.filter((player) => player.isReady).length === 2
+                ? timeProgress
+                : "Wait"
+            }
             question={room.questions[room.questionIndex]}
             onClick={(option) => checkAnswer(option)}
             handleJoker={(joker) => handleJoker(joker)}
             usedJokers={room.players.find((player) => player.username === username).usedJokers}
           />
+          {/* )} */}
           <ScoreCard
             firstUser={room.players[0].username === username ? room.players[1] : room.players[0]}
             secondUser={room.players[1].username === username ? room.players[1] : room.players[0]}

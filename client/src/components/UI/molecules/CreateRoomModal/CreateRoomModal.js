@@ -58,7 +58,7 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
         timer,
         isPublic: isPublic === "Public" ? true : false,
       });
-      navigate(`/rooms/${roomId}`);
+      navigate(`/rooms/${roomId}`, { state: { isPublic } });
       modalClose();
     }
   };
