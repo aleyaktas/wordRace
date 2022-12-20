@@ -71,11 +71,12 @@ const RoomPage = () => {
               font="RobotoMedium"
               fontSize="1.7rem"
               width="20rem"
-              height="3.8rem"
+              height="5rem"
               borderRadius="1rem"
               iconPosition="right"
               buttonColor="#EBD894"
               iconName="Plus"
+              iconColor="dark"
             />
           </div>
 

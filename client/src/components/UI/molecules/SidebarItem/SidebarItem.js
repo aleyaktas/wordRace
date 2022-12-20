@@ -3,8 +3,10 @@ import Icon from "../../../../assets/icons/Icon";
 import style from "./SidebarItem.style";
 import ReactTooltip from "react-tooltip";
 import { Animated } from "react-animated-css";
+import { useNavigate } from "react-router-dom";
+import FriendItemListModal from "../../molecules/FriendItemListModal/FriendItemListModal";
 
-const SidebarItem = ({ sidebarItem, onClick, onClickSend, onChangeMsg, isOpen, chatRef }) => {
+const SidebarItem = ({ sidebarItem, onlineFriends, onClick, onClickSend, onChangeMsg, isOpen, chatRef }) => {
   const styles = style({ isOpen });
 
   const handleKeyPress = (e) => {
@@ -14,6 +16,14 @@ const SidebarItem = ({ sidebarItem, onClick, onClickSend, onChangeMsg, isOpen, c
       onClickSend(e);
     }
   };
+  const [isOpenFriendsModal, setIsOpenFriendsModal] = useState(false);
+
+  const navigate = useNavigate();
+  if (sidebarItem === "Out") {
+    onClick = () => navigate("/login");
+  } else if (sidebarItem === "Friends") {
+    onClick = () => setIsOpenFriendsModal(!isOpen);
+  }
 
   return (
     <>
@@ -39,6 +49,11 @@ const SidebarItem = ({ sidebarItem, onClick, onClickSend, onChangeMsg, isOpen, c
             </Animated>
           </div>
         )}
+        {isOpenFriendsModal && (
+          <FriendItemListModal friends={onlineFriends} modalType="onlineModal" isOpen={isOpenFriendsModal} modalClose={() => setIsOpenFriendsModal(false)} />
+        )}
+
+        {/* {isOpen && sidebarItem === "Out" && navigate("/")} */}
       </div>
       <ReactTooltip textColor="#6B5814" backgroundColor="#EBD894" />
     </>

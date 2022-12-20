@@ -32,7 +32,7 @@ const GamePage = () => {
   const { username } = useAppSelector((state) => state.auth.user);
   const onlineUsers = useAppSelector((state) => state.auth.onlineUsers.filter((user) => user.username !== username));
   const allFriends = useAppSelector((state) => state.auth.user.friends);
-  const onlineFriends = onlineUsers.filter((item) => allFriends.some((i) => i.username === item.username));
+  const onlineFriends = onlineUsers?.filter((item) => allFriends?.some((i) => i.username === item.username));
 
   useEffect(() => {
     socket.on("room_created", ({ room }) => {
@@ -40,12 +40,17 @@ const GamePage = () => {
       setRoom(room);
     });
     socket.on("room_joined", ({ room, joinUser }) => {
+      console.log("username", username);
       setRoom(room);
       setPause(false);
+      console.log(joinUser);
+      console.log(username);
 
       setTimeProgress(room.timer);
       if (joinUser !== username) {
-        showMessage(`${username} has joined the room`, "success");
+        console.log("joinUser", joinUser);
+        console.log("username", username);
+        showMessage(`${joinUser} has joined the room`, "success");
       }
     });
     socket.on("leave_room", ({ room, disconnectUser }) => {
@@ -71,12 +76,7 @@ const GamePage = () => {
       console.log(room);
       console.log(room.questionIndex);
       console.log(room.questions.length);
-      // if (room.questionIndex === 20) {
-      //   socket.emit("game_over", { roomId: room.id });
-      // } else {
-      //   setTimeProgress(room.timer);
-      //   setRoom(room);
-      // }
+
       if (room.questionIndex <= room.questions.length - 1) {
         setTimeProgress(room.timer);
         setRoom(room);
@@ -102,15 +102,6 @@ const GamePage = () => {
       setTimeProgress(room.timer);
       setRoom(room);
       const findMe = room.players.find((player) => player.username === username);
-      // if (isReadyCount === 1 && room.players.length === 1) {
-      //   showMessage("Waiting for other player to start play again", "info");
-      //   setPause(true);
-      //   setRoom(room);
-      // } else if (isReadyCount === 2) {
-      //   setRoom(room);
-      //   setTimeProgress(room.timer);
-      //   setPause(false);
-      // }
     });
     socket.on("opponent_quit", ({ username, room }) => {
       setRoom(room);
@@ -125,6 +116,17 @@ const GamePage = () => {
   useEffect(() => {
     return () => {
       socket.emit("left_room", { username });
+      socket.off("room_joined");
+      socket.off("room_created");
+      socket.off("leave_room");
+      socket.off("correct_answered");
+      socket.off("wrong_answered");
+      socket.off("fifty_fifty_joker_used");
+      socket.off("double_chance_joker_used");
+      socket.off("game_finished");
+      socket.off("started_play_again");
+      socket.off("opponent_quit");
+      socket.off("message_received");
     };
   }, []);
 
@@ -273,6 +275,7 @@ const GamePage = () => {
       {room && room.players && room.players.length === 2 && room.players?.filter((player) => player.isReady).length === 2 && (
         <div style={styles.container}>
           <SidebarItemList
+            onlineFriends={onlineFriends}
             onClickSend={onClickSendMsg}
             onChangeMsg={(e) => handleMessageChange(e)}
             isOpen={isOpenMsgBox}

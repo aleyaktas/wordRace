@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../../store";
 import { acceptFriend, getFriends, rejectFriend } from "../../../../store/features/auth/authSlice";
 import DeleteFriendModal from "../DeleteFriendModal/DeleteFriendModal";
 import socket from "../../../../utils/socket";
+import { showMessage } from "../../../../utils/showMessage";
 
 const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   const [isInvite, setIsInvite] = useState(false);
@@ -17,6 +18,8 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   const onClickInvite = () => {
     setIsInvite(true);
     socket.emit("invite_user", { username, ownerUser });
+    showMessage("Invitation sent", "success");
+    modalClose();
   };
 
   const onClickAccept = async (e) => {
@@ -27,9 +30,9 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
     modalClose();
   };
 
-  const onClickReject = (e) => {
+  const onClickReject = async (e) => {
     e.preventDefault();
-    dispatch(rejectFriend({ username }));
+    await dispatch(rejectFriend({ username }));
     dispatch(getFriends({ ownerUser }));
     modalClose();
   };

@@ -2,7 +2,8 @@ export const style = () => ({
   container: {
     width: "32rem",
     height: "6rem",
-    textAlign: "-webkit-center",
+    display: "flex",
+    justifyContent: "center",
   },
 });
 

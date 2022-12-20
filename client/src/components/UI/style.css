@@ -5,7 +5,7 @@
   height: 3.4rem;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -19,8 +19,8 @@
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -31,16 +31,16 @@
   left: 0.4rem;
   bottom: 0.4rem;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
@@ -49,7 +49,7 @@ input:checked + .slider:before {
   transform: translateX(2.6rem);
 }
 #messageInput::placeholder {
-  font-size: 1.20rem;
+  font-size: 1.2rem;
   font-style: italic;
 }
 
@@ -62,11 +62,10 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-
 #close-button {
-  background-color:white; 
-  border:none;
-  border-radius: 40%; 
+  background-color: white;
+  border: none;
+  border-radius: 40%;
   transition-duration: 0.4s;
   cursor: pointer;
   /* padding-top:1 */
@@ -84,50 +83,50 @@ input:checked + .slider:before {
   transform: translate(-50%, -50%);
 }
 .card-container:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4) !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4) !important;
   transition: 0.2s;
 }
-.card-container:hover .card-footer p{
+.card-container:hover .card-footer p {
   color: white !important;
   transition: 0.4s;
 }
-.card-container:hover .card-footer{
+.card-container:hover .card-footer {
   background-color: #4c9edb !important;
   transition: 0.4s;
 }
-#close-button:hover svg{
+#close-button:hover svg {
   color: black;
 }
 .buttonHoverGreen:hover {
-  background-color: #39D712 !important;
+  background-color: #39d712 !important;
   transition: 0.3s !important;
 }
-.buttonHoverGreen:hover p{
+.buttonHoverGreen:hover p {
   color: white !important;
   transition: 0.3s !important;
 }
 .buttonHoverGold:hover {
-  background-color: #DEBF50 !important;
+  background-color: #debf50 !important;
   transition: 0.3s;
 }
-.buttonHoverGold:hover p{
+.buttonHoverGold:hover p {
   color: white !important;
   transition: 0.3s;
 }
-.buttonHoverGold:hover svg{
+.buttonHoverGold:hover svg {
   color: white !important;
   transition: 0.3s;
 }
 .buttonHoverGoldenYellow:hover {
   border: none !important;
 
-  background-color: #EBD894 !important;
+  background-color: #ebd894 !important;
   transition: 0.3s;
 }
-.buttonHoverGoldenYellow:hover p{
+.buttonHoverGoldenYellow:hover p {
   transition: 0.3s;
 }
-.buttonHoverGoldenYellow:hover svg{
+.buttonHoverGoldenYellow:hover svg {
   color: white !important;
   transition: 0.3s;
 }
@@ -135,49 +134,50 @@ input:checked + .slider:before {
   background-color: white !important;
   transition: 0.3s;
 }
-.buttonHoverYellow:hover p{
-  color: #F3B948 !important;
+.buttonHoverYellow:hover p {
+  color: #f3b948 !important;
   transition: 0.3s;
 }
-.buttonHoverBlack:hover p{
+.buttonHoverBlack:hover p {
   color: black !important;
   font: caption;
   transition: 0.3s;
 }
-.buttonHoverBlack:hover svg{
+.buttonHoverBlack:hover svg {
   color: black !important;
   transition: 0.3s;
 }
-.buttonHoverRoomCard:hover p{
+.buttonHoverRoomCard:hover p {
   color: black !important;
   font-weight: bold;
 }
-.buttonHoverRoomCard:hover div>img{
+.buttonHoverRoomCard:hover div > img {
   width: 11rem !important;
   height: 11rem !important;
   transition: 0.3s;
 }
 .buttonHoverDropDown:hover {
-  background-color: #EBC351 !important;
+  background-color: #ebc351 !important;
   transition: 0.3s;
 }
-.buttonHoverDropDown:hover p{
+.buttonHoverDropDown:hover p {
   color: white !important;
   transition: 0.3s;
 }
-.buttonHoverDropDown:hover svg{
+.buttonHoverDropDown:hover svg {
   color: white !important;
   transition: 0.3s;
 }
 .buttonHoverRoomCard:hover {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important ;}
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important ;
+}
 .passedScore {
-  background-color: #F3B948 !important;
+  background-color: #f3b948 !important;
 }
 .passedScore p {
   color: white !important;
 }
-.hoverJoker:hover  {
+.hoverJoker:hover {
   background-color: #4d8278 !important;
   transition: 0.2s;
 }
@@ -215,13 +215,13 @@ input:checked + .slider:before {
 .input::placeholder {
   font-size: 1.6rem !important;
 }
-.input:checked input{
-  accent-color: #709F60;
+.input:checked input {
+  accent-color: #709f60;
   font-style: normal;
-} 
-.input:checked{
-  color: #709F60;
-  accent-color: #709F60 !important;
+}
+.input:checked {
+  color: #709f60;
+  accent-color: #709f60 !important;
   border: none;
 }
 .dropbtn {
@@ -242,7 +242,7 @@ input:checked + .slider:before {
   border-radius: 2rem;
   background-color: #f9f9f9;
   min-width: 14rem;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   transition: 0.2s;
 }
@@ -255,17 +255,25 @@ input:checked + .slider:before {
   overflow: hidden;
 }
 
-.dropdown:hover .dropbtn div>svg {
-  color: #EBC351;
-  width: 4.5rem;
-  height: 4.5rem;
+.dropdown:hover .dropbtn div > svg {
+  color: #ebc351;
+  width: 4.2rem;
+  height: 4.2rem;
   transition: 0.2s;
-  
 }
-.close-button:hover svg{
+.dropdown:hover .dropbtn > p {
+  color: #ebc351 !important;
+  transition: 0.2s;
+}
+
+.close-button:hover svg {
   color: black !important;
   transition: 0.4s !important;
 }
-#friendItemList .row:nth-child(odd){background-color: #F0F6F5;}
+#friendItemList .row:nth-child(odd) {
+  background-color: #f0f6f5;
+}
 
-#friendItemList .row:nth-child(even){background-color: #E6E6E6;}
+#friendItemList .row:nth-child(even) {
+  background-color: #e6e6e6;
+}

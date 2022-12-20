@@ -86,43 +86,46 @@ const Navbar = () => {
   const authLinks = (
     <>
       <div style={styles.navUser} className="dropdown">
-        <button className="dropbtn">
-          <Icon name="User" width="4.3rem" height="4.3rem" color="white" />
+        <button className="dropbtn" style={{ display: "flex", alignItems: "center" }}>
+          <Icon name="User" width="4rem" height="4rem" color="white" />
+          <Text text={`Hello, ${username.toUpperCase()}`} fontSize="1.8rem" color="white" font="RobotoMedium" className="hoverTextNavbar" />
         </button>
-        <div className="dropdown-content">
-          <Button
-            onClick={() => navigate("/profile")}
-            height="4rem"
-            buttonColor="transparent"
-            className="buttonHoverDropDown"
-            color="black"
-            iconName="ProfileSettings"
-            iconPosition="start"
-            iconSize="2.2rem"
-            text="Profile"
-          />
-          <Button
-            onClick={() => navigate("/friends")}
-            height="4rem"
-            buttonColor="transparent"
-            className="buttonHoverDropDown"
-            color="black"
-            iconName="Friends"
-            iconPosition="start"
-            iconSize="2.2rem"
-            text="Friends"
-          />
-          <Button
-            height="4rem"
-            buttonColor="transparent"
-            className="buttonHoverDropDown"
-            color="black"
-            iconName="Logout"
-            iconPosition="start"
-            iconSize="2.2rem"
-            text="Logout"
-            onClick={onClickLogout}
-          />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="dropdown-content">
+            <Button
+              onClick={() => navigate("/profile")}
+              height="4rem"
+              buttonColor="transparent"
+              className="buttonHoverDropDown"
+              color="black"
+              iconName="ProfileSettings"
+              iconPosition="start"
+              iconSize="2.2rem"
+              text="Profile"
+            />
+            <Button
+              onClick={() => navigate("/friends")}
+              height="4rem"
+              buttonColor="transparent"
+              className="buttonHoverDropDown"
+              color="black"
+              iconName="Friends"
+              iconPosition="start"
+              iconSize="2.2rem"
+              text="Friends"
+            />
+            <Button
+              height="4rem"
+              buttonColor="transparent"
+              className="buttonHoverDropDown"
+              color="black"
+              iconName="Logout"
+              iconPosition="start"
+              iconSize="2.2rem"
+              text="Logout"
+              onClick={onClickLogout}
+            />
+          </div>
         </div>
       </div>
       <div style={styles.dropdownButton}></div>

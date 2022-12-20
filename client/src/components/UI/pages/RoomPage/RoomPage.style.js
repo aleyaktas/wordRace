@@ -13,12 +13,12 @@ const style = () => ({
   scoreCard: {
     width: "20%",
     height: "65rem",
-    backgroundColor: "#EBF1F5",
+    // backgroundColor: "#EBF1F5",
     overflowY: "auto",
   },
   text: {
     backgroundColor: "#5B5B5B",
-    height: "3.8rem",
+    height: "5rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -26,7 +26,7 @@ const style = () => ({
   roomText: {
     display: "flex",
     width: "60%",
-    height: "3.8rem",
+    height: "5rem",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FAEEED",

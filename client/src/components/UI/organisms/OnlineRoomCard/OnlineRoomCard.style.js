@@ -2,7 +2,7 @@ const style = () => ({
   container: {
     height: "65rem",
     width: "60%",
-    backgroundColor: "#ECF1F5",
+    // backgroundColor: "#ECF1F5",
   },
   text: {
     height: "5rem",

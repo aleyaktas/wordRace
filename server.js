@@ -14,11 +14,11 @@ const io = require("socket.io")(http, {
 });
 const cors = require("cors");
 app.use(cors());
-
 const connectDB = require("./config/db");
 const fileUpload = require("express-fileupload");
 const CreateQuestion = require("./utils/CreateQuestion");
 const User = require("./models/User");
+
 dotenv.config();
 
 connectDB();
@@ -86,7 +86,6 @@ const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
 const items = ["Bear", "Bird", "Bug", "Cat", "Crown", "Elephant", "Flower", "Horse", "Parrot", "Snake", "Turtle"];
 
 io.on("connection", (socket) => {
-  //if not players in room, this room delete
   rooms.find((room, index) => {
     if (room.players.length === 0) {
       rooms.splice(index, 1);
@@ -145,6 +144,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("join_room", ({ user, roomId }) => {
+    console.log(user.username);
     const { username, image } = user;
     const room = rooms.find((room) => room.id === roomId);
 
@@ -159,6 +159,8 @@ io.on("connection", (socket) => {
         usedJokers: [],
       });
       room.questions = CreateQuestion();
+      room.players[0].isYourTurn = true;
+      room.players[1].isYourTurn = false;
       socket.to(roomId).emit("room_joined", { room, joinUser: username });
       socket.emit("room_joined", { room, joinUser: username });
       io.emit("get_rooms", { rooms });
@@ -167,73 +169,50 @@ io.on("connection", (socket) => {
 
   socket.on("play_again", ({ roomId, username }) => {
     console.log("play_again");
-    const findRoom = rooms.find((room) => room.id === roomId);
-    if (findRoom) {
-      const newRooms = rooms.map((room) => {
-        if (room.id === roomId) {
-          room.players.map((player) => {
-            if (player.username === username) {
-              player.isReady = true;
-              socket.emit("started_play_again", { room });
-              return socket.to(roomId).emit("started_play_again", { room });
-            }
-          });
-          if (room.players.filter((player) => player.isReady === true).length === 2) {
-            room.players[0].isYourTurn = true;
-            room.players[1].isYourTurn = false;
-            room.players[0].scoreIndex = 0;
-            room.players[1].scoreIndex = 0;
-            room.players[0].usedJokers = [];
-            room.players[1].usedJokers = [];
-            room.questionIndex = 0;
-            room.questions = CreateQuestion();
-
-            socket.emit("started_play_again", { room });
-            socket.to(roomId).emit("started_play_again", { room });
-          }
+    const room = rooms.find((room) => room.id === roomId);
+    if (room) {
+      room.players.map((player) => {
+        if (player.username === username) {
+          player.isReady = true;
+          socket.emit("started_play_again", { room });
+          return socket.to(roomId).emit("started_play_again", { room });
         }
       });
+      if (room.players.filter((player) => player.isReady === true).length === 2) {
+        room.players[0].isYourTurn = true;
+        room.players[1].isYourTurn = false;
+        room.players[0].scoreIndex = 0;
+        room.players[1].scoreIndex = 0;
+        room.players[0].usedJokers = [];
+        room.players[1].usedJokers = [];
+        room.questionIndex = 0;
+        room.questions = CreateQuestion();
 
-      socket.emit("get_rooms", { rooms: newRooms });
-      socket.broadcast.emit("get_rooms", { rooms: newRooms });
+        socket.emit("started_play_again", { room });
+        socket.to(roomId).emit("started_play_again", { room });
+      }
+      console.log("newRooms", rooms);
     }
 
-    // if (isReadyCount === 1) {
-    //   room.players.forEach((player) => {
-    //     {
-    //       player.username === username && player.isYourTurn === true;
-    //     }
-    //   });
-    //   console.log("isPublicState", isPublicState);
-    //   if (isPublicState === "Public") {
-    //     room.isPublic = true;
-    //     rooms.find((room) => room.id === roomId).isPublic = true;
-    //   }
+    console.log("newRooms", rooms);
 
-    //   socket.emit("started_play_again", { room, isReadyCount });
-    //   socket.to("started_play_again", { room, isReadyCount });
-    // } else if (isReadyCount === 2) {
-    //   io.to(roomId).emit("started_play_again", { room, isReadyCount });
-    //   isReadyCount = 0;
-    // }
-    // socket.emit("get_rooms", { rooms });
-    // socket.broadcast.emit("get_rooms", { rooms });
+    socket.emit("get_rooms", { rooms });
+    socket.broadcast.emit("get_rooms", { rooms });
   });
-
   socket.on("quit_game", ({ roomId, username }) => {
     const room = rooms.find((room) => room.id === roomId);
     const player = room.players.find((player) => player.username === username);
+    socket.leave(roomId);
     if (room) {
       if (player) {
         room.players = room.players.filter((player) => player.username !== username);
-        const newRoom = rooms.find((room) => room.id === roomId);
       }
       if (room.players.length === 0) {
         rooms = rooms.filter((room) => room.id !== roomId);
       }
-      // console.log(room.players);
+
       socket.to(roomId).emit("opponent_quit", { username, room });
-      socket.emit("opponent_quit", { username, room });
+      //socket.emit("opponent_quit", { username, room });
     }
     socket.emit("get_rooms", { rooms });
     socket.broadcast.emit("get_rooms", { rooms });
@@ -416,7 +395,7 @@ io.on("connection", (socket) => {
       const findPlayer = findRoom.players.find((player) => player.username === username);
       const indexPlayer = findRoom.players.indexOf(findPlayer);
       findRoom.players.splice(indexPlayer, 1);
-      // console.log(findRoom?.players);
+
       if (findRoom.players.length === 0) {
         const indexRoom = rooms.indexOf(findRoom);
         rooms.splice(indexRoom, 1);
@@ -445,7 +424,7 @@ io.on("connection", (socket) => {
 
     rooms.forEach((room) => {
       let index = room.players.findIndex((x) => x.username === disconnectUser);
-      // console.log(index);
+
       if (index !== -1) {
         console.log("disconnected room");
         room.players.splice(index, 1);

@@ -230,8 +230,8 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(addFriend.fulfilled, (state, action) => {
-      state.message = "Friend added";
-      showMessage("Friend added", "success");
+      state.message = "Friend request send";
+      showMessage("Friend request send", "success");
     });
     builder.addCase(acceptFriend.pending, (state, action) => {
       state.error = "";

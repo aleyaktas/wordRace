@@ -33,7 +33,7 @@ function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (findUsername !== undefined) {
-      const socket = socketIO("http://localhost:3000", {
+      const socket = socketIO("https://api-wordrace.aleynaaktas.me", {
         query: {
           username: findUsername,
         },
@@ -64,7 +64,7 @@ function App() {
     { name: "secondUser", score: 5 },
     { name: "firstUser", score: 10 },
   ];
-  // axios.defaults.baseURL = "https://api-wordrace.aleynaaktas.me";
+  axios.defaults.baseURL = "https://api-wordrace.aleynaaktas.me";
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

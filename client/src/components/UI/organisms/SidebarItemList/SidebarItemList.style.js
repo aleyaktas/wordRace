@@ -4,7 +4,7 @@ const style = () => ({
     width: "35rem",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
   },
 });
 
