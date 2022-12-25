@@ -246,7 +246,7 @@ io.on("connection", (socket) => {
 
   socket.on("wrong_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
-    room?.players.forEach((player) => {
+    room.players.forEach((player) => {
       if (player.username === username) {
         player.isYourTurn = false;
       }
