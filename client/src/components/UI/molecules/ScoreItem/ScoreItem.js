@@ -13,8 +13,11 @@ const ScoreItem = ({ score, indexNumber, className, firstUser, secondUser }) => 
             {firstUser.image ? (
               <img className="firstUser" src={firstUser.image} alt={firstUser.image} />
             ) : (
-              <div className="firstUser" style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}>
-                {firstUser.username.charAt(0).toUpperCase()}
+              <div
+                className="firstUser"
+                style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}
+              >
+                {firstUser.username.charAt(0)?.toUpperCase()}
               </div>
             )}
 
@@ -36,8 +39,11 @@ const ScoreItem = ({ score, indexNumber, className, firstUser, secondUser }) => 
             {secondUser.image ? (
               <img className="secondUser" src={secondUser.image} alt={secondUser.image} />
             ) : (
-              <div className="secondUser" style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}>
-                {secondUser.username.charAt(0).toUpperCase()}
+              <div
+                className="secondUser"
+                style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}
+              >
+                {secondUser.username.charAt(0)?.toUpperCase()}
               </div>
             )}
           </div>
@@ -60,8 +66,11 @@ const ScoreItem = ({ score, indexNumber, className, firstUser, secondUser }) => 
                 <img className="firstUser" src={firstUser.image} alt={firstUser.image} />
               </div>
             ) : (
-              <div className="firstUser" style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}>
-                {firstUser.username.charAt(0).toUpperCase()}
+              <div
+                className="firstUser"
+                style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}
+              >
+                {firstUser.username.charAt(0)?.toUpperCase()}
               </div>
             )}
 
@@ -82,8 +91,11 @@ const ScoreItem = ({ score, indexNumber, className, firstUser, secondUser }) => 
                 <img className="secondUser" src={secondUser.image} alt={secondUser.image} />
               </div>
             ) : (
-              <div className="secondUser" style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}>
-                {secondUser.username.charAt(0).toUpperCase()}
+              <div
+                className="secondUser"
+                style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", backgroundColor: " rgb(196, 196, 196)" }}
+              >
+                {secondUser.username.charAt(0)?.toUpperCase()}
               </div>
             )}
           </div>

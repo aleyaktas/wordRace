@@ -16,7 +16,7 @@ const PlayAgainModal = ({ isOpen, modalClose, gameResult, username, onClick }) =
 
   return (
     <>
-      <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal open={isOpen} sx={styles.rootContainer} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
           <ModalHeader
             icon

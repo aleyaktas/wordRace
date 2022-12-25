@@ -160,6 +160,8 @@ io.on("connection", (socket) => {
       });
       room.questions = CreateQuestion();
       room.players[0].isYourTurn = true;
+      room.players[0].usedJokers = [];
+      room.players[0].scoreIndex = 0;
       room.players[1].isYourTurn = false;
       socket.to(roomId).emit("room_joined", { room, joinUser: username });
       socket.emit("room_joined", { room, joinUser: username });
@@ -174,6 +176,9 @@ io.on("connection", (socket) => {
       room.players.map((player) => {
         if (player.username === username) {
           player.isReady = true;
+          player.scoreIndex = 0;
+          player.usedJokers = [];
+
           socket.emit("started_play_again", { room });
           return socket.to(roomId).emit("started_play_again", { room });
         }
@@ -206,6 +211,7 @@ io.on("connection", (socket) => {
     if (room) {
       if (player) {
         room.players = room.players.filter((player) => player.username !== username);
+        room.questionIndex = 0;
       }
       if (room.players.length === 0) {
         rooms = rooms.filter((room) => room.id !== roomId);
@@ -240,7 +246,7 @@ io.on("connection", (socket) => {
 
   socket.on("wrong_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
-    room.players.forEach((player) => {
+    room?.players.forEach((player) => {
       if (player.username === username) {
         player.isYourTurn = false;
       }
@@ -257,8 +263,25 @@ io.on("connection", (socket) => {
     socket.emit("wrong_answered", { room });
   });
 
+  // socket.on("update_top_score", ({ roomId }) => {
+  //   const room = rooms.find((room) => room.id === roomId);
+  //   room.players.map(async (player) => {
+  //     console.log("player", player);
+  //     const user = await User.findOne({ username: player.username });
+  //     if (user) {
+  //       user.score += scores[player.scoreIndex];
+  //       console.log(player.scoreIndex);
+  //       await user.save();
+  //     }
+  //     console.log("user", user);
+  //   });
+  // });
+
+  // update top score
+
   socket.on("game_over", ({ roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
+
     let result;
     //find winner player
     result = room.players.reduce((prev, current) => (prev.scoreIndex > current.scoreIndex ? prev : current));
@@ -269,34 +292,28 @@ io.on("connection", (socket) => {
       result = "draw";
     }
 
-    room.players.map(async (player) => {
-      const user = await User.findOne({ username: player.username });
-      if (user) {
-        user.score += scores[player.scoreIndex];
-        await user.save();
-      }
-    });
+    console.log("roommm", room);
 
-    console.log("game over");
-    console.log(room.players);
-
-    const newRooms = rooms.map((room) => {
-      if (room.id === roomId) {
-        room.players[0].isYourTurn = true;
-        room.players.forEach((player) => {
+    if (room.id === roomId) {
+      room.players.map(async (player) => {
+        const user = await User.findOne({ username: player.username });
+        if (user) {
+          console.log("user", user);
+          console.log("player", player);
+          user.score += scores[player.scoreIndex];
+          await user.save();
           player.scoreIndex = 0;
           player.usedJokers = [];
           player.isReady = false;
-        });
-        room.questionIndex = 0;
-      }
-      return room;
-    });
-    console.log(newRooms);
+        }
+      });
+      room.players[0].isYourTurn = true;
+      room.questionIndex = 0;
+    }
 
     socket.to(roomId).emit("game_finished", { result, room });
     socket.emit("game_finished", { result, room });
-    io.emit("get_rooms", { rooms: newRooms });
+    io.emit("get_rooms", { rooms });
   });
 
   socket.on("fifty_fifty_joker", ({ username, roomId }) => {
@@ -340,6 +357,7 @@ io.on("connection", (socket) => {
         player.usedJokers.push("double_chance");
       }
     });
+
     socket.emit("double_chance_joker_used", { room });
   });
 
@@ -406,6 +424,8 @@ io.on("connection", (socket) => {
       if (nextPlayer) {
         findRoom.players[indexNextPlayer].isYourTurn = true;
       }
+      findRoom.questionIndex = 0;
+
       socket.leave(findRoom.id);
       socket.to(findRoom.id).emit("leave_room", { room: findRoom });
       socket.emit("leave_room", { room: findRoom });

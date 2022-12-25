@@ -7,9 +7,9 @@ import { useAppDispatch, useAppSelector } from "../../../../store";
 import Icon from "../../../../assets/icons/Icon";
 import { storage } from "../../../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { changePassword, editProfile } from "../../../../store/features/auth/authSlice";
-import { getScore } from "./actions";
+import { changePassword, getScore, updateProfile } from "./actions";
 import { showMessage } from "../../../../utils/showMessage";
+import { editProfile } from "../../../../store/features/auth/authSlice";
 
 const ProfilePage = () => {
   const styles = style();
@@ -26,7 +26,7 @@ const ProfilePage = () => {
   }, []);
 
   const handleImageChange = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
       setShowImage(URL.createObjectURL(e.target.files[0]));
@@ -34,21 +34,25 @@ const ProfilePage = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(e);
-    e.preventDefault();
+    // e.preventDefault();
     if (image) {
       const storageRef = ref(storage, `images/${image.name}`);
       await uploadBytes(storageRef, image);
       const downloadURL = await getDownloadURL(storageRef);
+      // await updateProfile({ url: downloadURL });
       await dispatch(editProfile({ url: downloadURL }));
       showMessage("Profile image updated successfully", "success");
     }
   };
 
-  const handlePasswordChange = (value) => {
+  const handlePasswordChange = async (value) => {
     if (value.newPassword === value.confirmPassword) {
-      dispatch(changePassword({ oldPassword: value.oldPassword, newPassword: value.newPassword }));
+      // await dispatch(changePassword({ oldPassword: value.oldPassword, newPassword: value.newPassword }));
+      const res = await changePassword({ oldPassword: value.oldPassword, newPassword: value.newPassword });
       setIsChecked(false);
+      if (res.errors) {
+        return showMessage(res.errors[0].msg, "error");
+      }
       return showMessage("Password changed successfully", "success");
     }
     setIsChecked(false);
@@ -58,7 +62,7 @@ const ProfilePage = () => {
   return (
     <div style={styles.container}>
       <div style={styles.imageContainer}>
-        {showImage ? <img src={showImage} alt="profile" style={styles.profileImage} /> : <div style={styles.profileChar}>{username.charAt(0).toUpperCase()}</div>}
+        {showImage ? <img src={showImage} alt="profile" style={styles.profileImage} /> : <div style={styles.profileChar}>{username?.charAt(0)?.toUpperCase()}</div>}
       </div>
       <div>
         <label for="file-input" style={styles.imageUpload}>

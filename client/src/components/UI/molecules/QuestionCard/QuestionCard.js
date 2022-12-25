@@ -22,7 +22,8 @@ const QuestionCard = ({ username, messages, timer, question, onClick, handleJoke
       </div>
       <div id="scroll" style={styles.messagesContainer}>
         {messages.length > 0 &&
-          (((scroll.scrollTop = scroll.scrollHeight), scroll.scrollIntoView({ behavior: "smooth" })),
+          scroll &&
+          (((scroll.scrollTop = scroll.scrollHeight), scroll?.scrollIntoView({ behavior: "smooth" })),
           messages.map((item, index) => <MessageBox image={item.img} message={item.msg} isOwnUser={item.username === username ? true : false} username={username} />))}
       </div>
     </div>

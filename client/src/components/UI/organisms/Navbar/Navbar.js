@@ -88,7 +88,7 @@ const Navbar = () => {
       <div style={styles.navUser} className="dropdown">
         <button className="dropbtn" style={{ display: "flex", alignItems: "center" }}>
           <Icon name="User" width="4rem" height="4rem" color="white" />
-          <Text text={`Hello, ${username.toUpperCase()}`} fontSize="1.8rem" color="white" font="RobotoMedium" className="hoverTextNavbar" />
+          <Text text={`Hello, ${username?.toUpperCase()}`} fontSize="1.8rem" color="white" font="RobotoMedium" className="hoverTextNavbar" />
         </button>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div className="dropdown-content">

@@ -26,7 +26,7 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
     e.preventDefault();
     await dispatch(acceptFriend({ username }));
     socket.emit("friend_accept", { username });
-    dispatch(getFriends({ ownerUser }));
+    await dispatch(getFriends({ ownerUser }));
     modalClose();
   };
 

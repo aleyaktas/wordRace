@@ -46,7 +46,7 @@ const ChangePasswordModal = ({ isOpen, modalClose, onClick }) => {
             />
             <TextInput
               onChange={(e) => setConfirmPassword(e.target.value)}
-              onKeyDown={handleKeyPress}
+              // onKeyDown={handleKeyPress}
               className="input"
               font="InterRegular"
               placeHolder="Confirm New Password"

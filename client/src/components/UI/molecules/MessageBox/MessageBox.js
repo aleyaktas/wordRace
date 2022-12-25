@@ -17,7 +17,7 @@ const MessageBox = ({ image, message, isOwnUser, username }) => {
         {" "}
         <div style={styles.messageContainer}>
           <div style={styles.messageBox}>
-            {image ? <img src={image} style={styles.profileImage} /> : <div style={styles.usernameChar}>{username.charAt(0).toUpperCase()}</div>}
+            {image ? <img src={image} style={styles.profileImage} /> : <div style={styles.usernameChar}>{username.charAt(0)?.toUpperCase()}</div>}
             <Text text={message} fontSize="1.5rem" color="black" />
           </div>
         </div>

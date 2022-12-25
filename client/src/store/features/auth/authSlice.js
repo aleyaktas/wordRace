@@ -124,9 +124,13 @@ export const editProfile = createAsyncThunk("editProfile", async ({ url }) => {
     },
   };
 
-  const body = JSON.stringify({ url });
-  const res = await axios.post("/api/auth/editProfile", body, config);
-  return res.data;
+  try {
+    const body = JSON.stringify({ url });
+    const res = await axios.post("/api/auth/editProfile", body, config);
+    return res.data;
+  } catch (err) {
+    return err.response.data;
+  }
 });
 
 export const changePassword = createAsyncThunk("changePassword", async ({ oldPassword, newPassword }, { rejectWithValue }) => {

@@ -42,6 +42,7 @@ const HomePage = () => {
           </Animated>{" "}
         </div>
       </div>
+
       <div className="homePageContainer2" style={styles.container}>
         <img className="homePageImg" src={HomePageSecondImg} alt="first" width="100%" />
         {scrollY > 230 && (

@@ -27,8 +27,6 @@ const RoomPage = () => {
     getTopScores(setTopScores);
   }, [rooms, dispatch]);
 
-  console.log(rooms);
-
   let publicRoomCount = rooms?.filter((room) => room?.isPublic)?.length;
   return (
     <div>
@@ -86,6 +84,8 @@ const RoomPage = () => {
               <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" margin="0 0 0 0.4rem" />
             </div>
             {topScores.map((player, index) => {
+              console.log(player);
+              console.log(topScores);
               if (player.score > 0) {
                 return (
                   <div key={index} style={styles.score}>

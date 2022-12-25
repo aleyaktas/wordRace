@@ -105,6 +105,7 @@ const GamePage = () => {
     });
     socket.on("opponent_quit", ({ username, room }) => {
       setRoom(room);
+
       showMessage(`${username} has left the room`, "info");
       console.log(room);
     });
@@ -122,7 +123,7 @@ const GamePage = () => {
       socket.off("correct_answered");
       socket.off("wrong_answered");
       socket.off("fifty_fifty_joker_used");
-      socket.off("double_chance_joker_used");
+
       socket.off("game_finished");
       socket.off("started_play_again");
       socket.off("opponent_quit");
@@ -167,12 +168,16 @@ const GamePage = () => {
       console.log(room.questions[room.questionIndex].answer);
       if (answer === room.questions[room.questionIndex].answer) {
         socket.emit("correct_answer", { username, roomId: room.id });
+        doubleChance && setDoubleChance(false);
         showMessage("Correct Answer", "success");
       }
       if (room.questionIndex === 19) {
+        console.log(room);
+
         socket.emit("game_over", { roomId: room.id });
       }
-      if (doubleChance) {
+
+      if (doubleChance && answer !== room.questions[room.questionIndex].answer) {
         console.log("b");
         setDoubleChance(false);
         return showMessage("Wrong Answer", "error");
