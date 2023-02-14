@@ -33,6 +33,10 @@ const GamePage = () => {
   const onlineUsers = useAppSelector((state) => state.auth.onlineUsers.filter((user) => user.username !== username));
   const allFriends = useAppSelector((state) => state.auth.user.friends);
   const onlineFriends = onlineUsers?.filter((item) => allFriends?.some((i) => i.username === item.username));
+  const offlineFriends = allFriends?.filter((item) => !onlineFriends?.some((i) => i.username === item.username));
+  const onlineUsersLength = onlineUsers?.length;
+  console.log("onlineFriends", onlineFriends);
+  console.log("offlineFriends", offlineFriends);
 
   useEffect(() => {
     socket.on("room_created", ({ room }) => {
@@ -239,7 +243,16 @@ const GamePage = () => {
     <div>
       {room && room.players && room.players?.filter((player) => player.isReady).length === 1 && (
         <div>
-          {isOpen && <FriendItemListModal friends={onlineFriends} modalType="inviteModal" isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
+          {isOpen && (
+            <FriendItemListModal
+              friends={onlineFriends}
+              onlineUsersLength={onlineUsersLength}
+              offlineFriends={offlineFriends}
+              modalType="inviteModal"
+              isOpen={isOpen}
+              modalClose={() => setIsOpen(false)}
+            />
+          )}
           <div style={styles.button} onClick={() => setIsOpen(true)}>
             <Button
               className="buttonHoverGold"
@@ -280,6 +293,8 @@ const GamePage = () => {
       {room && room.players && room.players.length === 2 && room.players?.filter((player) => player.isReady).length === 2 && (
         <div style={styles.container}>
           <SidebarItemList
+            onlineUsersLength={onlineUsersLength}
+            offlineFriends={offlineFriends}
             onlineFriends={onlineFriends}
             onClickSend={onClickSendMsg}
             onChangeMsg={(e) => handleMessageChange(e)}

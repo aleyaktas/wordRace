@@ -3,12 +3,12 @@ html {
 }
 
 * {
-  margin: 0px ;
-  padding: 0px ;
+  margin: 0px;
+  padding: 0px;
   box-sizing: border-box;
 }
 body {
-  background-color: #F3F2EE;
+  background-color: #f3f2ee;
 }
 
 svg {
@@ -20,122 +20,121 @@ svg {
 }
 
 @font-face {
-  font-family: 'Inter-SemiBold';
-  src: local('Inter-SemiBold'), url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
+  font-family: "Inter-SemiBold";
+  src: local("Inter-SemiBold"), url("./assets/fonts/Inter-SemiBold.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'MerriweatherSans-Regular' ;
-  src: local('MerriweatherSans-Regular'), url('./assets/fonts/MerriweatherSans-Regular.ttf') format('truetype');
+  font-family: "MerriweatherSans-Regular";
+  src: local("MerriweatherSans-Regular"), url("./assets/fonts/MerriweatherSans-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Inter-Bold' ;
-  src: local('Inter-Bold'), url('./assets/fonts/Inter-Bold.ttf') format('truetype');
+  font-family: "Inter-Bold";
+  src: local("Inter-Bold"), url("./assets/fonts/Inter-Bold.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Inter-Regular' ;
-  src: local('Inter-Regular'), url('./assets/fonts/Inter-Regular.ttf') format('truetype');
+  font-family: "Inter-Regular";
+  src: local("Inter-Regular"), url("./assets/fonts/Inter-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'OpenSans-Regular' ;
-  src: local('OpenSans-Regular'), url('./assets/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-family: "OpenSans-Regular";
+  src: local("OpenSans-Regular"), url("./assets/fonts/OpenSans-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Poppins-Regular' ;
-  src: local('Poppins-Regular'), url('./assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-family: "Poppins-Regular";
+  src: local("Poppins-Regular"), url("./assets/fonts/Poppins-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'RedHatMono-Regular' ;
-  src: local('RedHatMono-Regular'), url('./assets/fonts/RedHatMono-Regular.ttf') format('truetype');
+  font-family: "RedHatMono-Regular";
+  src: local("RedHatMono-Regular"), url("./assets/fonts/RedHatMono-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Roboto-Bold' ;
-  src: local('Roboto-Bold'), url('./assets/fonts/Roboto-Bold.ttf') format('truetype');
+  font-family: "Roboto-Bold";
+  src: local("Roboto-Bold"), url("./assets/fonts/Roboto-Bold.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Roboto-Black' ;
-  src: local('Roboto-Black'), url('./assets/fonts/Roboto-Black.ttf') format('truetype');
+  font-family: "Roboto-Black";
+  src: local("Roboto-Black"), url("./assets/fonts/Roboto-Black.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Roboto-Medium' ;
-  src: local('Roboto-Medium'), url('./assets/fonts/Roboto-Medium.ttf') format('truetype');
+  font-family: "Roboto-Medium";
+  src: local("Roboto-Medium"), url("./assets/fonts/Roboto-Medium.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Roboto-LightItalic' ;
-  src: local('Roboto-LightItalic'), url('./assets/fonts/Roboto-LightItalic.ttf') format('truetype');
+  font-family: "Roboto-LightItalic";
+  src: local("Roboto-LightItalic"), url("./assets/fonts/Roboto-LightItalic.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Roboto-Thin' ;
-  src: local('Roboto-Thin'), url('./assets/fonts/Roboto-Thin.ttf') format('truetype');
+  font-family: "Roboto-Thin";
+  src: local("Roboto-Thin"), url("./assets/fonts/Roboto-Thin.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Roboto-ThinItalic';
-  src: local('Roboto-ThinItalic'), url('./assets/fonts/Roboto-ThinItalic.ttf') format('truetype');
+  font-family: "Roboto-ThinItalic";
+  src: local("Roboto-ThinItalic"), url("./assets/fonts/Roboto-ThinItalic.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'RobotoSlab-Regular' ;
-  src: local('RobotoSlab-Regular'), url('./assets/fonts/RobotoSlab-Regular.ttf') format('truetype');
+  font-family: "RobotoSlab-Regular";
+  src: local("RobotoSlab-Regular"), url("./assets/fonts/RobotoSlab-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'SawarabiMincho-Regular' ;
-  src: local('SawarabiMincho-Regular'), url('./assets/fonts/SawarabiMincho-Regular.ttf') format('truetype');
+  font-family: "SawarabiMincho-Regular";
+  src: local("SawarabiMincho-Regular"), url("./assets/fonts/SawarabiMincho-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'SfProDisplay-Medium' ;
-  src: local('SfProDisplay-Medium'), url('./assets/fonts/SfProDisplay-Medium.ttf') format('truetype');
+  font-family: "SfProDisplay-Medium";
+  src: local("SfProDisplay-Medium"), url("./assets/fonts/SfProDisplay-Medium.ttf") format("truetype");
 }
-
 
 .InterBold {
-font-family: Inter-Bold
+  font-family: Inter-Bold;
 }
 .InterRegular {
-font-family: Inter-Regular
+  font-family: Inter-Regular;
 }
 .InterSemiBold {
-font-family: Inter-SemiBold
+  font-family: Inter-SemiBold;
 }
 .MerriweatherSansRegular {
-font-family: MerriweatherSans-Regular
+  font-family: MerriweatherSans-Regular;
 }
 .OpenSansRegular {
-font-family: OpenSans-Regular
+  font-family: OpenSans-Regular;
 }
 .PoppinsRegular {
-font-family: Poppins-Regular
+  font-family: Poppins-Regular;
 }
 .RedHatMonoRegular {
-font-family: RedHatMono-Regular
+  font-family: RedHatMono-Regular;
 }
 .RobotoBold {
-font-family: Roboto-Bold
+  font-family: Roboto-Bold;
 }
 .RobotoBlack {
-  font-family: Roboto-Black
-  }
+  font-family: Roboto-Black;
+}
 .RobotoMedium {
-font-family: Roboto-Medium
+  font-family: Roboto-Medium;
 }
 .RobotoLightItalic {
-font-family: Roboto-LightItalic
+  font-family: Roboto-LightItalic;
 }
 .RobotoThin {
-font-family: Roboto-Thin
+  font-family: Roboto-Thin;
 }
 .RobotoThinItalic {
-font-family: Roboto-ThinItalic;
+  font-family: Roboto-ThinItalic;
 }
 .RobotoSlabRegular {
-font-family: RobotoSlab-Regular
+  font-family: RobotoSlab-Regular;
 }
 .SawarabiMinchoRegular {
-font-family: SawarabiMincho-Regular
+  font-family: SawarabiMincho-Regular;
 }
 .SfProDisplayMedium {
-font-family: SfProDisplay-Medium
+  font-family: SfProDisplay-Medium;
 }
 
 .homePageImg {
-  width: 70%
+  width: 70%;
 }
 .homePageText {
   width: 30%;
@@ -149,4 +148,84 @@ font-family: SfProDisplay-Medium
 }
 .homePageContainer {
   display: flex;
+}
+
+@media (max-width: 576px) {
+  html {
+    font-size: 40%; /*10px*/
+  }
+  .navText {
+    margin-left: 0 !important;
+  }
+  .homePageImg {
+    width: 100% !important;
+
+    object-fit: cover;
+    background-size: cover;
+  }
+  .homeFirstImg {
+    object-position: bottom;
+    height: 20vh !important;
+  }
+  .homeSecondImg {
+    object-position: top;
+    height: 30vh !important;
+  }
+  .homeThirdImg {
+    object-position: top;
+    height: 30vh !important;
+  }
+  .homeFourthImg {
+    object-position: center;
+    height: 30vh !important;
+  }
+  .homePageContainer {
+    flex-direction: column-reverse !important;
+    justify-content: space-evenly !important;
+    height: 28vh !important;
+    padding-top: 5rem;
+  }
+
+  .homePageContainer2 {
+    flex-direction: column-reverse !important;
+    justify-content: space-evenly !important;
+    height: 30vh !important;
+  }
+
+  .homePageText {
+    width: 100% !important;
+    display: flex;
+    margin: 0 auto !important;
+  }
+
+  .homePageContainer2 p {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+    width: 70%;
+    margin: 0 auto !important;
+  }
+  .homePageContainer p {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+    width: 70%;
+    margin: 0 auto !important;
+  }
+  .navButton {
+    margin-right: 0 !important;
+  }
+  .navButton button {
+    width: 10rem !important;
+    height: 3rem !important;
+  }
+  .navText p {
+    letter-spacing: 0 !important;
+  }
+  .navContainer {
+    justify-content: space-between !important;
+    padding: 0 2rem !important;
+  }
+  .navUser {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }

@@ -68,6 +68,8 @@ const FriendsPage = () => {
           {(isOpenState === true) & (componentName === "FriendItemListModal") ? (
             <FriendItemListModal
               friends={pendingRequests}
+              onlineUserLength={0}
+              offlineFriends={[]}
               modalType="requestModal"
               title="Pending Requests"
               setIsOpen={setIsOpen}

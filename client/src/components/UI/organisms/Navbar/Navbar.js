@@ -54,7 +54,7 @@ const Navbar = () => {
           modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })}
         />
       ) : null}
-      <div style={styles.navButton}>
+      <div className="navButton" style={styles.navButton}>
         <Button
           onClick={() => onClick("RegisterModal")}
           className="buttonHoverGold"
@@ -85,7 +85,7 @@ const Navbar = () => {
   );
   const authLinks = (
     <>
-      <div style={styles.navUser} className="dropdown">
+      <div style={styles.navUser} className="dropdown navUser">
         <button className="dropbtn" style={{ display: "flex", alignItems: "center" }}>
           <Icon name="User" width="4rem" height="4rem" color="white" />
           <Text text={`Hello, ${username?.toUpperCase()}`} fontSize="1.8rem" color="white" font="RobotoMedium" className="hoverTextNavbar" />
@@ -128,13 +128,13 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div style={styles.dropdownButton}></div>
+      {/* <div style={styles.dropdownButton}></div> */}
     </>
   );
   return (
     <>
-      <div style={styles.navContainer}>
-        <div onClick={() => navigate("/")} style={styles.navText}>
+      <div className="navContainer" style={styles.navContainer}>
+        <div className="navText" onClick={() => navigate("/")} style={styles.navText}>
           <Text text="WORD RACE" color="white" fontSize="2.5rem" font="InterSemiBold" letterSpacing="0.2rem" />
         </div>
         {<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}

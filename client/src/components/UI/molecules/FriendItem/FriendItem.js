@@ -19,7 +19,7 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
     setIsInvite(true);
     socket.emit("invite_user", { username, ownerUser });
     showMessage("Invitation sent", "success");
-    modalClose();
+    // modalClose();
   };
 
   const onClickAccept = async (e) => {
@@ -38,9 +38,7 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   };
   const inviteControl = (isInvite, setIsInvite) => (
     <>
-      {isInvite ? (
-        <Text text="invited" />
-      ) : (
+      {isOnline ? (
         <Button
           onClick={onClickInvite}
           width="12rem"
@@ -54,6 +52,21 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
           fontSize="1.6rem"
           iconSize="2rem"
           className="buttonHoverGold"
+        />
+      ) : (
+        <Button
+          onClick={onClickInvite}
+          width="12rem"
+          padding="0.3rem"
+          textPosition="center"
+          text="Invite"
+          iconName="Letter"
+          iconPosition="left"
+          buttonColor="#EBD894"
+          textMargin="0 0 0 1rem"
+          fontSize="1.6rem"
+          iconSize="2rem"
+          disabled={true}
         />
       )}
     </>
@@ -107,7 +120,7 @@ const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
   return (
     <div className="row" style={styles.row}>
       <div style={styles.column}>
-        <Text text={index} />
+        <Text fontSize="2rem" text="➝" />
       </div>
       <div style={styles.column}>
         <Text text={username} />

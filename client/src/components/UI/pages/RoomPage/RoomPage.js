@@ -33,7 +33,7 @@ const RoomPage = () => {
       {rooms && rooms?.length > 0 && publicRoomCount > 0 && (
         <div style={styles.container}>
           <OnlineRoomCard />
-          <div style={styles.scoreCard}>
+          <div className="scoreCard" style={styles.scoreCard}>
             <div style={styles.text}>
               <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />
             </div>
@@ -78,7 +78,7 @@ const RoomPage = () => {
             />
           </div>
 
-          <div style={styles.scoreCard}>
+          <div className="scoreCard" style={styles.scoreCard}>
             <div style={styles.text}>
               <Icon name="Winners" color="rgb(235, 216, 148)" width="2rem" height="2rem" />
               <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" margin="0 0 0 0.4rem" />

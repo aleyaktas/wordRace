@@ -4,12 +4,15 @@ import HomePageFirstImg from "../../../../assets/images/HomePageFirstImg.png";
 import HomePageSecondImg from "../../../../assets/images/HomePageSecondImg.png";
 import HomePageThirdImg from "../../../../assets/images/HomePageThirdImg.png";
 import HomePageFourthImg from "../../../../assets/images/HomePageFourthImg.png";
+import { useMediaQuery } from "react-responsive";
 import { Animated } from "react-animated-css";
 import style from "./HomePage.style";
 
 const HomePage = () => {
   const styles = style();
   const [scrollY, setScrollY] = useState(0);
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 576px)" });
 
   function logit() {
     setScrollY(window.pageYOffset);
@@ -28,7 +31,7 @@ const HomePage = () => {
   return (
     <>
       <div className="homePageContainer" style={styles.container}>
-        <img className="homePageImg" src={HomePageFirstImg} alt="first" width="100%" />
+        <img className="homePageImg homeFirstImg" src={HomePageFirstImg} alt="first" width="100%" />
         <div className="homePageText">
           <Animated animationIn="fadeInRight" animationInDuration={1800} isVisible={true}>
             <Text
@@ -44,8 +47,8 @@ const HomePage = () => {
       </div>
 
       <div className="homePageContainer2" style={styles.container}>
-        <img className="homePageImg" src={HomePageSecondImg} alt="first" width="100%" />
-        {scrollY > 230 && (
+        <img className="homePageImg homeSecondImg" src={HomePageSecondImg} alt="first" width="100%" />
+        {scrollY > 230 ? (
           <div className="homePageText">
             <Animated animationIn="fadeInLeft" animationInDuration={1800} isVisible={true}>
               <Text
@@ -58,11 +61,22 @@ const HomePage = () => {
               />{" "}
             </Animated>{" "}
           </div>
+        ) : (
+          isTabletOrMobile && (
+            <Text
+              font="InterBold"
+              textAlign="-webkit-center"
+              color="#47607A"
+              fontSize="2.5rem"
+              lineHeight="3.5rem"
+              text="If you want, you can create a room and invite your friends to the room. Are you ready for this learning journey?"
+            />
+          )
         )}
       </div>
       <div className="homePageContainer" style={styles.container}>
-        <img className="homePageImg" src={HomePageThirdImg} alt="first" width="100%" />
-        {scrollY > 680 && (
+        <img className="homePageImg homeThirdImg" src={HomePageThirdImg} alt="first" width="100%" />
+        {scrollY > 680 ? (
           <div className="homePageText">
             <Animated animationIn="fadeInRight" animationInDuration={1800} isVisible={true}>
               <Text
@@ -75,11 +89,22 @@ const HomePage = () => {
               />{" "}
             </Animated>{" "}
           </div>
+        ) : (
+          isTabletOrMobile && (
+            <Text
+              font="InterBold"
+              textAlign="-webkit-center"
+              color="#47607A"
+              fontSize="2.5rem"
+              lineHeight="3.5rem"
+              text="Or you can join the created online rooms and play with different users"
+            />
+          )
         )}
       </div>
       <div className="homePageContainer2" style={styles.container}>
-        <img className="homePageImg" src={HomePageFourthImg} alt="first" width="100%" />
-        {scrollY > 1000 && (
+        <img className="homePageImg homeFourthImg" src={HomePageFourthImg} alt="first" width="100%" />
+        {scrollY > 1000 ? (
           <div className="homePageText">
             <Animated animationIn="fadeInLeft" animationInDuration={1800} isVisible={true}>
               <Text
@@ -92,6 +117,17 @@ const HomePage = () => {
               />{" "}
             </Animated>{" "}
           </div>
+        ) : (
+          isTabletOrMobile && (
+            <Text
+              font="InterBold"
+              textAlign="-webkit-center"
+              color="#47607A"
+              fontSize="2.5rem"
+              lineHeight="3.5rem"
+              text="It's game time! Don't be afraid, you have jockeys and don't forget to face your opponent to score, good luck"
+            />
+          )
         )}
       </div>
     </>

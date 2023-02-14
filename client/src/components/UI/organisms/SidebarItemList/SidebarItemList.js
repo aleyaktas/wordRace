@@ -2,7 +2,7 @@ import React from "react";
 import SidebarItem from "../../molecules/SidebarItem/SidebarItem";
 import style from "./SidebarItemList.style.js";
 
-const SidebarItemList = ({ onClick, onClickSend, onChangeMsg, isOpen, chatRef, onlineFriends }) => {
+const SidebarItemList = ({ onClick, onClickSend, onChangeMsg, isOpen, chatRef, onlineFriends, offlineFriends }) => {
   const styles = style();
   const sidebarItems = ["Message", "Friends", "Out"];
 
@@ -10,6 +10,7 @@ const SidebarItemList = ({ onClick, onClickSend, onChangeMsg, isOpen, chatRef, o
     <div style={styles.container}>
       {sidebarItems.map((sidebarItem) => (
         <SidebarItem
+          offlineFriends={offlineFriends}
           onlineFriends={onlineFriends}
           onClickSend={onClickSend}
           onChangeMsg={(e) => onChangeMsg(e)}

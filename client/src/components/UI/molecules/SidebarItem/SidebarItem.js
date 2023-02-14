@@ -6,7 +6,7 @@ import { Animated } from "react-animated-css";
 import { useNavigate } from "react-router-dom";
 import FriendItemListModal from "../../molecules/FriendItemListModal/FriendItemListModal";
 
-const SidebarItem = ({ sidebarItem, onlineFriends, onClick, onClickSend, onChangeMsg, isOpen, chatRef }) => {
+const SidebarItem = ({ sidebarItem, onlineFriends, onlineUsersLength, offlineFriends, onClick, onClickSend, onChangeMsg, isOpen, chatRef }) => {
   const styles = style({ isOpen });
 
   const handleKeyPress = (e) => {
@@ -50,7 +50,14 @@ const SidebarItem = ({ sidebarItem, onlineFriends, onClick, onClickSend, onChang
           </div>
         )}
         {isOpenFriendsModal && (
-          <FriendItemListModal friends={onlineFriends} modalType="onlineModal" isOpen={isOpenFriendsModal} modalClose={() => setIsOpenFriendsModal(false)} />
+          <FriendItemListModal
+            onlineUsersLength={onlineUsersLength}
+            friends={onlineFriends}
+            offlineFriends={offlineFriends}
+            modalType="onlineModal"
+            isOpen={isOpenFriendsModal}
+            modalClose={() => setIsOpenFriendsModal(false)}
+          />
         )}
 
         {/* {isOpen && sidebarItem === "Out" && navigate("/")} */}
