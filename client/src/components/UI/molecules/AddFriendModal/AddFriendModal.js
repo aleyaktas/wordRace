@@ -43,7 +43,7 @@ const AddFriendModal = ({ isOpen, modalClose }) => {
     <>
       <Modal open={isOpen} sx={styles.rootContainer} onClose={modalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal" style={styles.container}>
-          <ModalHeader modalClose={modalClose} iconName="Friend" text="Add Friend" />
+          <ModalHeader modalClose={modalClose} iconName="Friend" iconColor="dark" text="Add Friend" />
           <div style={styles.body}>
             <TextInput
               value={username}

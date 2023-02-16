@@ -7,7 +7,7 @@ const SidebarItemList = ({ onClick, onClickSend, onChangeMsg, isOpen, chatRef, o
   const sidebarItems = ["Message", "Friends", "Out"];
 
   return (
-    <div style={styles.container}>
+    <div className="sidebarItemsContainer" style={styles.container}>
       {sidebarItems.map((sidebarItem) => (
         <SidebarItem
           offlineFriends={offlineFriends}

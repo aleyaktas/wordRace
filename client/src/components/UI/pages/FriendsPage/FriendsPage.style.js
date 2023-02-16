@@ -6,7 +6,9 @@ const style = () => ({
   },
   button: {
     display: "flex",
-    justifyContent: "end",
+    justifyContent: "flex-end",
+    placeContent: "end",
+    width: "100%",
   },
   body: {
     margin: "3rem 4rem 0 4rem",

@@ -9,7 +9,7 @@ const RoomCardList = () => {
   const rooms = useAppSelector((state) => state.auth.rooms);
 
   return (
-    <div style={styles.container}>
+    <div className="roomCardListContainer" style={styles.container}>
       {rooms?.map((room) => (
         <>{room.isPublic === true && <RoomCard room={room} />}</>
       ))}

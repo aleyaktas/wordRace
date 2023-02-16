@@ -31,7 +31,7 @@ const RoomPage = () => {
   return (
     <div>
       {rooms && rooms?.length > 0 && publicRoomCount > 0 && (
-        <div style={styles.container}>
+        <div className="roomContainer" style={styles.container}>
           <OnlineRoomCard />
           <div className="scoreCard" style={styles.scoreCard}>
             <div style={styles.text}>
@@ -57,14 +57,14 @@ const RoomPage = () => {
       )}
       {publicRoomCount === 0 && (
         <div style={styles.containerNoRoom}>
-          <div style={styles.roomText}>
+          <div className="roomText" style={styles.roomText}>
             <Text text="😕 Currently there are no online rooms" font="PoppinsRegular" />
           </div>
 
           {isOpen && <CreateRoomModal rooms={rooms} isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
           <div onClick={() => setIsOpen(true)}>
             <Button
-              className="buttonHoverGold"
+              className="buttonHoverGold createRoomButton plusIcon"
               text="Create Room"
               font="RobotoMedium"
               fontSize="1.7rem"

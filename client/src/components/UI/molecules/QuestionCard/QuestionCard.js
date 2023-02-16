@@ -10,7 +10,7 @@ const QuestionCard = ({ username, messages, timer, question, onClick, handleJoke
   var scroll = document.getElementById("scroll");
 
   return (
-    <div style={styles.container}>
+    <div className="questionCard" style={styles.container}>
       <div style={styles.header}>
         <Text text={question?.question} fontSize="3rem" color="white" />
       </div>

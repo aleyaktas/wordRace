@@ -60,11 +60,11 @@ const ProfilePage = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="profilePageContainer" style={styles.container}>
       <div style={styles.imageContainer}>
         {showImage ? <img src={showImage} alt="profile" style={styles.profileImage} /> : <div style={styles.profileChar}>{username?.charAt(0)?.toUpperCase()}</div>}
       </div>
-      <div>
+      <div className="imageUploadContainer">
         <label for="file-input" style={styles.imageUpload}>
           <Icon name="Camera" width="3rem" height="3rem" color="white" />
           <input

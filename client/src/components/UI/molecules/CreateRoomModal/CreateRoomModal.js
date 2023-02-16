@@ -86,7 +86,7 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
               type="text"
             />
             <div style={styles.checkbox}>
-              <Box sx={{ width: "20%", margin: "0 3rem 0 0" }}>
+              <Box sx={{ width: "25%", margin: "0 3rem 0 0" }}>
                 <FormControl fullWidth>
                   <InputLabel sx={{ fontSize: "2rem" }} variant="standard" htmlFor="uncontrolled-native">
                     Timer

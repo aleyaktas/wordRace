@@ -12,9 +12,12 @@ import socket from "../../../../utils/socket";
 import { showMessage } from "../../../../utils/showMessage";
 import { useLocation, useNavigate } from "react-router-dom";
 import PlayAgainModal from "../../molecules/PlayAgainModal/PlayAgainModal";
+import { useMediaQuery } from "react-responsive";
 
 const GamePage = () => {
   const styles = style();
+  const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 576px)" });
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenMsgBox, setIsOpenMsgBox] = useState(false);
@@ -291,44 +294,67 @@ const GamePage = () => {
         </div>
       )}
       {room && room.players && room.players.length === 2 && room.players?.filter((player) => player.isReady).length === 2 && (
-        <div style={styles.container}>
-          <SidebarItemList
-            onlineUsersLength={onlineUsersLength}
-            offlineFriends={offlineFriends}
-            onlineFriends={onlineFriends}
-            onClickSend={onClickSendMsg}
-            onChangeMsg={(e) => handleMessageChange(e)}
-            isOpen={isOpenMsgBox}
-            onClick={(sidebarItem) => onClickSidebarItem(sidebarItem)}
-            chatRef={chatRef}
-          />
-          {/* {room.players?.filter((player) => player.isReady).length === 1 ? (
-            <Animated animationIn="zoomIn" animationInDuration={1200} isVisible={true}>
-              {" "}
-              <Text text="Waiting for other player's decision" font="RedHatMonoRegular" fontSize="2.4rem" color="#6B5814" />
-            </Animated>
-          ) : ( */}
-          <QuestionCard
-            username={username}
-            messages={messages}
-            timer={
-              room.players.find((player) => player.username === username).isYourTurn &&
-              room.players.length === 2 &&
-              room.players?.filter((player) => player.isReady).length === 2
-                ? timeProgress
-                : "Wait"
-            }
-            question={room.questions[room.questionIndex]}
-            onClick={(option) => checkAnswer(option)}
-            handleJoker={(joker) => handleJoker(joker)}
-            usedJokers={room.players.find((player) => player.username === username).usedJokers}
-          />
-          {/* )} */}
-          <ScoreCard
-            firstUser={room.players[0].username === username ? room.players[1] : room.players[0]}
-            secondUser={room.players[1].username === username ? room.players[1] : room.players[0]}
-          />
-        </div>
+        <>
+          <div className="scoreTextCont" style={styles.scoreTextCont}>
+            {room.players[0].username === username ? (
+              <>
+                <div style={styles.scoreTextList}>
+                  <Text className={`scoreText ${room.players[0].isYourTurn && "turnEffect"}`} text={`${scores[room.players[0].scoreIndex]}`} />
+                  {/* <Text className={"scoreText" + room.players[0].isYourTurn && "turnEffect"} text={`${room.players[0].username}`} /> */}
+                  <Text className="scoreText" text={`${scores[room.players[0].scoreIndex]}`} />
+                </div>
+                <div style={styles.scoreTextList}>
+                  <Text className="scoreText" text={`${scores[room.players[1].scoreIndex]}`} />
+                  <Text className={`scoreText + ${room.players[1].isYourTurn && "turnEffect"}`} text={`${room.players[1].username}`} />
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={styles.scoreTextList}>
+                  <Text className={`scoreText + ${room.players[1].isYourTurn && "turnEffect"}`} text={`${room.players[1].username}`} />
+                  <Text className="scoreText" text={`${scores[room.players[1].scoreIndex]}`} />
+                </div>
+                <div style={styles.scoreTextList}>
+                  <Text className="scoreText" text={`${scores[room.players[0].scoreIndex]}`} />
+                  <Text className={`scoreText + ${room.players[0].isYourTurn && "turnEffect"}`} text={`${room.players[0].username}`} />
+                </div>
+              </>
+            )}
+          </div>
+          <div className="gamePageContainer" style={styles.container}>
+            <SidebarItemList
+              onlineUsersLength={onlineUsersLength}
+              offlineFriends={offlineFriends}
+              onlineFriends={onlineFriends}
+              onClickSend={onClickSendMsg}
+              onChangeMsg={(e) => handleMessageChange(e)}
+              isOpen={isOpenMsgBox}
+              onClick={(sidebarItem) => onClickSidebarItem(sidebarItem)}
+              chatRef={chatRef}
+            />
+
+            <QuestionCard
+              username={username}
+              messages={messages}
+              timer={
+                room.players.find((player) => player.username === username).isYourTurn &&
+                room.players.length === 2 &&
+                room.players?.filter((player) => player.isReady).length === 2
+                  ? timeProgress
+                  : "Wait"
+              }
+              question={room.questions[room.questionIndex]}
+              onClick={(option) => checkAnswer(option)}
+              handleJoker={(joker) => handleJoker(joker)}
+              usedJokers={room.players.find((player) => player.username === username).usedJokers}
+            />
+            {/* )} */}
+            <ScoreCard
+              firstUser={room.players[0].username === username ? room.players[1] : room.players[0]}
+              secondUser={room.players[1].username === username ? room.players[1] : room.players[0]}
+            />
+          </div>
+        </>
       )}
       <PlayAgainModal
         onClick={(value) => onClickAgainGame(value)}

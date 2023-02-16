@@ -33,7 +33,7 @@ const HomePage = () => {
       <div className="homePageContainer" style={styles.container}>
         <img className="homePageImg homeFirstImg" src={HomePageFirstImg} alt="first" width="100%" />
         <div className="homePageText">
-          <Animated animationIn="fadeInRight" animationInDuration={1800} isVisible={true}>
+          {isTabletOrMobile ? (
             <Text
               font="InterBold"
               textAlign="-webkit-center"
@@ -41,8 +41,19 @@ const HomePage = () => {
               fontSize="2.5rem"
               lineHeight="3.5rem"
               text="How many English words do you know? How about learning more words by playing? Register now and start learning"
-            />{" "}
-          </Animated>{" "}
+            />
+          ) : (
+            <Animated animationIn="fadeInRight" animationInDuration={1800} isVisible={true}>
+              <Text
+                font="InterBold"
+                textAlign="-webkit-center"
+                color="#47607A"
+                fontSize="2.5rem"
+                lineHeight="3.5rem"
+                text="How many English words do you know? How about learning more words by playing? Register now and start learning"
+              />{" "}
+            </Animated>
+          )}
         </div>
       </div>
 

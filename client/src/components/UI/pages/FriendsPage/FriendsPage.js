@@ -56,7 +56,7 @@ const FriendsPage = () => {
     <div style={styles.noFriendText}>
       <Animated animationIn="zoomIn" animationInDuration={1200} isVisible={true}>
         {" "}
-        <Text text="You don't have any friends yet, do you want to add friends?" font="RedHatMonoRegular" fontSize="2.4rem" color="#6B5814" />
+        <Text className="anyFriendsText" text="You don't have any friends yet, do you want to add friends?" font="RedHatMonoRegular" fontSize="2.4rem" color="#6B5814" />
       </Animated>
     </div>
   );
@@ -80,7 +80,7 @@ const FriendsPage = () => {
             <AddFriendModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen(false)} />
           ) : null}
           <Button
-            className={pendingRequests.length === 0 ? "" : "buttonHoverGold"}
+            className={pendingRequests.length === 0 ? "pendingRequestButton" : "buttonHoverGold pendingRequestButton"}
             disabled={pendingRequests.length === 0}
             onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "FriendItemListModal" })}
             text="Pending Requests"
@@ -94,7 +94,7 @@ const FriendsPage = () => {
           />
         </div>
         <Button
-          className="buttonHoverGold"
+          className="buttonHoverGold addFriendButton"
           onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "AddFriendModal" })}
           text="Add Friend"
           margin="0 5rem 0 0"

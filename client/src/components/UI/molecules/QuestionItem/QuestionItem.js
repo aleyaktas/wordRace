@@ -7,7 +7,7 @@ const QuestionItem = ({ option, className, onClick, disabled }) => {
   const styles = style();
   return (
     <>
-      <div style={styles.container}>
+      <div className="questionItemContainer" style={styles.container}>
         <Button
           onClick={onClick}
           disabled={disabled}

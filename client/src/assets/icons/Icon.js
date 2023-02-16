@@ -76,7 +76,7 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
 
   return (
     <div className={className} style={style}>
-      <IconItem width={width} height={height} color={color} />
+      <IconItem width={width} height={height} color={color || "black"} />
     </div>
   );
 };

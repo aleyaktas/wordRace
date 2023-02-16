@@ -150,7 +150,7 @@ svg {
   display: flex;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 900px) {
   html {
     font-size: 40%; /*10px*/
   }
@@ -210,6 +210,25 @@ svg {
     width: 70%;
     margin: 0 auto !important;
   }
+  .createRoomButton {
+    width: 15rem !important;
+    height: 3rem !important;
+  }
+  .roomText {
+    height: 3rem !important;
+  }
+  .roomCardContainer {
+    width: 15rem !important;
+    height: 15rem !important;
+  }
+  .roomImg {
+    height: 8rem;
+    width: auto;
+    contain: strict !important;
+  }
+  .roomCard {
+    height: 10rem !important;
+  }
   .navButton {
     margin-right: 0 !important;
   }
@@ -227,5 +246,90 @@ svg {
   .navUser {
     margin-left: 0 !important;
     margin-right: 0 !important;
+  }
+  .dropbtn {
+    padding: 0 !important;
+  }
+  .scoreCard {
+    display: none !important;
+  }
+  .roomContainer {
+    align-items: flex-start !important;
+    margin-top: 2rem !important;
+    padding: 0 2rem !important;
+  }
+  .onlineRoomCardContainer {
+    width: 100% !important;
+  }
+  .gamePageContainer {
+    justify-content: start !important;
+    height: auto !important;
+    flex-direction: column-reverse !important;
+  }
+  .scoreCardContainer {
+    display: none !important;
+  }
+  .questionCard {
+    height: auto !important;
+    width: 85% !important;
+    margin: 0 auto;
+  }
+  .turnEffect {
+    text-decoration: underline !important;
+    text-decoration-color: red !important;
+    text-underline-position: unset !important;
+    text-underline-offset: 0.5em;
+    font-size: 2.6rem !important;
+    transition: 0.2s;
+  }
+  .sidebarItemsContainer {
+    display: none !important;
+  }
+  .addFriendButton {
+    width: 15rem !important;
+    height: 3rem !important;
+    margin-right: 5rem !important;
+  }
+  .pendingRequestButton {
+    width: 18rem !important;
+    height: 3rem !important;
+  }
+  .anyFriendsText {
+    font-size: 1.8rem !important;
+    text-align: center !important;
+  }
+  .questionItemContainer {
+    width: 45% !important;
+  }
+  .questionList {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .scoreTextCont {
+    display: flex !important;
+    width: 100%;
+    color: white;
+    margin: 5rem 0;
+    justify-content: center;
+  }
+  .scoreText {
+    font-size: 2.4rem !important;
+    font-weight: bolder !important;
+  }
+  .plusIcon > div > svg {
+    color: rgb(107, 88, 20) !important;
+  }
+  .roomCardListContainer {
+    height: auto !important;
+  }
+  .imageUploadContainer {
+    display: none !important;
+  }
+  .profilePageContainer {
+    justify-content: flex-start !important;
+    margin-top: 15rem !important;
+  }
+  .modal {
+    width: 35rem !important;
   }
 }

@@ -19,5 +19,11 @@ const style = () => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  scoreTextCont: { display: "none" },
+  scoreTextList: {
+    display: "flex",
+    width: "15rem",
+    justifyContent: "space-around",
+  },
 });
 export default style;

@@ -8,7 +8,7 @@ const QuestionItemList = ({ options, onClick }) => {
   const styles = style();
 
   return (
-    <div style={styles.questionList}>
+    <div className="questionList" style={styles.questionList}>
       <QuestionItem disabled={options.a === "" && true} option={options.a} onClick={() => onClick("a")} />
       <QuestionItem disabled={options.b === "" && true} option={options.b} onClick={() => onClick("b")} />
       <QuestionItem disabled={options.c === "" && true} option={options.c} onClick={() => onClick("c")} />

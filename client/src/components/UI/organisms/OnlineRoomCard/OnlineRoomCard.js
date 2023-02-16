@@ -9,7 +9,7 @@ const OnlineRoomCard = () => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div style={styles.container}>
+    <div className="onlineRoomCardContainer" style={styles.container}>
       <div style={styles.text}>
         <Text text="Online Rooms" color="white" font="InterSemiBold" fontSize="2rem" />
       </div>
@@ -17,7 +17,7 @@ const OnlineRoomCard = () => {
         {isOpen && <CreateRoomModal isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
         <div style={styles.button} onClick={() => setIsOpen(true)}>
           <Button
-            className="buttonHoverGold"
+            className="buttonHoverGold plusIcon"
             text="Create Room"
             font="RobotoMedium"
             fontSize="1.7rem"
@@ -28,6 +28,7 @@ const OnlineRoomCard = () => {
             iconPosition="right"
             buttonColor="#EBD894"
             iconName="Plus"
+            iconColor="dark"
           />
         </div>
         <RoomCardList />

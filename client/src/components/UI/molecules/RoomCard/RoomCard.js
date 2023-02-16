@@ -28,9 +28,9 @@ const RoomCard = ({ room, margin }) => {
   };
 
   return (
-    <button className="buttonHoverRoomCard" onClick={onClick} style={styles.cardContainer}>
-      <div style={styles.card}>
-        <img src={require(`../../../../assets/images/${image}.png`)} alt="Bear" width="100" height="100" />
+    <button className="buttonHoverRoomCard roomCardContainer" onClick={onClick} style={styles.cardContainer}>
+      <div className="roomCard" style={styles.card}>
+        <img className="roomImg" src={require(`../../../../assets/images/${image}.png`)} alt="Bear" width="100" height="100" />
       </div>
       <div style={{ ...styles.card, ...styles.cardFooter }} className="card-footer">
         <Text font="InterRegular" text={name} color="#556577" textAlign="center" />
