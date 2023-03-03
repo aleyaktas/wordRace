@@ -1,4 +1,6 @@
 import React from "react";
+import { Provider } from "react-redux";
+import store from "../../../../store";
 import QuestionCard from "./QuestionCard";
 
 export default {
@@ -6,13 +8,21 @@ export default {
   component: QuestionCard,
 };
 
-const Template = (args) => <QuestionCard {...args} />;
-
+const Template = (args) => (
+  <Provider store={store}>
+    <QuestionCard {...args} />
+  </Provider>
+);
 export const DefaultQuestionCard = Template.bind({});
 DefaultQuestionCard.args = {
   question: {
-    inner: "What is the answer?",
-    options: ["first option", "second option", "third option", "fourth option"],
+    question: "What is the answer?",
+    a: "First option",
+    b: "Second option",
+    c: "Third option",
+    d: "Fourth option",
   },
-  time: "20",
+  timer: "20",
+  messages: [],
+  usedJokers: [],
 };

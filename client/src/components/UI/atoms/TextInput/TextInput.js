@@ -23,6 +23,7 @@ const TextInput = ({
   className,
   onChange,
   onKeyDown,
+  onBlur,
   value,
 }) => {
   const styles = style({
@@ -39,6 +40,7 @@ const TextInput = ({
     <div style={styles.container}>
       {iconName && <Icon name={iconName} width={iconWidth} height={iconHeight} color={iconColor} />}
       <input
+        onBlur={onBlur}
         value={value}
         name={placeHolder.toLowerCase()}
         type={type}

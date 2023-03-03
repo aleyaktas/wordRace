@@ -150,17 +150,99 @@ svg {
   display: flex;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1400px) {
+  .questionItemContainer {
+    width: 45% !important;
+  }
+  .questionList {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .questionCard {
+    height: auto !important;
+    width: 75% !important;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 992px) {
+  .homePageText p {
+    font-size: 2rem !important;
+  }
+  .homePageContainer p {
+    font-size: 2rem !important;
+  }
+  .homePageContainer2 p {
+    font-size: 2rem !important;
+  }
+  .scoreCardContainer {
+    display: none !important;
+  }
+  .questionItemContainer {
+    width: 45% !important;
+  }
+  .questionList {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .questionCard {
+    height: auto !important;
+    width: 85% !important;
+    margin: 0 auto;
+  }
+  .sidebarItemsContainer {
+    width: 85% !important;
+    height: auto !important;
+    flex-direction: initial !important;
+    justify-content: space-between !important;
+    margin: 3rem 0 !important;
+  }
+  .gamePageContainer {
+    justify-content: start !important;
+    height: auto !important;
+    flex-direction: column !important;
+  }
+  .Friends {
+    justify-content: center !important;
+  }
+  .Out {
+    justify-content: flex-end !important;
+  }
+  .chatContainer {
+    width: 16rem !important;
+  }
+  .messageInput {
+    width: 11rem !important;
+  }
+  .chatInputSubmit {
+    width: auto !important;
+  }
+}
+
+@media (max-width: 576px) {
   html {
-    font-size: 40%; /*10px*/
+    font-size: 40% !important; /*10px*/
+  }
+  .userIcon svg {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 60%; /*10px*/
+  }
+
+  .homePageText p {
+    font-size: 1.5rem !important;
   }
   .navText {
     margin-left: 0 !important;
   }
   .homePageImg {
     width: 100% !important;
-
-    object-fit: cover;
+    max-width: min-content;
     background-size: cover;
   }
   .homeFirstImg {
@@ -168,28 +250,33 @@ svg {
     height: 20vh !important;
   }
   .homeSecondImg {
-    object-position: top;
-    height: 30vh !important;
+    object-position: bottom;
+    height: 25vh !important;
   }
   .homeThirdImg {
-    object-position: top;
-    height: 30vh !important;
+    object-position: bottom;
+    height: 25vh !important;
   }
   .homeFourthImg {
-    object-position: center;
-    height: 30vh !important;
+    object-position: bottom;
+    height: 25vh !important;
   }
   .homePageContainer {
     flex-direction: column-reverse !important;
     justify-content: space-evenly !important;
-    height: 28vh !important;
+    min-height: 28vh !important;
+    max-height: 33vh !important;
     padding-top: 5rem;
+    place-items: center;
   }
 
   .homePageContainer2 {
     flex-direction: column-reverse !important;
     justify-content: space-evenly !important;
-    height: 30vh !important;
+    min-height: 30vh !important;
+    max-height: 35vh !important;
+    padding-top: 5rem;
+    place-items: center;
   }
 
   .homePageText {
@@ -288,7 +375,7 @@ svg {
   .addFriendButton {
     width: 15rem !important;
     height: 3rem !important;
-    margin-right: 5rem !important;
+    margin-right: 1rem !important;
   }
   .pendingRequestButton {
     width: 18rem !important;
@@ -315,6 +402,10 @@ svg {
   .scoreText {
     font-size: 2.4rem !important;
     font-weight: bolder !important;
+    color: #000000bf !important;
+  }
+  .scoreTextCont div {
+    overflow-wrap: anywhere !important;
   }
   .plusIcon > div > svg {
     color: rgb(107, 88, 20) !important;
@@ -327,9 +418,13 @@ svg {
   }
   .profilePageContainer {
     justify-content: flex-start !important;
-    margin-top: 15rem !important;
+    margin-top: 10rem !important;
+    height: auto !important;
   }
   .modal {
     width: 35rem !important;
+  }
+  .timer {
+    width: 30% !important;
   }
 }

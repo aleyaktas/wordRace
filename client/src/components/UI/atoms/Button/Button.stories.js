@@ -23,7 +23,7 @@ iconButton.args = {
   text: "Button",
   width: "15rem",
   height: "5rem",
-  icon: true,
+  iconName: "User",
   iconPosition: "left",
   borderRadius: "1rem",
   textPosition: "center",

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Icon from "../../../../assets/icons/Icon";
 import style from "./SidebarItem.style";
 import ReactTooltip from "react-tooltip";
@@ -6,7 +6,7 @@ import { Animated } from "react-animated-css";
 import { useNavigate } from "react-router-dom";
 import FriendItemListModal from "../../molecules/FriendItemListModal/FriendItemListModal";
 
-const SidebarItem = ({ sidebarItem, onlineFriends, onlineUsersLength, offlineFriends, onClick, onClickSend, onChangeMsg, isOpen, chatRef }) => {
+const SidebarItem = ({ className, sidebarItem, onlineFriends, onlineUsersLength, offlineFriends, onClick, onClickSend, onChangeMsg, isOpen, chatRef }) => {
   const styles = style({ isOpen });
 
   const handleKeyPress = (e) => {
@@ -27,25 +27,26 @@ const SidebarItem = ({ sidebarItem, onlineFriends, onlineUsersLength, offlineFri
 
   return (
     <>
-      <div style={styles.messageItem}>
+      <div className={className} style={styles.messageItem}>
         <div onClick={() => onClick()} data-tip={sidebarItem} style={styles.container}>
           <Icon name={sidebarItem} color="#F3B948" width="3rem" height="3rem" />
         </div>
         {isOpen && sidebarItem === "Message" && (
-          <div style={styles.chatContainer} ref={chatRef}>
+          <div className="chatContainer" style={styles.chatContainer} ref={chatRef}>
             <Animated animationIn="fadeInLeft" animationInDuration={1000} isVisible={true}>
               {" "}
               {/* <Text text="You don't have any friends yet, do you want to add friends?" font="RedHatMonoRegular" fontSize="2.4rem" color="#6B5814" /> */}
               <input
                 onKeyDown={handleKeyPress}
                 id="messageInput"
+                className="messageInput"
                 onChange={(e) => onChangeMsg(e)}
                 style={styles.chatInputText}
                 type="text"
                 placeholder="You can enter up to 100 characters"
                 maxLength="100"
               />
-              <input onClick={onClickSend} id="chatInputSubmit" className="buttonHoverGold" style={styles.chatInputSubmit} type="submit" value="SEND" />
+              <input onClick={onClickSend} id="chatInputSubmit" className="buttonHoverGold chatInputSubmit" style={styles.chatInputSubmit} type="submit" value="SEND" />
             </Animated>
           </div>
         )}

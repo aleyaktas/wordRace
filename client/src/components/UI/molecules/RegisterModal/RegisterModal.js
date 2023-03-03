@@ -6,35 +6,17 @@ import "../../style.css";
 import PropTypes from "prop-types";
 import style from "./RegisterModal.style";
 import ModalHeader from "../Modals/ModalHeader/ModalHeader";
-import { useState } from "react";
-import { useAppDispatch } from "../../../../store";
-import { getUser, registerUser } from "../../../../store/features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { Formik } from "formik";
 
-const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
+const RegisterSchema = Yup.object().shape({
+  username: Yup.string().min(4, "Minumum 4 Character required ").max(30, "Too Long!").required("Please enter your username"),
+  email: Yup.string().email("Invalid email").required("Please enter your email"),
+  password: Yup.string().min(6, "Minumum 6 Character required").max(30, "Too Long!").required("Please enter your password"),
+});
+
+const RegisterModal = ({ isOpen, setIsOpen, modalClose, handleSubmit }) => {
   const styles = style();
-  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value.trim(),
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    //control username, email, password
-    e.preventDefault();
-    const { username, email, password } = formData;
-    await dispatch(registerUser({ username, email, password }));
-    await dispatch(getUser());
-    if (localStorage.getItem("token")) {
-      modalClose();
-      navigate("/room");
-    }
-  };
 
   const handleKeyPress = (e) => {
     console.log(e.key);
@@ -49,19 +31,59 @@ const RegisterModal = ({ isOpen, setIsOpen, modalClose }) => {
         <div className="modal" style={styles.container}>
           <ModalHeader modalClose={modalClose} iconName="RegisterUser" text="Sign Up" />
           <div style={styles.body}>
-            <TextInput onChange={handleChange} font="InterRegular" placeHolder="Username" iconName="User" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
-            <TextInput onChange={handleChange} font="InterRegular" placeHolder="Email" iconName="Mail" fontSize="1.6rem" margin="0 0 1.5rem 0" type="text" />
-            <TextInput
-              onChange={handleChange}
-              onKeyDown={handleKeyPress}
-              font="InterRegular"
-              placeHolder="Password"
-              iconName="Lock"
-              fontSize="1.6rem"
-              margin="0 0 1.5rem 0"
-              type="password"
-            />
-            <Button className="buttonHoverGold" onClick={handleSubmit} text="Sign Up" width="100%" margin="2rem 0" padding="1rem" buttonColor="#EBD894" />
+            <Formik
+              initialValues={{
+                username: "",
+                email: "",
+                password: "",
+              }}
+              validationSchema={RegisterSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                <form onSubmit={handleSubmit}>
+                  <TextInput
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.username}
+                    font="InterRegular"
+                    placeHolder="Username"
+                    iconName="User"
+                    fontSize="1.6rem"
+                    margin="0 0 1.5rem 0"
+                    type="text"
+                  />
+                  {errors.username && touched.username && <Text text={errors.username} fontSize="1rem" color="#ff4e4e" margin="0 0 1rem 0" />}
+                  <TextInput
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                    font="InterRegular"
+                    placeHolder="Email"
+                    iconName="Mail"
+                    fontSize="1.6rem"
+                    margin="0 0 1.5rem 0"
+                    type="text"
+                  />
+                  {errors.email && touched.email && <Text text={errors.email} fontSize="1rem" color="#ff4e4e" margin="0 0 1rem 0" />}
+                  <TextInput
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                    onKeyDown={handleKeyPress}
+                    font="InterRegular"
+                    placeHolder="Password"
+                    iconName="Lock"
+                    fontSize="1.6rem"
+                    margin="0 0 1.5rem 0"
+                    type="password"
+                  />
+                  {errors.password && touched.password && <Text text={errors.password} fontSize="1rem" color="#ff4e4e" margin="0 0 1rem 0" />}
+                  <Button className="buttonHoverGold" text="Sign Up" width="100%" margin="2rem 0" padding="1rem" buttonColor="#EBD894" />
+                </form>
+              )}
+            </Formik>
+
             <button className="buttonHoverBlack" style={styles.button} onClick={() => setIsOpen({ ...isOpen, isOpenState: true, componentName: "LoginModal" })}>
               <Text textAlign="center" text="Do you have an account?" font="RobotoThin" color="#6B5814" letterSpacing="0.15rem" />
             </button>

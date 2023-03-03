@@ -9,12 +9,21 @@ import { useAppDispatch, useAppSelector } from "../../../../store";
 import { getRooms } from "../../../../store/features/auth/authSlice";
 import { getTopScores } from "./actions";
 import Icon from "../../../../assets/icons/Icon";
-import { useFocusEffect } from "@react-navigation/core";
+import { useNavigate } from "react-router-dom";
+import { showMessage } from "../../../../utils/showMessage";
+const { v4: uuidv4 } = require("uuid");
 
 const RoomPage = () => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
   const [topScores, setTopScores] = useState([]);
+
+  const [roomName, setRoomName] = useState("");
+  const [timer, setTimer] = useState(20);
+  const [isPublic, setIsPublic] = useState("Public");
+  const { username, profileImage } = useAppSelector((state) => state?.auth.user);
+
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const rooms = useAppSelector((state) => state.auth.rooms);
@@ -27,12 +36,39 @@ const RoomPage = () => {
     getTopScores(setTopScores);
   }, [rooms, dispatch]);
 
+  const onClickSubmit = (e) => {
+    e.preventDefault();
+    console.log(rooms);
+    const roomId = uuidv4();
+    if (roomName.length === 0) {
+      showMessage("Room name cannot be empty", "error");
+    } else if (roomName.length < 3) {
+      showMessage("Room name must be at least 4 characters", "error");
+    } else if (rooms.find((room) => room.name === roomName)) {
+      showMessage("Room name already exists", "error");
+    } else if (roomName.length > 3) {
+      socket.emit("create_room", {
+        user: {
+          username,
+          image: profileImage,
+        },
+        roomName,
+        roomId,
+        timer,
+        isPublic: isPublic === "Public" ? true : false,
+      });
+      navigate(`/rooms/${roomId}`, { state: { isPublic } });
+      // modalClose();
+      setIsOpen(false);
+    }
+  };
+
   let publicRoomCount = rooms?.filter((room) => room?.isPublic)?.length;
   return (
     <div>
       {rooms && rooms?.length > 0 && publicRoomCount > 0 && (
         <div className="roomContainer" style={styles.container}>
-          <OnlineRoomCard />
+          <OnlineRoomCard setIsPublic={setIsPublic} setTimer={setTimer} setRoomName={setRoomName} roomName={roomName} onClickSubmit={onClickSubmit} />
           <div className="scoreCard" style={styles.scoreCard}>
             <div style={styles.text}>
               <Text font="InterSemiBold" fontSize="1.8rem" color="white" text="TOP 10" />
@@ -61,8 +97,19 @@ const RoomPage = () => {
             <Text text="😕 Currently there are no online rooms" font="PoppinsRegular" />
           </div>
 
-          {isOpen && <CreateRoomModal rooms={rooms} isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
-          <div onClick={() => setIsOpen(true)}>
+          {isOpen && (
+            <CreateRoomModal
+              setIsPublic={setIsPublic}
+              setTimer={setTimer}
+              setRoomName={setRoomName}
+              roomName={roomName}
+              onClickSubmit={onClickSubmit}
+              rooms={rooms}
+              isOpen={isOpen}
+              modalClose={() => setIsOpen(false)}
+            />
+          )}
+          <div style={{ height: "fit-content" }} onClick={() => setIsOpen(true)}>
             <Button
               className="buttonHoverGold createRoomButton plusIcon"
               text="Create Room"

@@ -1,4 +1,6 @@
 import React from "react";
+import { Provider } from "react-redux";
+import store from "../../../../store";
 import SidebarItem from "./SidebarItem";
 
 export default {
@@ -6,8 +8,11 @@ export default {
   component: SidebarItem,
 };
 
-const Template = (args) => <SidebarItem {...args} />;
-
+const Template = (args) => (
+  <Provider store={store}>
+    <SidebarItem {...args} />
+  </Provider>
+);
 export const DefaultSidebarItem = Template.bind({});
 DefaultSidebarItem.args = {
   sidebarItem: "Message",

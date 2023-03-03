@@ -30,11 +30,11 @@ router.post("/", [check("username", "Please include a valid username").not().isE
   try {
     let user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+      return res.status(400).json({ msg: "Invalid Credentials" });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+      return res.status(400).json({ msg: "Invalid Credentials" });
     }
     const payload = {
       user: {

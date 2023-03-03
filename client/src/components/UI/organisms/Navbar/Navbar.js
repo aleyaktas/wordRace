@@ -7,7 +7,7 @@ import LoginModal from "../../molecules/LoginModal/LoginModal";
 import ForgotPasswordModal from "../../molecules/ForgotPasswordModal/ForgotPasswordModal";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import Icon from "../../../../assets/icons/Icon";
-import { forgotPassword, logout } from "../../../../store/features/auth/authSlice";
+import { forgotPassword, getUser, loginUser, logout, registerUser } from "../../../../store/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../../utils/socket";
 import { showMessage } from "../../../../utils/showMessage";
@@ -15,8 +15,32 @@ import { showMessage } from "../../../../utils/showMessage";
 const Navbar = () => {
   const styles = style();
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState({ isOpenState: false, componentName: "" });
+
   const dispatch = useAppDispatch();
+
+  const handleSubmitLogin = async (values) => {
+    console.log(values);
+    const { username, password } = values;
+    await dispatch(loginUser({ username, password }));
+    await dispatch(getUser());
+    if (localStorage.getItem("token")) {
+      setIsOpen({ isOpenState: false, componentName: "" });
+      navigate("/room");
+    }
+  };
+  const handleSubmitRegister = async (values) => {
+    console.log(values);
+    const { username, email, password } = values;
+    await dispatch(registerUser({ username, email, password }));
+    await dispatch(getUser());
+    if (localStorage.getItem("token")) {
+      setIsOpen({ isOpenState: false, componentName: "" });
+      navigate("/room");
+    }
+  };
+
+  const [isOpen, setIsOpen] = useState({ isOpenState: false, componentName: "" });
+
   const { loading, isAuthenticated } = useAppSelector((state) => state.auth);
   const username = useAppSelector((state) => state.auth?.user?.username);
   const onClick = (modalName) => {
@@ -43,9 +67,14 @@ const Navbar = () => {
   const guestLinks = (
     <>
       {(isOpenState === true) & (componentName === "RegisterModal") ? (
-        <RegisterModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })} />
+        <RegisterModal
+          setIsOpen={setIsOpen}
+          isOpen={isOpenState}
+          modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })}
+          handleSubmit={handleSubmitRegister}
+        />
       ) : (isOpenState === true) & (componentName === "LoginModal") ? (
-        <LoginModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })} />
+        <LoginModal setIsOpen={setIsOpen} isOpen={isOpenState} modalClose={() => setIsOpen({ isOpenState: false, componentName: "" })} handleSubmit={handleSubmitLogin} />
       ) : (isOpenState === true) & (componentName === "ForgotPasswordModal") ? (
         <ForgotPasswordModal
           onClick={(email) => onClickResetPassword(email)}
@@ -87,7 +116,7 @@ const Navbar = () => {
     <>
       <div style={styles.navUser} className="dropdown navUser">
         <button className="dropbtn" style={{ display: "flex", alignItems: "center" }}>
-          <Icon name="User" width="4rem" height="4rem" color="white" />
+          <Icon className="userIcon" name="User" width="4rem" height="4rem" color="white" />
           <Text text={`Hello, ${username?.toUpperCase()}`} fontSize="1.8rem" color="white" font="RobotoMedium" className="hoverTextNavbar" />
         </button>
         <div style={{ display: "flex", justifyContent: "center" }}>

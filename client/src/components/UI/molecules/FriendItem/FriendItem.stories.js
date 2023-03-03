@@ -1,13 +1,18 @@
 import React from "react";
 import FriendItem from "./FriendItem";
+import { Provider } from "react-redux";
+import store from "../../../../store";
 
 export default {
   title: "Molecules/FriendItem",
   component: FriendItem,
 };
 
-const Template = (args) => <FriendItem {...args} />;
-
+const Template = (args) => (
+  <Provider store={store}>
+    <FriendItem {...args} />
+  </Provider>
+);
 export const DefaultFriendItem = Template.bind({});
 DefaultFriendItem.args = {
   index: 1,

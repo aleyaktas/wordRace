@@ -12,7 +12,7 @@ const HomePage = () => {
   const styles = style();
   const [scrollY, setScrollY] = useState(0);
 
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 576px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 900px)" });
 
   function logit() {
     setScrollY(window.pageYOffset);
@@ -40,7 +40,7 @@ const HomePage = () => {
               color="#47607A"
               fontSize="2.5rem"
               lineHeight="3.5rem"
-              text="How many English words do you know? How about learning more words by playing? Register now and start learning"
+              text="How many English words do you know? How about learning more words by playing?"
             />
           ) : (
             <Animated animationIn="fadeInRight" animationInDuration={1800} isVisible={true}>
@@ -59,7 +59,7 @@ const HomePage = () => {
 
       <div className="homePageContainer2" style={styles.container}>
         <img className="homePageImg homeSecondImg" src={HomePageSecondImg} alt="first" width="100%" />
-        {scrollY > 230 ? (
+        {(scrollY > 230) & !isTabletOrMobile ? (
           <div className="homePageText">
             <Animated animationIn="fadeInLeft" animationInDuration={1800} isVisible={true}>
               <Text
@@ -136,7 +136,7 @@ const HomePage = () => {
               color="#47607A"
               fontSize="2.5rem"
               lineHeight="3.5rem"
-              text="It's game time! Don't be afraid, you have jockeys and don't forget to face your opponent to score, good luck"
+              text="It's game time! Don't be afraid, you have jockeys and don't forget to face your opponent to score, good luck. Register now and start learning"
             />
           )
         )}

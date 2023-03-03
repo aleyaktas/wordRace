@@ -17,7 +17,7 @@ import { useMediaQuery } from "react-responsive";
 const GamePage = () => {
   const styles = style();
   const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 576px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 900px)" });
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenMsgBox, setIsOpenMsgBox] = useState(false);
@@ -296,30 +296,37 @@ const GamePage = () => {
       {room && room.players && room.players.length === 2 && room.players?.filter((player) => player.isReady).length === 2 && (
         <>
           <div className="scoreTextCont" style={styles.scoreTextCont}>
-            {room.players[0].username === username ? (
+            {/* {room.players[0]?.username === username ? (
               <>
                 <div style={styles.scoreTextList}>
-                  <Text className={`scoreText ${room.players[0].isYourTurn && "turnEffect"}`} text={`${scores[room.players[0].scoreIndex]}`} />
-                  {/* <Text className={"scoreText" + room.players[0].isYourTurn && "turnEffect"} text={`${room.players[0].username}`} /> */}
-                  <Text className="scoreText" text={`${scores[room.players[0].scoreIndex]}`} />
+                  <Text className={`scoreText ${room.players[0]?.isYourTurn && "turnEffect"}`} text={`${scores[room.players[0]?.scoreIndex]}`} />
+                  <Text className="scoreText" text={`${scores[room.players[0]?.scoreIndex]}`} />
                 </div>
                 <div style={styles.scoreTextList}>
-                  <Text className="scoreText" text={`${scores[room.players[1].scoreIndex]}`} />
-                  <Text className={`scoreText + ${room.players[1].isYourTurn && "turnEffect"}`} text={`${room.players[1].username}`} />
+                  <Text className="scoreText" text={`${scores[room.players[1]?.scoreIndex]}`} />
+                  <Text className={`scoreText + ${room.players[1]?.isYourTurn && "turnEffect"}`} text={`${room.players[1]?.username}`} />
                 </div>
               </>
             ) : (
               <>
                 <div style={styles.scoreTextList}>
-                  <Text className={`scoreText + ${room.players[1].isYourTurn && "turnEffect"}`} text={`${room.players[1].username}`} />
-                  <Text className="scoreText" text={`${scores[room.players[1].scoreIndex]}`} />
+                  <Text className={`scoreText + ${room.players[1]?.isYourTurn && "turnEffect"}`} text={`${room.players[1]?.username}`} />
+                  <Text className="scoreText" text={`${scores[room.players[1]?.scoreIndex]}`} />
                 </div>
                 <div style={styles.scoreTextList}>
                   <Text className="scoreText" text={`${scores[room.players[0].scoreIndex]}`} />
-                  <Text className={`scoreText + ${room.players[0].isYourTurn && "turnEffect"}`} text={`${room.players[0].username}`} />
+                  <Text className={`scoreText + ${room.players[0]?.isYourTurn && "turnEffect"}`} text={`${room.players[0]?.username}`} />
                 </div>
               </>
-            )}
+            )} */}
+            <div style={styles.scoreTextList}>
+              <Text className={`scoreText + ${room.players[0]?.isYourTurn && "turnEffect"}`} text={`${room.players[0]?.username}`} />
+              <Text className="scoreText" text={`${scores[room.players[0].scoreIndex]}`} />
+            </div>
+            <div style={styles.scoreTextList}>
+              <Text className="scoreText" text={`${scores[room.players[1]?.scoreIndex]}`} />
+              <Text className={`scoreText + ${room.players[1]?.isYourTurn && "turnEffect"}`} text={`${room.players[1]?.username}`} />
+            </div>
           </div>
           <div className="gamePageContainer" style={styles.container}>
             <SidebarItemList

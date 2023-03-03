@@ -9,7 +9,7 @@ import DeleteFriendModal from "../DeleteFriendModal/DeleteFriendModal";
 import socket from "../../../../utils/socket";
 import { showMessage } from "../../../../utils/showMessage";
 
-const FriendItem = ({ index, username, modalType, modalClose, isOnline }) => {
+const FriendItem = ({ username, modalType, modalClose, isOnline }) => {
   const [isInvite, setIsInvite] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();

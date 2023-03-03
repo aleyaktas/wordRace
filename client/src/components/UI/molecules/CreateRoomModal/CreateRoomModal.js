@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TextInput from "../../atoms/TextInput/TextInput";
 import Modal from "@mui/material/Modal";
 import "../../style.css";
@@ -7,24 +7,13 @@ import Checkbox from "../../atoms/Checkbox/Checkbox";
 import Button from "../../atoms/Button/Button";
 import style from "./CreateRoomModal.style";
 import ModalHeader from "../Modals/ModalHeader/ModalHeader";
-import { useNavigate } from "react-router-dom";
-import socket from "../../../../utils/socket";
-import { useAppDispatch, useAppSelector } from "../../../../store";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-import { showMessage } from "../../../../utils/showMessage";
-const { v4: uuidv4 } = require("uuid");
 
-const CreateRoomModal = ({ isOpen, modalClose }) => {
+const CreateRoomModal = ({ isOpen, modalClose, onClickSubmit, setIsPublic, setTimer, setRoomName, roomName }) => {
   const styles = style();
-  const [roomName, setRoomName] = useState("");
-  const [timer, setTimer] = useState(20);
-  const [isPublic, setIsPublic] = useState("Public");
-  const { username, profileImage } = useAppSelector((state) => state.auth.user);
-  const { rooms } = useAppSelector((state) => state.auth);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -35,32 +24,6 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
   };
   const handleTimerChange = (e) => {
     setTimer(parseInt(e.target.value));
-  };
-
-  const onClickSubmit = (e) => {
-    e.preventDefault();
-    console.log(rooms);
-    const roomId = uuidv4();
-    if (roomName.length === 0) {
-      showMessage("Room name cannot be empty", "error");
-    } else if (roomName.length < 3) {
-      showMessage("Room name must be at least 4 characters", "error");
-    } else if (rooms.find((room) => room.name === roomName)) {
-      showMessage("Room name already exists", "error");
-    } else if (roomName.length > 3) {
-      socket.emit("create_room", {
-        user: {
-          username,
-          image: profileImage,
-        },
-        roomName,
-        roomId,
-        timer,
-        isPublic: isPublic === "Public" ? true : false,
-      });
-      navigate(`/rooms/${roomId}`, { state: { isPublic } });
-      modalClose();
-    }
   };
 
   const handleKeyPress = (e) => {
@@ -86,7 +49,7 @@ const CreateRoomModal = ({ isOpen, modalClose }) => {
               type="text"
             />
             <div style={styles.checkbox}>
-              <Box sx={{ width: "25%", margin: "0 3rem 0 0" }}>
+              <Box className="timer" sx={{ width: "25%", margin: "0 3rem 0 0" }}>
                 <FormControl fullWidth>
                   <InputLabel sx={{ fontSize: "2rem" }} variant="standard" htmlFor="uncontrolled-native">
                     Timer

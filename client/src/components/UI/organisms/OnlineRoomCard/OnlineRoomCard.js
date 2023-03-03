@@ -5,7 +5,7 @@ import CreateRoomModal from "../../molecules/CreateRoomModal/CreateRoomModal";
 import Button from "../../atoms/Button/Button";
 import style from "./OnlineRoomCard.style";
 
-const OnlineRoomCard = () => {
+const OnlineRoomCard = ({ onClickSubmit, setIsPublic, setTimer, setRoomName, roomName }) => {
   const styles = style();
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -14,7 +14,17 @@ const OnlineRoomCard = () => {
         <Text text="Online Rooms" color="white" font="InterSemiBold" fontSize="2rem" />
       </div>
       <div style={styles.body}>
-        {isOpen && <CreateRoomModal isOpen={isOpen} modalClose={() => setIsOpen(false)} />}
+        {isOpen && (
+          <CreateRoomModal
+            setIsPublic={setIsPublic}
+            setTimer={setTimer}
+            setRoomName={setRoomName}
+            roomName={roomName}
+            onClickSubmit={onClickSubmit}
+            isOpen={isOpen}
+            modalClose={() => setIsOpen(false)}
+          />
+        )}
         <div style={styles.button} onClick={() => setIsOpen(true)}>
           <Button
             className="buttonHoverGold plusIcon"

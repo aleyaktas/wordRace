@@ -13,8 +13,6 @@ const initialState = {
   rooms: [],
 };
 
-const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
-
 export const registerUser = createAsyncThunk("registerUser", async ({ username, email, password }, { rejectWithValue }) => {
   const config = {
     headers: {
@@ -194,7 +192,6 @@ export const authSlice = createSlice({
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
-      showMessage(action.payload[0].msg, "error");
     });
 
     builder.addCase(registerUser.fulfilled, (state, action) => {
@@ -203,7 +200,6 @@ export const authSlice = createSlice({
       state.loading = false;
       state.token = localStorage.getItem("token");
       setAuthToken(localStorage.getItem("token"));
-      console.log(action);
     });
     builder.addCase(loginUser.pending, (state, action) => {
       state.loading = true;

@@ -11,7 +11,9 @@ const style = () => ({
     marginTop: "5rem",
   },
   scoreCard: {
-    width: "20%",
+    // width: "20%",
+    width: "30rem",
+    marginLeft: "5rem",
     height: "65rem",
     // backgroundColor: "#EBF1F5",
     overflowY: "auto",

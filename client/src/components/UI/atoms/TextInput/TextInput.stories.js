@@ -9,12 +9,10 @@ export default {
 const Template = (args) => <TextInput {...args} />;
 
 export const defaultTextInput = Template.bind({});
-defaultTextInput.args = {
-  icon: false,
-};
+defaultTextInput.args = {};
 export const icontTextInput = Template.bind({});
-icontTextInput.args = {
-  icon: true,
+iconTextInput.args = {
+  iconName: "User",
   iconWidth: 16,
   iconHeight: 16,
   iconColor: "black",

@@ -63,20 +63,20 @@ const ProfilePage = () => {
     <div className="profilePageContainer" style={styles.container}>
       <div style={styles.imageContainer}>
         {showImage ? <img src={showImage} alt="profile" style={styles.profileImage} /> : <div style={styles.profileChar}>{username?.charAt(0)?.toUpperCase()}</div>}
-      </div>
-      <div className="imageUploadContainer">
-        <label for="file-input" style={styles.imageUpload}>
-          <Icon name="Camera" width="3rem" height="3rem" color="white" />
-          <input
-            style={styles.imageInput}
-            id="file-input"
-            type="file"
-            encType="multipart/form-data"
-            name="photo"
-            accept=".png, .jpg, .jpeg"
-            onChange={(e) => handleImageChange(e)}
-          />
-        </label>
+        <div className="imageUploadContainer">
+          <label for="file-input" style={styles.imageUpload}>
+            <Icon name="Camera" width="3rem" height="3rem" color="white" />
+            <input
+              style={styles.imageInput}
+              id="file-input"
+              type="file"
+              encType="multipart/form-data"
+              name="photo"
+              accept=".png, .jpg, .jpeg"
+              onChange={(e) => handleImageChange(e)}
+            />
+          </label>
+        </div>
       </div>
 
       <div style={{ width: "25rem", marginBottom: "2.2rem", display: "flex" }}>

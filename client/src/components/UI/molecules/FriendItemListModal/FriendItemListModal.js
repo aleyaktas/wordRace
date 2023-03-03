@@ -6,7 +6,7 @@ import FriendItemList from "../../organisms/FriendItemList/FriendItemList";
 import { Modal } from "@mui/material";
 import style from "./FriendItemListModal.style";
 
-const FriendListModal = ({ isOpen, friends, offlineFriends, onlineUsersLength, modalClose, modalType, title }) => {
+const FriendListModal = ({ isOpen, friends, offlineFriends, modalClose, modalType, title }) => {
   const styles = style();
 
   return (

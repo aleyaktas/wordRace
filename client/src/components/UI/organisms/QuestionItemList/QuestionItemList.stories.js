@@ -1,4 +1,6 @@
 import React from "react";
+import { Provider } from "react-redux";
+import store from "../../../../store";
 import QuestionItemList from "./QuestionItemList";
 
 export default {
@@ -6,9 +8,17 @@ export default {
   component: QuestionItemList,
 };
 
-const Template = (args) => <QuestionItemList {...args} />;
-
+const Template = (args) => (
+  <Provider store={store}>
+    <QuestionItemList {...args} />
+  </Provider>
+);
 export const DefaultQuestionItemList = Template.bind({});
 DefaultQuestionItemList.args = {
-  options: ["first option", "second option", "third option", "fourth option"],
+  options: {
+    a: "First option",
+    b: "Second option",
+    c: "Third option",
+    d: "Fourth option",
+  },
 };

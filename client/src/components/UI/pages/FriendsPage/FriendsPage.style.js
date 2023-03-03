@@ -1,6 +1,6 @@
 const style = () => ({
   container: {
-    height: "92vh",
+    height: "auto",
     padding: "6rem 0 0 0",
     boxSizing: "border-box",
   },

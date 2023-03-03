@@ -10,5 +10,6 @@ const Template = (args) => <QuestionJoker {...args} />;
 
 export const DefaultQuestionJoker = Template.bind({});
 DefaultQuestionJoker.args = {
-  time: "20",
+  timer: "20",
+  usedJokers: [],
 };
