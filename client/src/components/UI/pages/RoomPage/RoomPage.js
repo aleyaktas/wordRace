@@ -30,6 +30,7 @@ const RoomPage = () => {
 
   useEffect(() => {
     socket.on("get_rooms", ({ rooms }) => {
+      console.log("get_rooms");
       console.log(rooms);
       dispatch(getRooms(rooms));
     });
@@ -62,6 +63,7 @@ const RoomPage = () => {
       setIsOpen(false);
     }
   };
+  a;
 
   let publicRoomCount = rooms?.filter((room) => room?.isPublic)?.length;
   return (

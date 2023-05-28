@@ -466,6 +466,11 @@ io.on("connection", (socket) => {
       if (index !== -1) {
         console.log("disconnected room");
         room.players.splice(index, 1);
+        if (room.players.length === 0) {
+          const indexRoom = rooms.indexOf(room);
+          rooms.splice(indexRoom, 1);
+          return io.emit("get_rooms", { rooms });
+        }
         socket.to(room.id).emit("leave_room", { room, disconnectUser });
         socket.emit("leave_room", { room, disconnectUser });
         io.emit("get_rooms", { rooms });
