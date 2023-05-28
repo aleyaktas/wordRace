@@ -65,7 +65,7 @@ function App() {
     { name: "f  irstUser", score: 10 },
   ];
   axios.defaults.baseURL = "https://api-wordrace.aleynaaktas.me";
-  // axios.defaults.baseURL = "http://localhost:3000";
+  // axios.defaults.baseURL = "http://localhost:5001";
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

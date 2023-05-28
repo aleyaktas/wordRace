@@ -33,6 +33,23 @@ import { ReactComponent as Win } from "./Icons/Win.svg";
 import { ReactComponent as Winners } from "./Icons/Win-2.svg";
 import { ReactComponent as Lose } from "./Icons/Lose.svg";
 import { ReactComponent as Draw } from "./Icons/Draw.svg";
+import { ReactComponent as Bear } from "./Icons/Animals/Bear.svg";
+import { ReactComponent as Bird } from "./Icons/Animals/Bird.svg";
+import { ReactComponent as Bee } from "./Icons/Animals/Bee.svg";
+import { ReactComponent as Chicken } from "./Icons/Animals/Chicken.svg";
+import { ReactComponent as Cow } from "./Icons/Animals/Cow.svg";
+import { ReactComponent as Deer } from "./Icons/Animals/Deer.svg";
+import { ReactComponent as Dog } from "./Icons/Animals/Dog.svg";
+import { ReactComponent as Elephant } from "./Icons/Animals/Elephant.svg";
+import { ReactComponent as Frog } from "./Icons/Animals/Frog.svg";
+import { ReactComponent as Giraffe } from "./Icons/Animals/Giraffe.svg";
+import { ReactComponent as Jellyfish } from "./Icons/Animals/Jellyfish.svg";
+import { ReactComponent as Koala } from "./Icons/Animals/Koala.svg";
+import { ReactComponent as Lion } from "./Icons/Animals/Lion.svg";
+import { ReactComponent as Monkey } from "./Icons/Animals/Monkey.svg";
+import { ReactComponent as Penguin } from "./Icons/Animals/Penguin.svg";
+import { ReactComponent as Rabbit } from "./Icons/Animals/Rabbit.svg";
+import { ReactComponent as Unicorn } from "./Icons/Animals/Unicorn.svg";
 
 const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, style }) => {
   const icons = {
@@ -70,6 +87,23 @@ const Icon = ({ className, name, width = "2.4rem", height = "2.4rem", color, sty
     Winners,
     Lose,
     Draw,
+    Bear,
+    Bird,
+    Bee,
+    Chicken,
+    Cow,
+    Deer,
+    Dog,
+    Elephant,
+    Frog,
+    Giraffe,
+    Jellyfish,
+    Koala,
+    Lion,
+    Monkey,
+    Penguin,
+    Rabbit,
+    Unicorn,
   };
 
   const IconItem = icons[name];

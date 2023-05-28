@@ -23,11 +23,11 @@ const style = () => ({
   },
   card: {
     width: "10rem",
-    height: "10rem",
+    height: "11rem",
     margin: "auto",
   },
   cardImage: {
-    height: "15rem",
+    height: "16rem",
     width: "100%",
     backgroundColor: "#89DF73",
   },

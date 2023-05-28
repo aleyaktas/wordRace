@@ -44,7 +44,7 @@ const GameInviteModal = ({ room, isOpen, modalClose }) => {
               <Icon name="Close" width="1.8rem" height="1.8rem" color="#8F8F8F" />
             </button>
             <div style={styles.card} className="card">
-              <img src={image && require(`../../../../assets/images/${image}.png`)} alt={image} width="100%" height="100%" />
+              <Icon name={image} alt={image} width="100%" height="100%" />
             </div>
           </div>
           <div style={styles.cardText}>

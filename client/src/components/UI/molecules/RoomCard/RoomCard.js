@@ -6,6 +6,7 @@ import socket from "../../../../utils/socket";
 import { useAppSelector } from "../../../../store";
 import { useNavigate } from "react-router-dom";
 import { showMessage } from "../../../../utils/showMessage";
+import Icon from "../../../../assets/icons/Icon";
 
 const RoomCard = ({ room, margin }) => {
   const styles = style({ margin });
@@ -30,7 +31,7 @@ const RoomCard = ({ room, margin }) => {
   return (
     <button className="buttonHoverRoomCard roomCardContainer" onClick={onClick} style={styles.cardContainer}>
       <div className="roomCard" style={styles.card}>
-        <img className="roomImg" src={require(`../../../../assets/images/${image}.png`)} alt="Bear" width="100" height="100" />
+        <Icon className="roomImg" name={image} alt={image} width="100" height="100" />
       </div>
       <div style={{ ...styles.card, ...styles.cardFooter }} className="card-footer">
         <Text font="InterRegular" text={name} color="#556577" textAlign="center" />

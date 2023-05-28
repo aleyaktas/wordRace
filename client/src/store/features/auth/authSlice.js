@@ -42,7 +42,8 @@ export const loginUser = createAsyncThunk("loginUser", async ({ username, passwo
     const res = await axios.post("/api/auth", body, config);
     return res.data;
   } catch (err) {
-    return rejectWithValue(err.response.data.errors);
+    console.log(err);
+    return rejectWithValue(err.response.data);
   }
 });
 
@@ -192,6 +193,8 @@ export const authSlice = createSlice({
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
+      console.log(action.payload);
+      showMessage(action.payload[0].msg, "error");
     });
 
     builder.addCase(registerUser.fulfilled, (state, action) => {
@@ -209,7 +212,7 @@ export const authSlice = createSlice({
     builder.addCase(loginUser.rejected, (state, action) => {
       state.error = action.error.message;
       state.loading = false;
-      showMessage(action.payload[0].msg, "error");
+      showMessage(action.payload.msg, "error");
     });
 
     builder.addCase(loginUser.fulfilled, (state, action) => {

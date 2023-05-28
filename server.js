@@ -83,7 +83,25 @@ let rooms = [];
 let users = [];
 
 const scores = [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
-const items = ["Bear", "Bird", "Bug", "Cat", "Crown", "Elephant", "Flower", "Horse", "Parrot", "Snake", "Turtle"];
+const items = [
+  "Bear",
+  "Bird",
+  "Bee",
+  "Chicken",
+  "Cow",
+  "Deer",
+  "Dog",
+  "Elephant",
+  "Frog",
+  "Giraffe",
+  "Jellyfish",
+  "Koala",
+  "Lion",
+  "Monkey",
+  "Penguin",
+  "Rabbit",
+  "Unicorn",
+];
 
 io.on("connection", (socket) => {
   rooms.find((room, index) => {
