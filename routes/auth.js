@@ -162,10 +162,13 @@ router.post("/deleteFriend", auth, async (req, res) => {
   try {
     var me = await User.findById(req.user.id);
     var user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "User not found" }] });
+    }
     if (me) {
-      if (!me.friends.some((friend) => (friend._id = user.id))) {
+      if (!me.friends.some((friend) => friend._id == user.id)) {
         return res.status(400).json({ errors: [{ msg: "User not found" }] });
-      } else if (me.friends.some((friend) => (friend._id = user.id))) {
+      } else if (me.friends.some((friend) => friend._id == user.id)) {
         me.friends = me.friends.filter((friend) => friend._id != user.id);
         user.friends = user.friends.filter((friend) => friend._id != me.id);
         await me.save();
