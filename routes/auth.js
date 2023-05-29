@@ -201,8 +201,8 @@ router.get("/friends", auth, async (req, res) => {
 // Private
 router.get("/me", auth, async (req, res) => {
   const populate = [
-    { path: "pendingRequests", select: "username _id" },
-    { path: "friends", select: "username _id" },
+    { path: "pendingRequests", select: "username _id profileImage" },
+    { path: "friends", select: "username _id profileImage" },
   ];
   try {
     const me = await User.findById(req.user.id).lean().populate(populate).select("-password");
