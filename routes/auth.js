@@ -102,6 +102,9 @@ router.post("/acceptFriend", auth, async (req, res) => {
   try {
     let me = await User.findById(req.user.id).select("-password");
     let incomingRequest = await User.findOne({ username });
+    if (!incomingRequest) {
+      return res.status(400).json({ errors: [{ msg: "User not found" }] });
+    }
     if (me) {
       if (!me.pendingRequests.some((pendingRequest) => pendingRequest._id == incomingRequest.id)) {
         return res.status(400).json({ errors: [{ msg: "this user not found" }] });
@@ -134,6 +137,9 @@ router.post("/rejectFriend", auth, async (req, res) => {
   try {
     var me = await User.findById(req.user.id);
     var incomingRequest = await User.findOne({ username });
+    if (!incomingRequest) {
+      return res.status(400).json({ errors: [{ msg: "User not found" }] });
+    }
     if (me) {
       if (!me.pendingRequests.some((pendingRequest) => pendingRequest._id == incomingRequest.id)) {
         return res.status(400).json({ errors: [{ msg: "Request does not exist!" }] });
@@ -240,7 +246,7 @@ router.post("/editProfile", auth, async (req, res) => {
 // Get top 10 scores
 // Public
 router.get("/getTopScores", async (req, res) => {
-  let topScores = await User.find().sort({ score: -1 }).limit(10);
+  let topScores = await User.find().sort({ score: -1 }).limit(10).select("username score profileImage");
   res.send(topScores);
 });
 
