@@ -135,10 +135,10 @@ router.post("/rejectFriend", auth, async (req, res) => {
     var me = await User.findById(req.user.id);
     var incomingRequest = await User.findOne({ username });
     if (me) {
-      if (!me.pendingRequests.some((pendingRequest) => (pendingRequest._id = incomingRequest.id))) {
+      if (!me.pendingRequests.some((pendingRequest) => pendingRequest._id == incomingRequest.id)) {
         return res.status(400).json({ errors: [{ msg: "Request does not exist!" }] });
       }
-      if (me.pendingRequests.some((pendingRequest) => (pendingRequest._id = incomingRequest.id))) {
+      if (me.pendingRequests.some((pendingRequest) => pendingRequest._id == incomingRequest.id)) {
         me.pendingRequests = me.pendingRequests.filter((pendingRequest) => pendingRequest._id != incomingRequest.id);
         await me.save();
         res.send(me);
