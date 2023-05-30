@@ -1,6 +1,4 @@
 import axios from "axios";
-import store, { useAppSelector } from "../../../../store";
-import { editProfile } from "../../../../store/features/auth/authSlice";
 
 export const getScore = async (setScore) => {
   const res = await axios.get("/api/auth/getScore");

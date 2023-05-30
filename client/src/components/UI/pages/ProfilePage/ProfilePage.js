@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../../store";
 import Icon from "../../../../assets/icons/Icon";
 import { storage } from "../../../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { changePassword, getScore, updateProfile } from "./actions";
+import { changePassword, getScore } from "./actions";
 import { showMessage } from "../../../../utils/showMessage";
 import { editProfile } from "../../../../store/features/auth/authSlice";
 

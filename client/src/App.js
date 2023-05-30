@@ -43,7 +43,6 @@ function App() {
         dispatch(getOnlineUsers({ users }));
       });
       socket.on(`invited_${findUsername}`, ({ room }) => {
-        console.log(room);
         setIsOpen(true);
         setRoom(room);
       });
@@ -64,6 +63,7 @@ function App() {
     { name: "secondUser", score: 5 },
     { name: "f  irstUser", score: 10 },
   ];
+  console.log(room);
   axios.defaults.baseURL = "https://api-wordrace.aleynaaktas.me";
   // axios.defaults.baseURL = "http://localhost:5001";
   return (
@@ -72,7 +72,7 @@ function App() {
         <BrowserRouter>
           <ToastContainer newestOnTop={true} />
           <Navbar />
-          <GameInviteModal room={room} isOpen={isOpen} modalClose={() => setIsOpen(false) && setRoom({})} />
+          {room.image && <GameInviteModal image={room.image} id={room.id} players={room.players} isOpen={isOpen} modalClose={() => setIsOpen(false) && setRoom({})} />}
           <Routes>
             <Route element={<PublicRoute />}>
               <Route path="/" element={<HomePage />} />

@@ -63,7 +63,6 @@ const RoomPage = () => {
       setIsOpen(false);
     }
   };
-  a;
 
   let publicRoomCount = rooms?.filter((room) => room?.isPublic)?.length;
   return (
