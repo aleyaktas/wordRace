@@ -196,7 +196,6 @@ io.on("connection", (socket) => {
           player.isReady = true;
           player.scoreIndex = 0;
           player.usedJokers = [];
-
           socket.emit("started_play_again", { room });
           socket.to(roomId).emit("started_play_again", { room });
         }
@@ -210,21 +209,17 @@ io.on("connection", (socket) => {
         room.players[1].usedJokers = [];
         room.questionIndex = 0;
         room.questions = CreateQuestion();
-
         socket.emit("started_play_again", { room });
         socket.to(roomId).emit("started_play_again", { room });
+        io.emit("get_rooms", { rooms });
       }
-      console.log("newRooms", rooms);
     }
-
-    console.log("newRooms", rooms);
-
     socket.emit("get_rooms", { rooms });
     socket.broadcast.emit("get_rooms", { rooms });
   });
   socket.on("quit_game", ({ roomId, username }) => {
     const room = rooms.find((room) => room.id === roomId);
-    const player = room.players.find((player) => player.username === username);
+    const player = room?.players?.find((player) => player.username === username);
     socket.leave(roomId);
     if (room) {
       if (player) {
@@ -264,7 +259,7 @@ io.on("connection", (socket) => {
 
   socket.on("wrong_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
-    room.players.forEach((player) => {
+    room?.players.forEach((player) => {
       if (player.username === username) {
         player.isYourTurn = false;
       }
@@ -310,8 +305,6 @@ io.on("connection", (socket) => {
       result = "draw";
     }
 
-    console.log("roommm", room);
-
     if (room.id === roomId) {
       room.players.map(async (player) => {
         const user = await User.findOne({ username: player.username });
@@ -329,6 +322,8 @@ io.on("connection", (socket) => {
       room.players[1].isYourTurn = false;
       room.questionIndex = 0;
     }
+
+    console.log("result", room.players);
 
     socket.to(roomId).emit("game_finished", { result, room });
     socket.emit("game_finished", { result, room });

@@ -47,6 +47,7 @@ const GamePage = () => {
       setRoom(room);
     });
     socket.on("room_joined", ({ room, joinUser }) => {
+      console.log("room_joined", room);
       console.log("username", username);
       setRoom(room);
       setPause(false);
@@ -80,7 +81,7 @@ const GamePage = () => {
       }
     });
     socket.on("wrong_answered", ({ room }) => {
-      console.log(room);
+      console.log("wrong_answered", room);
       console.log(room.questionIndex);
       console.log(room.questions.length);
 
@@ -105,15 +106,13 @@ const GamePage = () => {
     });
 
     socket.on("started_play_again", ({ room }) => {
-      console.log(room);
       setTimeProgress(room.timer);
       setRoom(room);
-      const findMe = room.players.find((player) => player.username === username);
+      setPause(false);
     });
     socket.on("opponent_quit", ({ username, room }) => {
       setRoom(room);
       showMessage(`${username} has left the room`, "info");
-      console.log(room);
     });
     socket.on("message_received", ({ message }) => {
       setMessages((oldMessages) => [...oldMessages, message]);
