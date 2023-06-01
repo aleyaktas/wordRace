@@ -112,7 +112,6 @@ const GamePage = () => {
     });
     socket.on("opponent_quit", ({ username, room }) => {
       setRoom(room);
-
       showMessage(`${username} has left the room`, "info");
       console.log(room);
     });
@@ -130,7 +129,6 @@ const GamePage = () => {
       socket.off("correct_answered");
       socket.off("wrong_answered");
       socket.off("fifty_fifty_joker_used");
-
       socket.off("game_finished");
       socket.off("started_play_again");
       socket.off("opponent_quit");

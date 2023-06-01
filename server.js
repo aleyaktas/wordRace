@@ -198,7 +198,7 @@ io.on("connection", (socket) => {
           player.usedJokers = [];
 
           socket.emit("started_play_again", { room });
-          return socket.to(roomId).emit("started_play_again", { room });
+          socket.to(roomId).emit("started_play_again", { room });
         }
       });
       if (room.players.filter((player) => player.isReady === true).length === 2) {
@@ -326,6 +326,7 @@ io.on("connection", (socket) => {
         }
       });
       room.players[0].isYourTurn = true;
+      room.players[1].isYourTurn = false;
       room.questionIndex = 0;
     }
 
