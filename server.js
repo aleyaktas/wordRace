@@ -219,9 +219,9 @@ io.on("connection", (socket) => {
   });
   socket.on("quit_game", ({ roomId, username }) => {
     const room = rooms.find((room) => room.id === roomId);
-    const player = room?.players?.find((player) => player.username === username);
     socket.leave(roomId);
     if (room) {
+      const player = room.players.find((player) => player.username === username);
       if (player) {
         room.players = room.players.filter((player) => player.username !== username);
         room.questionIndex = 0;
@@ -259,7 +259,7 @@ io.on("connection", (socket) => {
 
   socket.on("wrong_answer", ({ username, roomId }) => {
     const room = rooms.find((room) => room.id === roomId);
-    room?.players.forEach((player) => {
+    room.players.forEach((player) => {
       if (player.username === username) {
         player.isYourTurn = false;
       }
