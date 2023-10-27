@@ -45,7 +45,7 @@ _⭐️ Don't forget to change proxy and socket adress for project before runnin
 
 ## Demo
 
-Demo link: https://wordrace.aleynaaktas.me
+Demo link: https://wordrace.aleynaaktas.com
 
 ## Screenshots
 
