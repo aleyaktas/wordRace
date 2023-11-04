@@ -23,6 +23,10 @@ const UserSchema = new Schema({
     required: true,
     min: 6,
   },
+  otp: {
+    type: Number,
+    length: 5,
+  },
   friends: [
     {
       type: Schema.Types.ObjectId,

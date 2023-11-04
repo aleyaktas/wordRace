@@ -17,7 +17,7 @@ const mailSender = (email, username, message) => {
     from: "wordracewebsite@gmail.com",
     to: `${email}`,
     subject: "Forgot Password",
-    text: `Hello ${username};\n\nYour temporary password: ${message}\nPlease change your password after logging in.\n\nThank you for using WordRace!`,
+    text: `Hello ${username};\n\nYour code for reset password: ${message}\nPlease change your password.\n\nThank you for using WordRace!`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
