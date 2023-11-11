@@ -36,7 +36,7 @@ const ProfilePage = () => {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     if (image) {
-      const storageRef = ref(storage, `images/${image.name}`);
+      const storageRef = ref(storage, `images/${username}`);
       await uploadBytes(storageRef, image);
       const downloadURL = await getDownloadURL(storageRef);
       // await updateProfile({ url: downloadURL });
