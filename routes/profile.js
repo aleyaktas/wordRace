@@ -136,7 +136,7 @@ router.delete("/deleteAccount", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (user) {
-      await User.remove();
+      await user.remove();
       res.status(200).json({ msg: "Account deleted successfuly" });
     } else {
       res.status(400).json({ errors: [{ msg: "User does not exist" }] });
